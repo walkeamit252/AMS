@@ -8,14 +8,19 @@ import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 
 import com.google.firebase.auth.FirebaseAuth;
 
 import tayler.ut.attendencemanagmentsystem.menu.StudentMenuActivity;
 import tayler.ut.attendencemanagmentsystem.menu.TeacherMenuActivity;
+import tayler.ut.attendencemanagmentsystem.model.student.StudentData;
 import tayler.ut.attendencemanagmentsystem.ui.LoginOptionActivity;
+import tayler.ut.attendencemanagmentsystem.utils.FirebaseUtility;
 
 public class SplashActivity extends BaseActivity {
+
+    private static final String TAG = "SplashActivity";
 
     private Context mContext;
     private FirebaseAuth auth;
@@ -36,7 +41,13 @@ public class SplashActivity extends BaseActivity {
 
         initUI();
 
-        moveToNextScreen();
+
+      StudentData studentData = new StudentData("","Siba",FirebaseUtility.FirebaseConstants.FIRSTYEAR,"sp.dobest@gmail.com","1235");
+      //  FirebaseUtility.updateStudent(SplashActivity.this,studentData);
+
+        FirebaseUtility.getStudentByYear(FirebaseUtility.FirebaseConstants.FIRSTYEAR);
+
+       // moveToNextScreen();
     }
 
     private void initUI() {
