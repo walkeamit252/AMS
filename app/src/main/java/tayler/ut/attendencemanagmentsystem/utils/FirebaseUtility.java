@@ -39,6 +39,12 @@ public class FirebaseUtility {
 
 
 
+    public static List<StudentData> listStudentsFirstYear = new ArrayList<>();
+    public static List<StudentData> listStudentsSecondYear = new ArrayList<>();
+    public static List<StudentData> listStudents3rdYear = new ArrayList<>();
+    public static List<StudentData> listStudents4thYear = new ArrayList<>();
+    public static List<TeacherData> listTeacher = new ArrayList<>();
+
 
     private static final String TAG = "FirebaseUtility";
 
@@ -48,6 +54,22 @@ public class FirebaseUtility {
 
     public static void saveStudentDetails(){
 
+    }
+
+    public static List<StudentData>getStudentListByYears(String year){
+
+        switch (year){
+            case FirebaseConstants.FIRSTYEAR :
+                return listStudentsFirstYear;
+            case FirebaseConstants.SECOND_YEAR :
+                return listStudentsSecondYear;
+            case FirebaseConstants.THIRD_YEAR :
+                return listStudents3rdYear;
+            case FirebaseConstants.FOURTH_YEAR :
+                return listStudents4thYear;
+
+        }
+        return null;
     }
 
 
@@ -137,9 +159,8 @@ public class FirebaseUtility {
      * @param year
      */
 
-    public static /*List<StudentData>*/ void getStudentByYear(final String year ){
+    public static void getStudentByYear(final String year ){
         final List<StudentData> listStudent = new ArrayList<>();
-        boolean isExecuted = false;
 
 
         ChildEventListener childEventListener = new ChildEventListener() {
@@ -148,9 +169,6 @@ public class FirebaseUtility {
                 Log.d(TAG, "onChildAdded:" + dataSnapshot.getKey());
 
                 Map<String, StudentData> hashMapObject = (HashMap<String,StudentData>) dataSnapshot.getValue();
-              //  List<Object> values = td.values();
-                //  StudentData studentData = dataSnapshot.getValue(StudentData.class);
-              //  listStudent.add(studentData);
 
                 for (Map.Entry mapEntry : hashMapObject.entrySet()) {
                     System.out.println("Key: "+mapEntry.getKey() + " & Value: " + mapEntry.getValue());
@@ -159,17 +177,21 @@ public class FirebaseUtility {
 
                     Gson g = new Gson();
                     StudentData studentData = g.fromJson(mapEntry.getValue().toString(), StudentData.class);
-                    listStudent.add(studentData);
+
+
+                    switch (year){
+                        case FirebaseConstants.FIRSTYEAR :
+                            listStudentsFirstYear.add(studentData);
+                        case FirebaseConstants.SECOND_YEAR :
+                             listStudentsSecondYear.add(studentData);
+                        case FirebaseConstants.THIRD_YEAR :
+                             listStudents3rdYear.add(studentData);
+                        case FirebaseConstants.FOURTH_YEAR :
+                             listStudents4thYear.add(studentData);
+
+                    }
                 }
 
-                Iterator iterator = hashMapObject.entrySet().iterator();
-                while (iterator.hasNext()) {
-                    Map.Entry me2 = (Map.Entry) iterator.next();
-                    System.out.println("Key: "+me2.getKey() + " & Value: " + me2.getValue());
-                }
-
-
-                Log.i(TAG, "onChildAdded: "+listStudent.size());
             }
 
             @Override
