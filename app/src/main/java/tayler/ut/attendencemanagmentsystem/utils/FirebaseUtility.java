@@ -3,27 +3,19 @@ package tayler.ut.attendencemanagmentsystem.utils;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.text.TextUtils;
-import android.util.JsonReader;
 import android.util.Log;
-import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.ValueEventListener;
 import com.google.gson.Gson;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
 
-import org.json.JSONArray;
-import org.json.JSONObject;
 import org.w3c.dom.Comment;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -36,8 +28,6 @@ import tayler.ut.attendencemanagmentsystem.model.teacher.TeacherData;
  */
 
 public class FirebaseUtility {
-
-
 
     public static List<StudentData> listStudentsFirstYear = new ArrayList<>();
     public static List<StudentData> listStudentsSecondYear = new ArrayList<>();
@@ -56,7 +46,7 @@ public class FirebaseUtility {
 
     }
 
-    public static List<StudentData>getStudentListByYears(String year){
+    public static List<StudentData> getStudentListByYears(String year){
 
         switch (year){
             case FirebaseConstants.FIRSTYEAR :
@@ -67,7 +57,6 @@ public class FirebaseUtility {
                 return listStudents3rdYear;
             case FirebaseConstants.FOURTH_YEAR :
                 return listStudents4thYear;
-
         }
         return null;
     }
@@ -82,14 +71,12 @@ public class FirebaseUtility {
      * @param studentData
      */
     public static void updateStudent(Context context, StudentData studentData){
-
         if(studentData!=null){
             String userId = studentData.getStudentId();
             if(TextUtils.isEmpty(studentData.getStudentId())){
                 userId = AMSApplication.getFirebaseReference().push().getKey();
                 studentData.setStudentId(userId);
             }
-
             AMSApplication.getFirebaseReference().child(FirebaseConstants.STUDENT_TABLE+studentData.getYear()).child(userId)
                     .setValue(studentData)
                     .addOnCompleteListener(new OnCompleteListener<Void>() {
@@ -105,13 +92,6 @@ public class FirebaseUtility {
         }
     }
 
-    /**
-     * Update Teachers Subjects
-     *
-     * @param context
-     * @param
-     */
-
     public static void updateTeacher(Context context, TeacherData teacherData){
         if(teacherData!=null){
             String userId = teacherData.getTeacherId();
@@ -119,7 +99,6 @@ public class FirebaseUtility {
                 userId = AMSApplication.getFirebaseReference().push().getKey();
                 teacherData.setTeacherId(userId);
             }
-
             AMSApplication.getFirebaseReference().child(FirebaseConstants.TEACHER_TABLE).child(userId)
                     .setValue(teacherData)
                     .addOnCompleteListener(new OnCompleteListener<Void>() {
@@ -158,7 +137,6 @@ public class FirebaseUtility {
      * get all the student list by year
      * @param year
      */
-
     public static void getStudentByYear(final String year ){
         final List<StudentData> listStudent = new ArrayList<>();
 
