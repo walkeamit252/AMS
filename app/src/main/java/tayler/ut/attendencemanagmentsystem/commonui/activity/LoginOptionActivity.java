@@ -1,16 +1,14 @@
-package tayler.ut.attendencemanagmentsystem.ui;
+package tayler.ut.attendencemanagmentsystem.commonui.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.view.View;
 import android.widget.RelativeLayout;
 
-import tayler.ut.attendencemanagmentsystem.BaseActivity;
 import tayler.ut.attendencemanagmentsystem.R;
-import tayler.ut.attendencemanagmentsystem.ui.student.StudentLoginActivity;
-import tayler.ut.attendencemanagmentsystem.ui.teacher.TeacherLoginActivity;
+import tayler.ut.attendencemanagmentsystem.student.activity.StudentLoginActivity;
+import tayler.ut.attendencemanagmentsystem.teacher.activity.TeacherLoginActivity;
 
 
 public class LoginOptionActivity extends BaseActivity {

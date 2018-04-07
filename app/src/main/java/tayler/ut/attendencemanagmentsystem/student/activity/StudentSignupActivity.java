@@ -1,4 +1,4 @@
-package tayler.ut.attendencemanagmentsystem.ui.teacher;
+package tayler.ut.attendencemanagmentsystem.student.activity;
 
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -22,12 +22,13 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-import tayler.ut.attendencemanagmentsystem.BaseActivity;
+import tayler.ut.attendencemanagmentsystem.commonui.activity.BaseActivity;
 import tayler.ut.attendencemanagmentsystem.R;
-import tayler.ut.attendencemanagmentsystem.menu.TeacherMenuActivity;
 import tayler.ut.attendencemanagmentsystem.model.SignupModel;
+import tayler.ut.attendencemanagmentsystem.teacher.activity.TeacherLoginActivity;
 
-public class TeacherSignupActivity extends BaseActivity {
+
+public class StudentSignupActivity extends BaseActivity {
 
     private Button btnSignup;
     private TextView txtLogin;
@@ -64,7 +65,6 @@ public class TeacherSignupActivity extends BaseActivity {
         etNumber = (EditText) findViewById(R.id.edt_numbet);
         etPassword = (EditText) findViewById(R.id.edt_password);
         etConfirmPassword = (EditText) findViewById(R.id.edt_confirm_password);
-
         setListener();
     }
 
@@ -77,7 +77,6 @@ public class TeacherSignupActivity extends BaseActivity {
     private class SignupButtonClickListener implements View.OnClickListener {
         @Override
         public void onClick(View view) {
-
             registerUser();
         }
     }
@@ -123,7 +122,7 @@ public class TeacherSignupActivity extends BaseActivity {
 
                         } else {
                             //display some message here
-                            Toast.makeText(TeacherSignupActivity.this, task.getException().toString(), Toast.LENGTH_LONG).show();
+                            Toast.makeText(StudentSignupActivity.this, task.getException().toString(), Toast.LENGTH_LONG).show();
                         }
                         progressDialog.dismiss();
                     }
@@ -135,8 +134,8 @@ public class TeacherSignupActivity extends BaseActivity {
         // Write new user
         writeNewUser(user.getUid(), etName.getText().toString().trim(), user.getEmail(), etNumber.getText().toString().trim());
         saveValueInSharedPrefrnce();
-        Toast.makeText(TeacherSignupActivity.this, "Successfully registered", Toast.LENGTH_LONG).show();
-        Intent intent = new Intent(TeacherSignupActivity.this, TeacherMenuActivity.class);
+        Toast.makeText(StudentSignupActivity.this, "Successfully registered", Toast.LENGTH_LONG).show();
+        Intent intent = new Intent(StudentSignupActivity.this, StudentMenuActivity.class);
         startActivity(intent);
         finish();
     }
@@ -144,7 +143,7 @@ public class TeacherSignupActivity extends BaseActivity {
     private void saveValueInSharedPrefrnce() {
         SharedPreferences sharedPref = getPreferences(Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPref.edit();
-        editor.putBoolean("isTeacher", true);
+        editor.putBoolean("isStudent", true);
         editor.commit();
     }
 
@@ -155,13 +154,13 @@ public class TeacherSignupActivity extends BaseActivity {
         signupModel.setName(name);
         signupModel.setEmail(email);
         signupModel.setNumber(number);
-        mDatabase.child("teachersignup").child(userId).setValue(signupModel);
+        mDatabase.child("studentsignup").child(userId).setValue(signupModel);
     }
 
     private class LoginClickListener implements View.OnClickListener {
         @Override
         public void onClick(View view) {
-            Intent intent = new Intent(TeacherSignupActivity.this, TeacherLoginActivity.class);
+            Intent intent = new Intent(StudentSignupActivity.this, TeacherLoginActivity.class);
             startActivity(intent);
             finish();
         }

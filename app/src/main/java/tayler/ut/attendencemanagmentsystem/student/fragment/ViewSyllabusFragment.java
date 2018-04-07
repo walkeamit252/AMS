@@ -1,4 +1,4 @@
-package tayler.ut.attendencemanagmentsystem.fragment.student;
+package tayler.ut.attendencemanagmentsystem.student.fragment;
 
 
 import android.os.Bundle;

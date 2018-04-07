@@ -6,7 +6,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
+import android.widget.Switch;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -33,7 +33,7 @@ public class AttendenceListAdapter extends RecyclerView.Adapter<AttendenceListAd
     // inflates the row layout from xml when needed
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = mInflater.inflate(R.layout.item_attendence_row, parent, false);
+        View view = mInflater.inflate(R.layout.row_layout_attendance, parent, false);
         return new ViewHolder(view);
     }
 
@@ -41,7 +41,6 @@ public class AttendenceListAdapter extends RecyclerView.Adapter<AttendenceListAd
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         holder.mtxtName.setText("Name: " + "" + mData.get(position).getStudentName());
-        holder.mtxtRollNumber.setText("Number: " + "" + mData.get(position).getStudentNumber());
     }
 
     // total number of rows
@@ -55,24 +54,11 @@ public class AttendenceListAdapter extends RecyclerView.Adapter<AttendenceListAd
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         private TextView mtxtName;
-        private TextView mtxtRollNumber;
-        private Button btnPresent;
-        private Button btnAbsent;
+        private Switch mSwitch;
 
         ViewHolder(View itemView) {
             super(itemView);
-            mtxtName = itemView.findViewById(R.id.txt_student_name);
-            mtxtRollNumber = itemView.findViewById(R.id.txt_student_roll_number);
-            btnAbsent = itemView.findViewById(R.id.btn_absent);
-            btnPresent = itemView.findViewById(R.id.btn_present);
-
-            if (activityName.equals("ViewAttendence")) {
-                btnPresent.setVisibility(View.GONE);
-                btnAbsent.setVisibility(View.GONE);
-            } else if (activityName.equals("MarkAttendence")) {
-                btnPresent.setVisibility(View.VISIBLE);
-                btnAbsent.setVisibility(View.VISIBLE);
-            }
+            mtxtName = itemView.findViewById(R.id.mTextViewStudentName);
             itemView.setOnClickListener(this);
         }
 

@@ -1,4 +1,4 @@
-package tayler.ut.attendencemanagmentsystem.fragment.teacher;
+package tayler.ut.attendencemanagmentsystem.teacher.fragment;
 
 import android.Manifest;
 import android.content.Intent;
@@ -36,7 +36,7 @@ import tayler.ut.attendencemanagmentsystem.utils.Constants;
 import static android.app.Activity.RESULT_OK;
 
 
-public class AddSyllabusFragment extends Fragment {
+public class AddSubjectFragment extends Fragment {
     @Nullable
 
     private TextView textViewStatus;

@@ -1,21 +1,19 @@
-package tayler.ut.attendencemanagmentsystem;
+package tayler.ut.attendencemanagmentsystem.commonui.activity;
 
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Bundle;
 import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-import android.util.Log;
 
 import com.google.firebase.auth.FirebaseAuth;
 
-import tayler.ut.attendencemanagmentsystem.menu.StudentMenuActivity;
-import tayler.ut.attendencemanagmentsystem.menu.TeacherMenuActivity;
+import tayler.ut.attendencemanagmentsystem.R;
 import tayler.ut.attendencemanagmentsystem.model.student.StudentData;
-import tayler.ut.attendencemanagmentsystem.ui.LoginOptionActivity;
+import tayler.ut.attendencemanagmentsystem.student.activity.StudentMenuActivity;
+import tayler.ut.attendencemanagmentsystem.teacher.activity.TeacherMenuActivity;
 import tayler.ut.attendencemanagmentsystem.utils.FirebaseUtility;
 
 public class SplashActivity extends BaseActivity {
@@ -42,7 +40,7 @@ public class SplashActivity extends BaseActivity {
         initUI();
 
 
-      StudentData studentData = new StudentData("","Siba",FirebaseUtility.FirebaseConstants.FIRSTYEAR,"sp.dobest@gmail.com","1235");
+      StudentData studentData = new StudentData("","Siba", FirebaseUtility.FirebaseConstants.FIRSTYEAR,"sp.dobest@gmail.com","1235");
       //  FirebaseUtility.updateStudent(SplashActivity.this,studentData);
 
         FirebaseUtility.getStudentByYear(FirebaseUtility.FirebaseConstants.FIRSTYEAR);
