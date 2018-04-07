@@ -2,15 +2,15 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android" >
     <group android:checkableBehavior="single">
         <item
-            android:id="@+id/nav_view_attendence"
+            android:id="@+id/nav_take_attendance"
             android:icon="@drawable/icon_view_attendence"
             android:title="@string/view_attendence" />
         <item
-            android:id="@+id/nav_add_syllabus"
+            android:id="@+id/nav_add_subject"
             android:icon="@drawable/icon_mark_attendence"
             android:title="@string/add_syllabus" />
         <item
-            android:id="@+id/nav_mark_attendence"
+            android:id="@+id/nav_view_profile"
             android:icon="@drawable/icon_mark_attendence"
             android:title="@string/mark_attendence" />
      <!--   <item

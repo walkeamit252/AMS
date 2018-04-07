@@ -1,4 +1,4 @@
-package tayler.ut.attendencemanagmentsystem;
+package tayler.ut.attendencemanagmentsystem.commonui.activity;
 
 import android.app.Activity;
 import android.content.Context;

@@ -1,10 +1,11 @@
-package tayler.ut.attendencemanagmentsystem.ui.student;
+package tayler.ut.attendencemanagmentsystem.teacher.activity;
 
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
@@ -21,15 +22,14 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.gson.Gson;
 
-import tayler.ut.attendencemanagmentsystem.BaseActivity;
 import tayler.ut.attendencemanagmentsystem.R;
-import tayler.ut.attendencemanagmentsystem.menu.StudentMenuActivity;
+import tayler.ut.attendencemanagmentsystem.commonui.activity.BaseActivity;
 import tayler.ut.attendencemanagmentsystem.model.SignupModel;
-import tayler.ut.attendencemanagmentsystem.ui.teacher.TeacherLoginActivity;
+import tayler.ut.attendencemanagmentsystem.utils.Constants;
 
-
-public class StudentSignupActivity extends BaseActivity {
+public class TeacherSignupActivity extends BaseActivity {
 
     private Button btnSignup;
     private TextView txtLogin;
@@ -44,6 +44,9 @@ public class StudentSignupActivity extends BaseActivity {
     private ProgressDialog progressDialog;
     private DatabaseReference mDatabase;
 
+    SharedPreferences prefs;
+
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,7 +56,7 @@ public class StudentSignupActivity extends BaseActivity {
     }
 
     private void initView() {
-
+        prefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         mDatabase = FirebaseDatabase.getInstance().getReference();
         firebaseAuth = FirebaseAuth.getInstance();
         progressDialog = new ProgressDialog(this);
@@ -66,6 +69,7 @@ public class StudentSignupActivity extends BaseActivity {
         etNumber = (EditText) findViewById(R.id.edt_numbet);
         etPassword = (EditText) findViewById(R.id.edt_password);
         etConfirmPassword = (EditText) findViewById(R.id.edt_confirm_password);
+
         setListener();
     }
 
@@ -78,6 +82,7 @@ public class StudentSignupActivity extends BaseActivity {
     private class SignupButtonClickListener implements View.OnClickListener {
         @Override
         public void onClick(View view) {
+
             registerUser();
         }
     }
@@ -123,7 +128,7 @@ public class StudentSignupActivity extends BaseActivity {
 
                         } else {
                             //display some message here
-                            Toast.makeText(StudentSignupActivity.this, task.getException().toString(), Toast.LENGTH_LONG).show();
+                            Toast.makeText(TeacherSignupActivity.this, task.getException().toString(), Toast.LENGTH_LONG).show();
                         }
                         progressDialog.dismiss();
                     }
@@ -135,8 +140,8 @@ public class StudentSignupActivity extends BaseActivity {
         // Write new user
         writeNewUser(user.getUid(), etName.getText().toString().trim(), user.getEmail(), etNumber.getText().toString().trim());
         saveValueInSharedPrefrnce();
-        Toast.makeText(StudentSignupActivity.this, "Successfully registered", Toast.LENGTH_LONG).show();
-        Intent intent = new Intent(StudentSignupActivity.this, StudentMenuActivity.class);
+        Toast.makeText(TeacherSignupActivity.this, "Successfully registered", Toast.LENGTH_LONG).show();
+        Intent intent = new Intent(TeacherSignupActivity.this, TeacherMenuActivity.class);
         startActivity(intent);
         finish();
     }
@@ -144,7 +149,7 @@ public class StudentSignupActivity extends BaseActivity {
     private void saveValueInSharedPrefrnce() {
         SharedPreferences sharedPref = getPreferences(Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPref.edit();
-        editor.putBoolean("isStudent", true);
+        editor.putBoolean("isTeacher", true);
         editor.commit();
     }
 
@@ -155,13 +160,17 @@ public class StudentSignupActivity extends BaseActivity {
         signupModel.setName(name);
         signupModel.setEmail(email);
         signupModel.setNumber(number);
-        mDatabase.child("studentsignup").child(userId).setValue(signupModel);
+        mDatabase.child("teachersignup").child(userId).setValue(signupModel);
+
+        Gson gson = new Gson();
+        String json = gson.toJson(signupModel);
+        prefs.edit().putString(Constants.USER_MODEL,json).commit();
     }
 
     private class LoginClickListener implements View.OnClickListener {
         @Override
         public void onClick(View view) {
-            Intent intent = new Intent(StudentSignupActivity.this, TeacherLoginActivity.class);
+            Intent intent = new Intent(TeacherSignupActivity.this, TeacherLoginActivity.class);
             startActivity(intent);
             finish();
         }

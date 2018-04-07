@@ -1,4 +1,4 @@
-package tayler.ut.attendencemanagmentsystem;
+package tayler.ut.attendencemanagmentsystem.commonui.activity;
 
 import android.content.Context;
 import android.content.Intent;
@@ -6,14 +6,13 @@ import android.content.SharedPreferences;
 import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
 import com.google.firebase.auth.FirebaseAuth;
 
-import tayler.ut.attendencemanagmentsystem.menu.StudentMenuActivity;
-import tayler.ut.attendencemanagmentsystem.menu.TeacherMenuActivity;
-import tayler.ut.attendencemanagmentsystem.ui.LoginOptionActivity;
+import tayler.ut.attendencemanagmentsystem.R;
+import tayler.ut.attendencemanagmentsystem.student.activity.StudentMenuActivity;
+import tayler.ut.attendencemanagmentsystem.teacher.activity.TeacherMenuActivity;
 
 public class SplashActivity extends BaseActivity {
 

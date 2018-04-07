@@ -1,4 +1,4 @@
-package tayler.ut.attendencemanagmentsystem.menu;
+package tayler.ut.attendencemanagmentsystem.student.activity;
 
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -13,14 +13,13 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
-import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 
 import tayler.ut.attendencemanagmentsystem.R;
-import tayler.ut.attendencemanagmentsystem.fragment.teacher.ViewAttendenceFragment;
-import tayler.ut.attendencemanagmentsystem.fragment.student.ViewSyllabusFragment;
-import tayler.ut.attendencemanagmentsystem.ui.LoginOptionActivity;
+import tayler.ut.attendencemanagmentsystem.teacher.fragment.ViewAttendenceFragment;
+import tayler.ut.attendencemanagmentsystem.student.fragment.ViewSyllabusFragment;
+import tayler.ut.attendencemanagmentsystem.commonui.activity.LoginOptionActivity;
 
 public class StudentMenuActivity extends AppCompatActivity {
 

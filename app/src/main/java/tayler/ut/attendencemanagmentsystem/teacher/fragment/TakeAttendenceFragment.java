@@ -1,4 +1,4 @@
-package tayler.ut.attendencemanagmentsystem.fragment.teacher;
+package tayler.ut.attendencemanagmentsystem.teacher.fragment;
 
 import android.app.ProgressDialog;
 import android.os.Bundle;
@@ -24,14 +24,13 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-import tayler.ut.attendencemanagmentsystem.ApplicationContext;
+import tayler.ut.attendencemanagmentsystem.app.ApplicationContext;
 import tayler.ut.attendencemanagmentsystem.R;
 import tayler.ut.attendencemanagmentsystem.adapter.AttendenceListAdapter;
-import tayler.ut.attendencemanagmentsystem.adapter.MarkAttendenceListAdapter;
 import tayler.ut.attendencemanagmentsystem.model.StudentListModel;
 
 
-public class MarkAttendenceFragment extends Fragment implements AttendenceListAdapter.ItemClickListener {
+public class TakeAttendenceFragment extends Fragment implements AttendenceListAdapter.ItemClickListener {
 
     private AttendenceListAdapter mListAdapter;
     private RecyclerView recyclerView;

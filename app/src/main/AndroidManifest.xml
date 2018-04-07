@@ -12,41 +12,42 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:name=".ApplicationContext"
+        android:name=".app.ApplicationContext"
         android:theme="@style/AppTheme">
-        <activity android:name=".SplashActivity">
+        <activity android:name=".commonui.activity.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
 
 
         <activity
-            android:name=".ui.LoginOptionActivity"
+            android:name=".commonui.activity.LoginOptionActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.student.StudentLoginActivity"
+            android:name=".student.activity.StudentLoginActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.teacher.TeacherLoginActivity"
+            android:name=".teacher.activity.TeacherLoginActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.AppCompat.DayNight.NoActionBar"
+            />
+
+        <activity
+            android:name=".student.activity.StudentSignupActivity"
             android:screenOrientation="portrait" />
 
         <activity
-            android:name=".ui.student.StudentSignupActivity"
+            android:name=".teacher.activity.TeacherSignupActivity"
             android:screenOrientation="portrait" />
 
         <activity
-            android:name=".ui.teacher.TeacherSignupActivity"
-            android:screenOrientation="portrait" />
-
-        <activity
-            android:name=".menu.StudentMenuActivity"
+            android:name=".student.activity.StudentMenuActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
 
         <activity
-            android:name=".menu.TeacherMenuActivity"
+            android:name=".teacher.activity.TeacherMenuActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
     </application>
 

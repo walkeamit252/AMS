@@ -1,7 +1,6 @@
-package tayler.ut.attendencemanagmentsystem.ui.student;
+package tayler.ut.attendencemanagmentsystem.teacher.activity;
 
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -19,25 +18,22 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
 
-import tayler.ut.attendencemanagmentsystem.BaseActivity;
 import tayler.ut.attendencemanagmentsystem.R;
-import tayler.ut.attendencemanagmentsystem.menu.StudentMenuActivity;
+import tayler.ut.attendencemanagmentsystem.commonui.activity.BaseActivity;
 
-
-public class StudentLoginActivity extends BaseActivity {
+public class TeacherLoginActivity extends BaseActivity {
 
     private EditText etEmailid;
     private EditText etPassword;
-
     private Button btnLogin;
     private TextView txtSignup;
+    DatabaseReference mDatabaseReference;
 
     private FirebaseAuth auth;
     private ProgressDialog progressDialog;
-
     SharedPreferences prefs;
-
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
 
@@ -46,22 +42,23 @@ public class StudentLoginActivity extends BaseActivity {
         //Get Firebase auth instance
         auth = FirebaseAuth.getInstance();
 
-        setContentView(R.layout.activity_student_login);
+        setContentView(R.layout.activity_teacher_login);
 
         initView();
     }
 
     private void initView() {
 
+
         prefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
 
         progressDialog = new ProgressDialog(this);
 
-        etEmailid = (EditText) findViewById(R.id.edt_emailid);
+        etEmailid = (EditText) findViewById(R.id.edt_email);
 
         etPassword = (EditText) findViewById(R.id.edt_password);
 
-        btnLogin = (Button) findViewById(R.id.btn_login_with_student);
+        btnLogin = (Button) findViewById(R.id.btn_login_with_teacher);
 
         txtSignup = (TextView) findViewById(R.id.txt_signup);
 
@@ -78,9 +75,10 @@ public class StudentLoginActivity extends BaseActivity {
     private class LoginButtonClickListner implements View.OnClickListener {
         @Override
         public void onClick(View view) {
-           /* Intent intent = new Intent(StudentLoginActivity.this, StudentMenuActivity.class);
-            startActivity(intent);*/
+
             loginUser();
+           /* Intent intent = new Intent(TeacherLoginActivity.this, StudentMenuActivity.class);
+            startActivity(intent);*/
         }
     }
 
@@ -102,7 +100,7 @@ public class StudentLoginActivity extends BaseActivity {
 
         //authenticate user
         auth.signInWithEmailAndPassword(etEmailid.getText().toString().trim(), etPassword.getText().toString().trim())
-                .addOnCompleteListener(StudentLoginActivity.this, new OnCompleteListener<AuthResult>() {
+                .addOnCompleteListener(TeacherLoginActivity.this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         // If sign in fails, display a message to the user. If sign in succeeds
@@ -110,11 +108,11 @@ public class StudentLoginActivity extends BaseActivity {
                         // signed in user can be handled in the listener.
                         if (!task.isSuccessful()) {
                             // there was an error
-                            Toast.makeText(StudentLoginActivity.this, getString(R.string.invalid_login), Toast.LENGTH_LONG).show();
+                            Toast.makeText(TeacherLoginActivity.this, getString(R.string.invalid_login), Toast.LENGTH_LONG).show();
                             progressDialog.dismiss();
                         } else {
-                            prefs.edit().putBoolean("studentlogin", true).commit();
-                            Intent intent = new Intent(StudentLoginActivity.this, StudentMenuActivity.class);
+                            prefs.edit().putBoolean("teacherlogin", true).commit();
+                            Intent intent = new Intent(TeacherLoginActivity.this, TeacherMenuActivity.class);
                             startActivity(intent);
                             finish();
                         }
@@ -123,10 +121,14 @@ public class StudentLoginActivity extends BaseActivity {
     }
 
 
+
+
+
     private class SignupClickListner implements View.OnClickListener {
         @Override
         public void onClick(View view) {
-            Intent intent = new Intent(StudentLoginActivity.this, StudentSignupActivity.class);
+
+            Intent intent = new Intent(TeacherLoginActivity.this, TeacherSignupActivity.class);
             startActivity(intent);
         }
     }

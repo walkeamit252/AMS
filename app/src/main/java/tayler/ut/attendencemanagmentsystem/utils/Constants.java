@@ -8,4 +8,6 @@ public class Constants {
 
     //this is the pic pdf code used in file chooser
     public static final  int PICK_PDF_CODE = 2342;
+
+    public static final String USER_MODEL = "user_model";
 }
