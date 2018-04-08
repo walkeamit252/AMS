@@ -11,6 +11,7 @@ import android.support.annotation.Nullable;
 import com.google.firebase.auth.FirebaseAuth;
 
 import tayler.ut.attendencemanagmentsystem.R;
+import tayler.ut.attendencemanagmentsystem.model.course.CourseData;
 import tayler.ut.attendencemanagmentsystem.model.student.StudentData;
 import tayler.ut.attendencemanagmentsystem.model.teacher.TeacherData;
 import tayler.ut.attendencemanagmentsystem.student.activity.StudentMenuActivity;
@@ -47,9 +48,35 @@ public class SplashActivity extends BaseActivity {
 //        TeacherData teacherData = new TeacherData("","SibaM","sp.dobest@gmail.com","9768235871", "","123");
 //        FirebaseUtility.updateTeacher(SplashActivity.this,teacherData);
 
-        FirebaseUtility.saveTeacherProfile("");
 
-    //    FirebaseUtility.getStudentByYear(FirebaseUtility.FirebaseConstants.FIRSTYEAR);
+//        int z  = 0;
+//        for(int i = 0;i<20;i++) {
+//            TeacherData teacherData = new TeacherData("","Teacher  "+(++z),"teacher"+z+"@gmail.com","9848234242","","");
+//            FirebaseUtility.updateTeacher(SplashActivity.this,teacherData);
+//        }
+
+
+       // int j  = 0;
+      /*      for(int i = 0;i<50;i++) {
+                StudentData studentData = new StudentData("","Siba","sp.dobest@gmail.com","9768235871", FirebaseUtility.FirebaseConstants.FIRSTYEAR,"123");
+                FirebaseUtility.updateStudent(SplashActivity.this,studentData);
+            }
+        int k  =0;
+        for(int i = 0;i<50;i++) {
+            StudentData studentData = new StudentData("","Siba","sp.dobest@gmail.com","9768235871", FirebaseUtility.FirebaseConstants.FIRSTYEAR,"123");
+            FirebaseUtility.updateStudent(SplashActivity.this,studentData);
+        }
+        int l  =0;
+        for(int i = 0;i<50;i++) {
+            StudentData studentData = new StudentData("","Siba","sp.dobest@gmail.com","9768235871", FirebaseUtility.FirebaseConstants.FIRSTYEAR,"123");
+            FirebaseUtility.updateStudent(SplashActivity.this,studentData);
+        }
+        int m  =0;
+        for(int i = 0;i<50;i++) {
+            StudentData studentData = new StudentData("","Siba","sp.dobest@gmail.com","9768235871", FirebaseUtility.FirebaseConstants.FIRSTYEAR,"123");
+            FirebaseUtility.updateStudent(SplashActivity.this,studentData);
+        }*/
+
 
        // moveToNextScreen();
     }

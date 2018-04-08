@@ -62,7 +62,7 @@ public class FirebaseUtility {
 
     public static void saveTeacherProfile(String teacherId){
 
-     //   teacherId = "-L9YZfr4aq4SLa7Uq2-a";
+       teacherId = "-L9YZfr4aq4SLa7Uq2-a";
         Query teacherDetailsQuery = ApplicationContext.getFirebaseDatabaseReference().child(FirebaseConstants.TEACHER_TABLE).orderByChild(FirebaseConstants.TEACHER_ID).equalTo(teacherId);
         teacherDetailsQuery.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
