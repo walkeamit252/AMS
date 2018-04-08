@@ -4,13 +4,14 @@ package tayler.ut.attendencemanagmentsystem.app;
 import android.app.Application;
 import android.content.Context;
 
+import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 public class ApplicationContext extends Application {
 
     public Context mContext;
     private static FirebaseDatabase database;
-
+    private static DatabaseReference dbRef ;
 
     public ApplicationContext() {
         super();
@@ -19,6 +20,7 @@ public class ApplicationContext extends Application {
     public ApplicationContext(Context mContext) {
         this.mContext = mContext;
         database = FirebaseDatabase.getInstance();
+        dbRef =  FirebaseDatabase.getInstance().getReference();
     }
 
     public Context getmContext() {
@@ -31,6 +33,9 @@ public class ApplicationContext extends Application {
 
     public static FirebaseDatabase getDatabase() {
         return database;
+    }
+    public static DatabaseReference getFirebaseDatabaseReference() {
+        return dbRef;
     }
 
 }
