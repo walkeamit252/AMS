@@ -222,11 +222,11 @@ public class FirebaseUtility {
     /**
      * Update Teachers Subjects
      *
-     * @param context
+     * @param
      * @param
      */
 
-    public static void updateTeacher(Context context, TeacherData teacherData){
+    public static void updateTeacher( TeacherData teacherData){
         if(teacherData!=null){
             String userId = teacherData.getTeacherId();
             if(TextUtils.isEmpty(userId)){
@@ -346,16 +346,12 @@ public class FirebaseUtility {
             public void onChildAdded(DataSnapshot dataSnapshot, String previousChildName) {
                 Log.d(TAG, "onChildAdded:" + dataSnapshot.getKey());
 
-                Map<String, StudentData> hashMapObject = (HashMap<String,StudentData>) dataSnapshot.getValue();
-
+                Map<String, Object> hashMapObject = (HashMap<String,Object>) dataSnapshot.getValue();
                 for (Map.Entry mapEntry : hashMapObject.entrySet()) {
-                    System.out.println("Key: "+mapEntry.getKey() + " & Value: " + mapEntry.getValue());
+                    Gson gson = new Gson();
+                    String obj = gson.toJson(mapEntry.getValue());
 
-                    Log.i(TAG, "onChildAdded: "+mapEntry.getValue().toString());
-
-                    Gson g = new Gson();
-                    StudentData studentData = g.fromJson(mapEntry.getValue().toString(), StudentData.class);
-
+                    StudentData studentData = new Gson().fromJson(obj, StudentData.class);
 
                     switch (year){
                         case FirebaseConstants.FIRSTYEAR :
@@ -437,17 +433,12 @@ public class FirebaseUtility {
         ChildEventListener childEventListener = new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String previousChildName) {
-                Log.d(TAG, "onChildAdded:" + dataSnapshot.getKey());
 
-                Map<String, StudentData> hashMapObject = (HashMap<String,StudentData>) dataSnapshot.getValue();
-
+                Map<String, Object> hashMapObject = (HashMap<String,Object>) dataSnapshot.getValue();
                 for (Map.Entry mapEntry : hashMapObject.entrySet()) {
-                    System.out.println("Key: "+mapEntry.getKey() + " & Value: " + mapEntry.getValue());
-
-                    Log.i(TAG, "onChildAdded: "+mapEntry.getValue().toString());
-
-                    Gson g = new Gson();
-                    TeacherData studentData = g.fromJson(mapEntry.getValue().toString(), TeacherData.class);
+                    Gson gson = new Gson();
+                    String obj = gson.toJson(mapEntry.getValue());
+                    TeacherData studentData = gson.fromJson(obj, TeacherData.class);
                     listTeacher.add(studentData);
                 }
 
@@ -512,22 +503,13 @@ public class FirebaseUtility {
             public void onChildAdded(DataSnapshot dataSnapshot, String previousChildName) {
                 Log.d(TAG, "onChildAdded:" + dataSnapshot.getKey());
 
-                Map<String, CourseData> hashMapObject = (HashMap<String,CourseData>) dataSnapshot.getValue();
 
+                Map<String, Object> hashMapObject = (HashMap<String,Object>) dataSnapshot.getValue();
                 for (Map.Entry mapEntry : hashMapObject.entrySet()) {
-                    System.out.println("Key: " + mapEntry.getKey() + " & Value: " + mapEntry.getValue());
+                    Gson gson = new Gson();
+                    String obj = gson.toJson(mapEntry.getValue());
 
-                    Log.i(TAG, "onChildAdded THIS IS ACTUAL VALU: " + mapEntry.getValue().toString());
-
-                    //CourseData courseData= (CourseData) mapEntry.getValue();
-
-                    Gson g = new Gson();
-
-                    String object=g.toJson(mapEntry.getValue());
-
-                    Log.i(TAG, "\nonChildAdded THIS IS ACTUAL VALU: " + object);
-
-                    CourseData courseData = g.fromJson(object, CourseData.class);
+                    CourseData courseData = new Gson().fromJson(obj, CourseData.class);
 
 
                     if (courseData != null && !TextUtils.isEmpty(courseData.getCourseYear())) {
