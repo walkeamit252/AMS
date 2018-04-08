@@ -1,12 +1,11 @@
 package tayler.ut.attendencemanagmentsystem.teacher.fragment;
 
 
-import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,20 +13,21 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import tayler.ut.attendencemanagmentsystem.R;
+import tayler.ut.attendencemanagmentsystem.model.teacher.TeacherData;
+import tayler.ut.attendencemanagmentsystem.utils.FirebaseUtility;
 
 /**
  * A simple {@link Fragment} subclass.
  */
 public class ProfileFragment extends Fragment {
 
-    TextView mUserName,mUserEmail,mUserNumber;
+    TextView mTeacherName, mTeacherEmail,mTeacherNumber,mTeacherSubjects;
     ImageView mImageProfile;
-
-    SharedPreferences prefs;
+    TeacherData mTeacherData;
+    View mSujectViewUnderline;
 
     public ProfileFragment() {
     }
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -39,10 +39,28 @@ public class ProfileFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        mUserName=(TextView)view.findViewById(R.id.mUserName);
-        mUserEmail=(TextView)view.findViewById(R.id.mUserEmail);
-        mUserNumber=(TextView)view.findViewById(R.id.mUserNumber);
-        prefs = PreferenceManager.getDefaultSharedPreferences(getActivity().getApplicationContext());
+        mTeacherName=(TextView)view.findViewById(R.id.mUserName);
+        mTeacherEmail =(TextView)view.findViewById(R.id.mUserEmail);
+        mTeacherNumber=(TextView)view.findViewById(R.id.mUserNumber);
+        mTeacherSubjects=(TextView)view.findViewById(R.id.mTeacherSubject);
+        mSujectViewUnderline=(View)view.findViewById(R.id.mSujectViewUnderline);
+
+        mTeacherData= FirebaseUtility.getTeacherProfileData();
+
+        mTeacherName.setText(mTeacherData.getName());
+        mTeacherEmail.setText(mTeacherData.getEmailId());
+        mTeacherNumber.setText(mTeacherData.getMobileNumber());
+        if(TextUtils.isEmpty(mTeacherData.getSubjects())){
+            mTeacherSubjects.setVisibility(View.VISIBLE);
+            mSujectViewUnderline.setVisibility(View.VISIBLE);
+            mTeacherSubjects.setText(mTeacherData.getSubjects());
+        }else {
+            mTeacherSubjects.setVisibility(View.GONE);
+            mSujectViewUnderline.setVisibility(View.GONE);
+        }
+
+
+
 
     }
 

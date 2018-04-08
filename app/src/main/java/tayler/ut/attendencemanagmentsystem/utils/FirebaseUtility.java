@@ -4,7 +4,6 @@ import android.content.Context;
 import android.support.annotation.NonNull;
 import android.text.TextUtils;
 import android.util.Log;
-import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -27,8 +26,6 @@ import tayler.ut.attendencemanagmentsystem.model.attendance.AttendanceData;
 import tayler.ut.attendencemanagmentsystem.model.course.CourseData;
 import tayler.ut.attendencemanagmentsystem.model.student.StudentData;
 import tayler.ut.attendencemanagmentsystem.model.teacher.TeacherData;
-
-import static com.firebase.ui.auth.AuthUI.getApplicationContext;
 
 /**
  * Created by sibaprasad on 07/04/18.
@@ -669,6 +666,6 @@ public class FirebaseUtility {
         String MOBILENUMBER            = "mobileNumber";
         String PASSWORD                = "password";
         String SUBJECT                 = "subject";
-        String TEACHER_ID               = "teacherId";
+        String TEACHER_ID              = "teacherId";
     }
 }

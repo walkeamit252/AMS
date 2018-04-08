@@ -12,6 +12,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
@@ -35,6 +36,7 @@ public class TakeAttendenceFragment extends Fragment implements AttendenceListAd
     private AttendenceListAdapter mListAdapter;
     private RecyclerView recyclerView;
     private LinearLayoutManager mLayoutManager;
+    private Button mButtonSave;
 
     private DatabaseReference mDatabaseRefrence;
     private FirebaseDatabase database;
@@ -72,8 +74,6 @@ public class TakeAttendenceFragment extends Fragment implements AttendenceListAd
         mDatabaseRefrence.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-
-
                 Map<String, Object> objectMap = (HashMap<String, Object>) dataSnapshot.getValue();
                 for (Object obj : objectMap.values()) {
                     if (obj instanceof Map) {
@@ -98,7 +98,7 @@ public class TakeAttendenceFragment extends Fragment implements AttendenceListAd
     }
 
     private void initview(View view) {
-
+        mButtonSave=(Button)view.findViewById(R.id.mButtonSave);
         mApplicationContext = new ApplicationContext(getActivity());
         database = ApplicationContext.getDatabase();
 

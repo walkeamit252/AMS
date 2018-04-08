@@ -10,5 +10,22 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_margin="@dimen/dimen_10"
+        android:layout_above="@id/mButtonSave"
         />
+
+
+    <Button
+        android:id="@+id/mButtonSave"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_margin="@dimen/dimen_16"
+        android:background="@drawable/common_rounded_button"
+        android:text="@string/submit"
+        android:textAllCaps="false"
+        android:textColor="@color/white"
+        android:textSize="18sp"
+        />
+
+
 </RelativeLayout>

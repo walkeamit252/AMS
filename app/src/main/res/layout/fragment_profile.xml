@@ -26,8 +26,7 @@
         android:layout_below="@id/mViewSeperator"
         android:layout_margin="@dimen/dimen_16"
         android:background="@android:color/white"
-        card_view:cardCornerRadius="4dp"
-        >
+        card_view:cardCornerRadius="4dp">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -56,7 +55,7 @@
                 android:id="@+id/mUserEmail"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Name"
+                android:text="Email"
                 android:layout_marginTop="@dimen/dimen_16"
                 android:padding="@dimen/dimen_10"
                 android:textSize="@dimen/dimen_16"
@@ -72,11 +71,30 @@
                 android:id="@+id/mUserNumber"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Name"
+                android:text="Number"
                 android:layout_marginTop="@dimen/dimen_16"
                 android:padding="@dimen/dimen_10"
                 android:textSize="@dimen/dimen_16"
                 />
+
+            <View
+                android:id="@+id/mSujectViewUnderline"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dimen_1"
+                android:layout_below="@id/mProfilePicture"
+                android:background="#000000"
+                />
+
+            <TextView
+                android:id="@+id/mTeacherSubject"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Number"
+                android:layout_marginTop="@dimen/dimen_16"
+                android:padding="@dimen/dimen_10"
+                android:textSize="@dimen/dimen_16"
+                />
+
 
         </LinearLayout>
 
