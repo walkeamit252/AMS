@@ -500,18 +500,12 @@ public class FirebaseUtility {
         return listYears;
     }
 
-    public static void getTotalCourses(final String year){
+    public static void getTotalCourses( ){
 
-        switch (year){
-            case FirebaseConstants.FIRSTYEAR :
                 listCourseFirstYear.clear();
-            case FirebaseConstants.SECOND_YEAR :
                 listCourseSecondYear.clear();
-            case FirebaseConstants.THIRD_YEAR :
                 listCourse3rdYear.clear();
-            case FirebaseConstants.FOURTH_YEAR :
                 listCourseFourthYear.clear();
-        }
 
         ChildEventListener childEventListener = new ChildEventListener() {
             @Override
@@ -521,23 +515,25 @@ public class FirebaseUtility {
                 Map<String, CourseData> hashMapObject = (HashMap<String,CourseData>) dataSnapshot.getValue();
 
                 for (Map.Entry mapEntry : hashMapObject.entrySet()) {
-                    System.out.println("Key: "+mapEntry.getKey() + " & Value: " + mapEntry.getValue());
+                    System.out.println("Key: " + mapEntry.getKey() + " & Value: " + mapEntry.getValue());
 
-                    Log.i(TAG, "onChildAdded: "+mapEntry.getValue().toString());
+                    Log.i(TAG, "onChildAdded: " + mapEntry.getValue().toString());
 
                     Gson g = new Gson();
                     CourseData courseData = g.fromJson(mapEntry.getValue().toString(), CourseData.class);
 
 
-                    switch (year){
-                        case FirebaseConstants.FIRSTYEAR :
-                            listCourseFirstYear.add(courseData);
-                        case FirebaseConstants.SECOND_YEAR :
-                            listCourseSecondYear.add(courseData);
-                        case FirebaseConstants.THIRD_YEAR :
-                            listCourse3rdYear.add(courseData);
-                        case FirebaseConstants.FOURTH_YEAR :
-                            listCourseFourthYear.add(courseData);
+                    if (courseData != null && !TextUtils.isEmpty(courseData.getCourseYear())) {
+                        switch (courseData.getCourseYear()) {
+                            case FirebaseConstants.FIRSTYEAR:
+                                listCourseFirstYear.add(courseData);
+                            case FirebaseConstants.SECOND_YEAR:
+                                listCourseSecondYear.add(courseData);
+                            case FirebaseConstants.THIRD_YEAR:
+                                listCourse3rdYear.add(courseData);
+                            case FirebaseConstants.FOURTH_YEAR:
+                                listCourseFourthYear.add(courseData);
+                        }
                     }
                 }
 
