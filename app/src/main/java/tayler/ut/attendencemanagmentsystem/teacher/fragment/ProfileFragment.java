@@ -46,6 +46,9 @@ public class ProfileFragment extends Fragment {
         mSujectViewUnderline=(View)view.findViewById(R.id.mSujectViewUnderline);
 
         mTeacherData= FirebaseUtility.getTeacherProfileData();
+        if(mTeacherData==null){
+            return;
+        }
 
         mTeacherName.setText(mTeacherData.getName());
         mTeacherEmail.setText(mTeacherData.getEmailId());

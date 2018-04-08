@@ -19,7 +19,7 @@ import tayler.ut.attendencemanagmentsystem.R;
 import tayler.ut.attendencemanagmentsystem.commonui.activity.LoginOptionActivity;
 import tayler.ut.attendencemanagmentsystem.teacher.fragment.AddCourseFragment;
 import tayler.ut.attendencemanagmentsystem.teacher.fragment.ProfileFragment;
-import tayler.ut.attendencemanagmentsystem.teacher.fragment.TakeAttendenceFragment;
+import tayler.ut.attendencemanagmentsystem.teacher.fragment.ViewTeacherAddedCourseFragment;
 
 public class TeacherMenuActivity extends AppCompatActivity {
 
@@ -45,7 +45,7 @@ public class TeacherMenuActivity extends AppCompatActivity {
                         Fragment selectedFragment = null;
                         switch (item.getItemId()) {
                             case R.id.nav_take_attendance:
-                                selectedFragment = new TakeAttendenceFragment();
+                                selectedFragment = new ViewTeacherAddedCourseFragment();
                                 break;
                             case R.id.nav_add_subject:
                                 selectedFragment = new AddCourseFragment();
