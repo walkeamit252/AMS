@@ -4,12 +4,15 @@ import android.content.Context;
 import android.support.annotation.NonNull;
 import android.text.TextUtils;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 import com.google.gson.Gson;
 
 import org.w3c.dom.Comment;
@@ -25,6 +28,8 @@ import tayler.ut.attendencemanagmentsystem.model.course.CourseData;
 import tayler.ut.attendencemanagmentsystem.model.student.StudentData;
 import tayler.ut.attendencemanagmentsystem.model.teacher.TeacherData;
 
+import static com.firebase.ui.auth.AuthUI.getApplicationContext;
+
 /**
  * Created by sibaprasad on 07/04/18.
  */
@@ -33,35 +38,104 @@ public class FirebaseUtility {
 
 
 
-    static List<StudentData> listStudentsFirstYear = new ArrayList<>();
-    static List<StudentData> listStudentsSecondYear = new ArrayList<>();
-    static List<StudentData> listStudents3rdYear = new ArrayList<>();
-    static List<StudentData> listStudents4thYear = new ArrayList<>();
-    static List<TeacherData> listTeacher = new ArrayList<>();
+    private static List<StudentData> listStudentsFirstYear = new ArrayList<>();
+    private static List<StudentData> listStudentsSecondYear = new ArrayList<>();
+    private static List<StudentData> listStudents3rdYear = new ArrayList<>();
+    private static List<StudentData> listStudents4thYear = new ArrayList<>();
+    private static List<TeacherData> listTeacher = new ArrayList<>();
 
-    static List<AttendanceData> listAttendanceFirstYear = new ArrayList<>();
-    static List<AttendanceData> listAttendanceSecondYear = new ArrayList<>();
-    static List<AttendanceData> listAttendance3rdYear = new ArrayList<>();
-    static List<AttendanceData> listAttendance4thYear = new ArrayList<>();
+    private static List<AttendanceData> listAttendanceFirstYear = new ArrayList<>();
+    private static List<AttendanceData> listAttendanceSecondYear = new ArrayList<>();
+    private static List<AttendanceData> listAttendance3rdYear = new ArrayList<>();
+    private static List<AttendanceData> listAttendance4thYear = new ArrayList<>();
 
-    static List<CourseData> listCourseFirstYear = new ArrayList<>();
-    static List<CourseData> listCourseSecondYear = new ArrayList<>();
-    static List<CourseData> listCourse3rdYear = new ArrayList<>();
-    static List<CourseData> listCourseFourthYear = new ArrayList<>();
+    private static List<CourseData> listCourseFirstYear = new ArrayList<>();
+    private static List<CourseData> listCourseSecondYear = new ArrayList<>();
+    private static List<CourseData> listCourse3rdYear = new ArrayList<>();
+    private static List<CourseData> listCourseFourthYear = new ArrayList<>();
 
-    static List<CourseData> listCourseAll = new ArrayList<>();
+    private static List<CourseData> listCourseAll = new ArrayList<>();
 
 
+    private static TeacherData teacherProfileData ;
+    private static StudentData studentProfileData;
 
 
     private static final String TAG = "FirebaseUtility";
 
-    public static void saveTeacherDetails(){
+    public static void saveTeacherProfile(String teacherId){
+
+     //   teacherId = "-L9YZfr4aq4SLa7Uq2-a";
+        Query teacherDetailsQuery = ApplicationContext.getFirebaseDatabaseReference().child(FirebaseConstants.TEACHER_TABLE).orderByChild(FirebaseConstants.TEACHER_ID).equalTo(teacherId);
+        teacherDetailsQuery.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                TeacherData teacherData = null;
+                //_______________________________ check if server return null _________________________________
+                if (dataSnapshot.exists()) {
+                    //getting the data at specific node which is selected by input Restaurant name
+                    for (DataSnapshot child : dataSnapshot.getChildren()) {
+                        teacherData = child.getValue(TeacherData.class);
+                        saveTeacherProfile(teacherData);
+                    }
+                    String name = teacherData.getName();
+                    Log.i(TAG, "onDataChange: name from id is:  "+name);
+                } else {
+                    Log.i(TAG, " name does'nt exists!");
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
 
     }
 
-    public static void saveStudentDetails(){
+    public static void saveTeacherProfile(TeacherData teacherData){
+        teacherProfileData = teacherData;
+    }
 
+    public static void saveStudentProfile(String studentId){
+//   teacherId = "-L9YZfr4aq4SLa7Uq2-a";
+        Query studentDetailsQuery = ApplicationContext.getFirebaseDatabaseReference().child(FirebaseConstants.STUDENT_TABLE).orderByChild(FirebaseConstants.STUDENT_ID).equalTo(studentId);
+        studentDetailsQuery.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                StudentData studentData = null;
+                //_______________________________ check if server return null _________________________________
+                if (dataSnapshot.exists()) {
+                    //getting the data at specific node which is selected by input Restaurant name
+                    for (DataSnapshot child : dataSnapshot.getChildren()) {
+                        studentData = child.getValue(StudentData.class);
+                        saveStudentProfile(studentData);
+
+                    }
+                    String name = studentData.getName();
+                    Log.i(TAG, "onDataChange: name from id is:  "+name);
+                } else {
+                    Log.i(TAG, " name does'nt exists!");
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+    }
+
+    public static void saveStudentProfile(StudentData studentData){
+        studentProfileData = studentData;
+    }
+
+    public static TeacherData getTeacherProfileData(){
+        return teacherProfileData;
+    }
+
+    public static StudentData getStudentProfileData(){
+        return studentProfileData;
     }
 
     public static List<CourseData> getCourses( String year ){
@@ -178,6 +252,60 @@ public class FirebaseUtility {
         }
     }
 
+    public static void updateAttendance(Context context, AttendanceData attendanceData,String year){
+        if(attendanceData!=null){
+            String attendanceId = attendanceData.getAttendanceId();
+            if(TextUtils.isEmpty(attendanceId)){
+                attendanceId = ApplicationContext.getFirebaseDatabaseReference().push().getKey();
+                attendanceData.setTeacherId(attendanceId);
+            }
+
+            ApplicationContext.getFirebaseDatabaseReference().child(FirebaseConstants.ATTENDANCE_TABLE+year).child(attendanceId)
+                    .setValue(attendanceData)
+                    .addOnCompleteListener(new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
+                            if (task.isSuccessful()) {
+                                Log.i(TAG, "onComplete: success ");
+                            } else {
+                                Log.i(TAG, "onComplete: fail");
+                            }
+                        }
+                    });
+        }
+    }
+
+    public static void updateCourse(Context context, CourseData courseData){
+        if(courseData!=null){
+            String courseId = courseData.getCourseId();
+            if(TextUtils.isEmpty(courseId)){
+                courseId = ApplicationContext.getFirebaseDatabaseReference().push().getKey();
+                courseData.setCourseId(courseId);
+            }
+
+            ApplicationContext.getFirebaseDatabaseReference().child(FirebaseConstants.COURSE_TABLE).child(courseId)
+                    .setValue(courseData)
+                    .addOnCompleteListener(new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
+                            if (task.isSuccessful()) {
+                                Log.i(TAG, "onComplete: success ");
+                            } else {
+                                Log.i(TAG, "onComplete: fail");
+                            }
+                        }
+                    });
+        }
+    }
+
+    public static List<AttendanceData> getAttendanceByYear(Context context,String year){
+
+        List<AttendanceData> listAttendance =  new ArrayList<>();
+
+
+        return listAttendance;
+    }
+
     public static String getYearFromSubjects(Context context, String subject){
         String year = "";
 
@@ -254,7 +382,7 @@ public class FirebaseUtility {
                 // A comment has changed, use the key to determine if we are displaying this
                 // comment and if so displayed the changed comment.
                 StudentData studentData = dataSnapshot.getValue(StudentData.class);
-                Log.i(TAG, "onChildChanged: "+studentData.getStudentName());
+                Log.i(TAG, "onChildChanged: "+studentData.getName());
             }
 
             @Override
@@ -363,15 +491,7 @@ public class FirebaseUtility {
 
     }
 
-    public interface FirebaseConstants{
-        String STUDENT_TABLE        = "Student-";
-        String TEACHER_TABLE        = "Teacher";
-        String FIRSTYEAR            = "1stYear";
-        String SECOND_YEAR          = "2ndYear";
-        String THIRD_YEAR           = "3rdYear";
-        String FOURTH_YEAR          = "4thYear";
 
-    }
     /**
      * This List will show TO Student Registration
      */
@@ -434,7 +554,7 @@ public class FirebaseUtility {
                 // A comment has changed, use the key to determine if we are displaying this
                 // comment and if so displayed the changed comment.
                 StudentData studentData = dataSnapshot.getValue(StudentData.class);
-                Log.i(TAG, "onChildChanged: "+studentData.getStudentName());
+                Log.i(TAG, "onChildChanged: "+studentData.getName());
             }
 
             @Override
@@ -503,7 +623,7 @@ public class FirebaseUtility {
                 // A comment has changed, use the key to determine if we are displaying this
                 // comment and if so displayed the changed comment.
                 StudentData studentData = dataSnapshot.getValue(StudentData.class);
-                Log.i(TAG, "onChildChanged: "+studentData.getStudentName());
+                Log.i(TAG, "onChildChanged: "+studentData.getName());
             }
 
             @Override
@@ -533,5 +653,23 @@ public class FirebaseUtility {
         ApplicationContext.getFirebaseDatabaseReference().addChildEventListener(childEventListener);
     }
 
+    public interface FirebaseConstants{
+        String STUDENT_TABLE        = "Student-";
+        String TEACHER_TABLE        = "Teacher";
+        String ATTENDANCE_TABLE     = "Attendance-";
+        String COURSE_TABLE         = "Course";
+        String FIRSTYEAR            = "1stYear";
+        String SECOND_YEAR          = "2ndYear";
+        String THIRD_YEAR           = "3rdYear";
+        String FOURTH_YEAR          = "4thYear";
 
+        // key constants in database
+        String STUDENT_ID              = "studentId";
+        String EMAILID                 = "emailId";
+        String NAME                    = "name";
+        String MOBILENUMBER            = "mobileNumber";
+        String PASSWORD                = "password";
+        String SUBJECT                 = "subject";
+        String TEACHER_ID               = "teacherId";
+    }
 }
