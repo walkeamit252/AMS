@@ -20,7 +20,7 @@ public class ApplicationContext extends Application {
     public ApplicationContext(Context mContext) {
         this.mContext = mContext;
         database = FirebaseDatabase.getInstance();
-        dbRef =  FirebaseDatabase.getInstance().getReference();
+
     }
 
     public Context getmContext() {
@@ -35,6 +35,9 @@ public class ApplicationContext extends Application {
         return database;
     }
     public static DatabaseReference getFirebaseDatabaseReference() {
+        if(dbRef==null) {
+            dbRef = FirebaseDatabase.getInstance().getReference();
+        }
         return dbRef;
     }
 

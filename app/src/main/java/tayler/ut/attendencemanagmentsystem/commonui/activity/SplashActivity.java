@@ -12,6 +12,7 @@ import com.google.firebase.auth.FirebaseAuth;
 
 import tayler.ut.attendencemanagmentsystem.R;
 import tayler.ut.attendencemanagmentsystem.model.student.StudentData;
+import tayler.ut.attendencemanagmentsystem.model.teacher.TeacherData;
 import tayler.ut.attendencemanagmentsystem.student.activity.StudentMenuActivity;
 import tayler.ut.attendencemanagmentsystem.teacher.activity.TeacherMenuActivity;
 import tayler.ut.attendencemanagmentsystem.utils.FirebaseUtility;
@@ -40,10 +41,15 @@ public class SplashActivity extends BaseActivity {
         initUI();
 
 
-      StudentData studentData = new StudentData("","Siba", FirebaseUtility.FirebaseConstants.FIRSTYEAR,"sp.dobest@gmail.com","1235");
-      //  FirebaseUtility.updateStudent(SplashActivity.this,studentData);
+//      StudentData studentData = new StudentData("","Siba","sp.dobest@gmail.com","9768235871", FirebaseUtility.FirebaseConstants.FIRSTYEAR,"123");
+//      FirebaseUtility.updateStudent(SplashActivity.this,studentData);
+//
+//        TeacherData teacherData = new TeacherData("","SibaM","sp.dobest@gmail.com","9768235871", "","123");
+//        FirebaseUtility.updateTeacher(SplashActivity.this,teacherData);
 
-        FirebaseUtility.getStudentByYear(FirebaseUtility.FirebaseConstants.FIRSTYEAR);
+        FirebaseUtility.saveTeacherProfile("");
+
+    //    FirebaseUtility.getStudentByYear(FirebaseUtility.FirebaseConstants.FIRSTYEAR);
 
        // moveToNextScreen();
     }

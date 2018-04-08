@@ -9,14 +9,15 @@ import android.os.Parcelable;
 
 public class StudentData implements Parcelable{
     String studentId;
-    String studentName;
+    String name;
 
-    public StudentData(String studentId, String studentName, String year, String emailId, String mobileNumber) {
+    public StudentData(String studentId, String name, String emailId, String mobileNumber, String year, String password) {
         this.studentId = studentId;
-        this.studentName = studentName;
-        this.year = year;
+        this.name = name;
         this.emailId = emailId;
         this.mobileNumber = mobileNumber;
+        this.year = year;
+        this.password = password;
     }
 
     public String getStudentId() {
@@ -27,20 +28,12 @@ public class StudentData implements Parcelable{
         this.studentId = studentId;
     }
 
-    public String getStudentName() {
-        return studentName;
+    public String getName() {
+        return name;
     }
 
-    public void setStudentName(String studentName) {
-        this.studentName = studentName;
-    }
-
-    public String getYear() {
-        return year;
-    }
-
-    public void setYear(String year) {
-        this.year = year;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getEmailId() {
@@ -59,9 +52,27 @@ public class StudentData implements Parcelable{
         this.mobileNumber = mobileNumber;
     }
 
-    String year;
+    public String getYear() {
+        return year;
+    }
+
+    public void setYear(String year) {
+        this.year = year;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
     String emailId;
     String mobileNumber;
+    String year;
+    String password;
+
 
     @Override
     public int describeContents() {
@@ -71,18 +82,23 @@ public class StudentData implements Parcelable{
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(this.studentId);
-        dest.writeString(this.studentName);
-        dest.writeString(this.year);
+        dest.writeString(this.name);
         dest.writeString(this.emailId);
         dest.writeString(this.mobileNumber);
+        dest.writeString(this.year);
+        dest.writeString(this.password);
+    }
+
+    public StudentData() {
     }
 
     protected StudentData(Parcel in) {
         this.studentId = in.readString();
-        this.studentName = in.readString();
-        this.year = in.readString();
+        this.name = in.readString();
         this.emailId = in.readString();
         this.mobileNumber = in.readString();
+        this.year = in.readString();
+        this.password = in.readString();
     }
 
     public static final Creator<StudentData> CREATOR = new Creator<StudentData>() {
