@@ -166,7 +166,6 @@ public class FirebaseUtility {
                              listStudents3rdYear.add(studentData);
                         case FirebaseConstants.FOURTH_YEAR :
                              listStudents4thYear.add(studentData);
-
                     }
                 }
 
