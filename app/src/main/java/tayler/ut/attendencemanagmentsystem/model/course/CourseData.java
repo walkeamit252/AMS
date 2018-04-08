@@ -26,6 +26,10 @@ public class CourseData implements Parcelable {
         this.totalStudents = totalStudents;
     }
 
+    public CourseData(){
+
+    }
+
 
     public String getCourseId() {
         return courseId;
@@ -112,4 +116,7 @@ public class CourseData implements Parcelable {
             return new CourseData[size];
         }
     };
+
+
+
 }

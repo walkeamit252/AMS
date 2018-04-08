@@ -517,10 +517,17 @@ public class FirebaseUtility {
                 for (Map.Entry mapEntry : hashMapObject.entrySet()) {
                     System.out.println("Key: " + mapEntry.getKey() + " & Value: " + mapEntry.getValue());
 
-                    Log.i(TAG, "onChildAdded: " + mapEntry.getValue().toString());
+                    Log.i(TAG, "onChildAdded THIS IS ACTUAL VALU: " + mapEntry.getValue().toString());
+
+                    //CourseData courseData= (CourseData) mapEntry.getValue();
 
                     Gson g = new Gson();
-                    CourseData courseData = g.fromJson(mapEntry.getValue().toString(), CourseData.class);
+
+                    String object=g.toJson(mapEntry.getValue());
+
+                    Log.i(TAG, "\nonChildAdded THIS IS ACTUAL VALU: " + object);
+
+                    CourseData courseData = g.fromJson(object, CourseData.class);
 
 
                     if (courseData != null && !TextUtils.isEmpty(courseData.getCourseYear())) {

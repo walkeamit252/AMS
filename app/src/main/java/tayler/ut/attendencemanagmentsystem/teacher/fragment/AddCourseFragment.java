@@ -180,7 +180,9 @@ public class AddCourseFragment extends Fragment implements View.OnClickListener,
         tvSecond.setSelected(false);
         tvThird.setSelected(false);
         tvFourth.setSelected(false);
-        listData= (ArrayList<CourseData>) FirebaseUtility.getCourses(FirebaseUtility.FirebaseConstants.FIRSTYEAR);
+        listData.clear();
+        listData.addAll(FirebaseUtility.getCourses(FirebaseUtility.FirebaseConstants.FIRSTYEAR));
+     //   listData= (ArrayList<CourseData>) FirebaseUtility.getCourses(FirebaseUtility.FirebaseConstants.FIRSTYEAR);
         mCourseListAdapter.notifyDataSetChanged();
     }
 
@@ -190,7 +192,8 @@ public class AddCourseFragment extends Fragment implements View.OnClickListener,
         tvSecond.setSelected(true);
         tvThird.setSelected(false);
         tvFourth.setSelected(false);
-        listData= (ArrayList<CourseData>) FirebaseUtility.getCourses(FirebaseUtility.FirebaseConstants.SECOND_YEAR);
+        listData.clear();
+        listData.addAll(FirebaseUtility.getCourses(FirebaseUtility.FirebaseConstants.SECOND_YEAR));
         mCourseListAdapter.notifyDataSetChanged();
     }
 
@@ -200,7 +203,8 @@ public class AddCourseFragment extends Fragment implements View.OnClickListener,
         tvSecond.setSelected(false);
         tvThird.setSelected(true);
         tvFourth.setSelected(false);
-        listData= (ArrayList<CourseData>) FirebaseUtility.getCourses(FirebaseUtility.FirebaseConstants.THIRD_YEAR);
+        listData.clear();
+        listData.addAll(FirebaseUtility.getCourses(FirebaseUtility.FirebaseConstants.THIRD_YEAR));
         mCourseListAdapter.notifyDataSetChanged();
     }
 
@@ -210,7 +214,8 @@ public class AddCourseFragment extends Fragment implements View.OnClickListener,
         tvSecond.setSelected(false);
         tvThird.setSelected(false);
         tvFourth.setSelected(true);
-        listData= (ArrayList<CourseData>) FirebaseUtility.getCourses(FirebaseUtility.FirebaseConstants.FIRSTYEAR);
+        listData.clear();
+        listData.addAll(FirebaseUtility.getCourses(FirebaseUtility.FirebaseConstants.FOURTH_YEAR));
         mCourseListAdapter.notifyDataSetChanged();
     }
 }

@@ -7,6 +7,8 @@ import android.content.Context;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import tayler.ut.attendencemanagmentsystem.utils.FirebaseUtility;
+
 public class ApplicationContext extends Application {
 
     public Context mContext;
@@ -17,9 +19,16 @@ public class ApplicationContext extends Application {
         super();
     }
 
+    @Override
+    public void onCreate() {
+        super.onCreate();
+        FirebaseUtility.getTotalCourses();
+    }
+
     public ApplicationContext(Context mContext) {
         this.mContext = mContext;
         database = FirebaseDatabase.getInstance();
+        FirebaseUtility.getTotalCourses();
 
     }
 
