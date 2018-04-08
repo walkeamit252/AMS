@@ -12,7 +12,6 @@ import android.util.Log;
 import com.google.firebase.auth.FirebaseAuth;
 
 import tayler.ut.attendencemanagmentsystem.R;
-import tayler.ut.attendencemanagmentsystem.model.course.CourseData;
 import tayler.ut.attendencemanagmentsystem.student.activity.StudentMenuActivity;
 import tayler.ut.attendencemanagmentsystem.teacher.activity.TeacherMenuActivity;
 import tayler.ut.attendencemanagmentsystem.utils.DateUtils;
@@ -67,6 +66,7 @@ public class SplashActivity extends BaseActivity {
 
                 if (auth.getCurrentUser() != null && isteacher ) {
                     startActivity(new Intent(SplashActivity.this, TeacherMenuActivity.class));
+                    FirebaseUtility.saveTeacherProfile(auth.getCurrentUser().getUid());
                     finish();
                 }
                 else if (auth.getCurrentUser() !=null && isStudent){

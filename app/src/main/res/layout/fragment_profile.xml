@@ -41,6 +41,7 @@
                 android:layout_marginTop="@dimen/dimen_16"
                 android:padding="@dimen/dimen_10"
                 android:textSize="@dimen/dimen_16"
+                android:textColor="@android:color/black"
                 />
 
             <View
@@ -59,6 +60,7 @@
                 android:layout_marginTop="@dimen/dimen_16"
                 android:padding="@dimen/dimen_10"
                 android:textSize="@dimen/dimen_16"
+                android:textColor="@android:color/black"
                 />
             <View
                 android:layout_width="match_parent"
@@ -75,6 +77,7 @@
                 android:layout_marginTop="@dimen/dimen_16"
                 android:padding="@dimen/dimen_10"
                 android:textSize="@dimen/dimen_16"
+                android:textColor="@android:color/black"
                 />
 
             <View
@@ -93,6 +96,7 @@
                 android:layout_marginTop="@dimen/dimen_16"
                 android:padding="@dimen/dimen_10"
                 android:textSize="@dimen/dimen_16"
+                android:textColor="@android:color/black"
                 />
 
 

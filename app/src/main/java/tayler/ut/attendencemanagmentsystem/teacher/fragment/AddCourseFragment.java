@@ -1,6 +1,7 @@
 package tayler.ut.attendencemanagmentsystem.teacher.fragment;
 
 import android.Manifest;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
@@ -45,19 +46,18 @@ public class AddCourseFragment extends Fragment implements View.OnClickListener,
     TextView tvFirst,tvSecond,tvThird,tvFourth;
     StorageReference mStorageReference;
     DatabaseReference mDatabaseReference;
-
     CourseListAdapter mCourseListAdapter;
     ArrayList<CourseData> listData=new ArrayList<>();
     RecyclerView.LayoutManager manager;
-
     CourseData courseDataAfterUpload;
 
-
+    private ProgressDialog progressDialog;
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_add_syllabus, container, false);
         //getting firebase objects
+        progressDialog = new ProgressDialog(getActivity());
         mStorageReference = FirebaseStorage.getInstance().getReference();
         mDatabaseReference = FirebaseDatabase.getInstance().getReference(Constants.DATABASE_PATH_UPLOADS);
         initView(view);
@@ -136,9 +136,7 @@ public class AddCourseFragment extends Fragment implements View.OnClickListener,
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-
         if (requestCode == Constants.PICK_PDF_CODE && resultCode == RESULT_OK && data != null && data.getData() != null) {
-
             if (data.getData() != null) {
                 uploadFile(data.getData());
             } else {
@@ -148,6 +146,8 @@ public class AddCourseFragment extends Fragment implements View.OnClickListener,
     }
 
     private void uploadFile(Uri data) {
+        progressDialog.setMessage("Please Wait...");
+        progressDialog.show();
 
         StorageReference sRef = mStorageReference.child(Constants.STORAGE_PATH_UPLOADS + System.currentTimeMillis() + ".pdf");
         sRef.putFile(data)
@@ -155,19 +155,21 @@ public class AddCourseFragment extends Fragment implements View.OnClickListener,
 
                     @Override
                     public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                        progressDialog.cancel();
                         String url = taskSnapshot.getDownloadUrl().toString();
                         if(courseDataAfterUpload!=null ) {
                             courseDataAfterUpload.setSyllabusFilePath(url);
                             FirebaseUtility.updateCourse(courseDataAfterUpload);
+                            FirebaseUtility.updateTeacherProfileData(courseDataAfterUpload.getCourseName());
                             Toast.makeText(getActivity(), "Success", Toast.LENGTH_LONG).show();
                         }
-                  //      UploadSyllabus upload = new UploadSyllabus(editTextFilename.getText().toString(), taskSnapshot.getDownloadUrl().toString());
-                  //      mDatabaseReference.child(mDatabaseReference.push().getKey()).setValue(upload);
+
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception exception) {
+                        progressDialog.cancel();
                         Toast.makeText(getActivity(), exception.getMessage(), Toast.LENGTH_LONG).show();
                     }
                 })
@@ -175,6 +177,7 @@ public class AddCourseFragment extends Fragment implements View.OnClickListener,
                     @SuppressWarnings("VisibleForTests")
                     @Override
                     public void onProgress(UploadTask.TaskSnapshot taskSnapshot) {
+                        progressDialog.cancel();
                         double progress = (100.0 * taskSnapshot.getBytesTransferred()) / taskSnapshot.getTotalByteCount();
 
                     }

@@ -62,7 +62,7 @@ public class FirebaseUtility {
 
     public static void saveTeacherProfile(String teacherId){
 
-       teacherId = "-L9YZfr4aq4SLa7Uq2-a";
+        // teacherId = "-L9YZfr4aq4SLa7Uq2-a";
         Query teacherDetailsQuery = ApplicationContext.getFirebaseDatabaseReference().child(FirebaseConstants.TEACHER_TABLE).orderByChild(FirebaseConstants.TEACHER_ID).equalTo(teacherId);
         teacherDetailsQuery.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -182,12 +182,16 @@ public class FirebaseUtility {
         switch (year){
             case FirebaseConstants.FIRSTYEAR :
                 return listAttendanceFirstYear;
+
             case FirebaseConstants.SECOND_YEAR :
                 return listAttendanceSecondYear;
+
             case FirebaseConstants.THIRD_YEAR :
                 return listAttendance3rdYear;
+
             case FirebaseConstants.FOURTH_YEAR :
                 return listAttendance4thYear;
+
         }
         return null;
     }
@@ -341,12 +345,16 @@ public class FirebaseUtility {
         switch (year){
             case FirebaseConstants.FIRSTYEAR :
                 listStudentsFirstYear.clear();
+                break;
             case FirebaseConstants.SECOND_YEAR :
                 listStudentsSecondYear.clear();
+                break;
             case FirebaseConstants.THIRD_YEAR :
                 listStudents3rdYear.clear();
+                break;
             case FirebaseConstants.FOURTH_YEAR :
                 listStudents4thYear.clear();
+                break;
 
         }
 
@@ -365,12 +373,16 @@ public class FirebaseUtility {
                     switch (year){
                         case FirebaseConstants.FIRSTYEAR :
                             listStudentsFirstYear.add(studentData);
+                            break;
                         case FirebaseConstants.SECOND_YEAR :
                              listStudentsSecondYear.add(studentData);
+                            break;
                         case FirebaseConstants.THIRD_YEAR :
                              listStudents3rdYear.add(studentData);
+                            break;
                         case FirebaseConstants.FOURTH_YEAR :
                              listStudents4thYear.add(studentData);
+                            break;
                     }
                 }
 
@@ -527,12 +539,16 @@ public class FirebaseUtility {
                         switch (courseData.getCourseYear()) {
                             case FirebaseConstants.FIRSTYEAR:
                                 listCourseFirstYear.add(courseData);
+                                break;
                             case FirebaseConstants.SECOND_YEAR:
                                 listCourseSecondYear.add(courseData);
+                                break;
                             case FirebaseConstants.THIRD_YEAR:
                                 listCourse3rdYear.add(courseData);
+                                break;
                             case FirebaseConstants.FOURTH_YEAR:
                                 listCourseFourthYear.add(courseData);
+                                break;
                         }
                     }
                 }
@@ -597,12 +613,16 @@ public class FirebaseUtility {
                     switch (year){
                         case FirebaseConstants.FIRSTYEAR :
                             listAttendanceFirstYear.add(attendanceData);
+                            break;
                         case FirebaseConstants.SECOND_YEAR :
                             listAttendanceSecondYear.add(attendanceData);
+                            break;
                         case FirebaseConstants.THIRD_YEAR :
                             listAttendance3rdYear.add(attendanceData);
+                            break;
                         case FirebaseConstants.FOURTH_YEAR :
                             listAttendance4thYear.add(attendanceData);
+                            break;
                     }
                 }
 

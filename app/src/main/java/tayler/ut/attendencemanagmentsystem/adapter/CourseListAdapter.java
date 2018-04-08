@@ -54,6 +54,7 @@ public class CourseListAdapter extends RecyclerView.Adapter<CourseListAdapter.Vi
                           mClickListener.onUploadFileClick(listData.get(position));
                     }
                 });
+                holder.textViewUpload.setTextColor(ContextCompat.getColor(context, android.R.color.holo_green_dark));
             }
             else{
                 holder.textViewUpload.setText("File Uploaded");

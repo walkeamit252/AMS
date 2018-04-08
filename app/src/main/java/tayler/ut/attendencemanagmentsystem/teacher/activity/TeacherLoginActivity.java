@@ -104,16 +104,8 @@ public class TeacherLoginActivity extends BaseActivity {
                 .addOnCompleteListener(TeacherLoginActivity.this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
-                        // If sign in fails, display a message to the user. If sign in succeeds
-                        // the auth state listener will be notified and logic to handle the
-                        // signed in user can be handled in the listener.
                         if (!task.isSuccessful()) {
 
-
-
-
-
-                            // there was an error
                             Toast.makeText(TeacherLoginActivity.this, getString(R.string.invalid_login), Toast.LENGTH_LONG).show();
                             progressDialog.dismiss();
                         } else {

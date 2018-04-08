@@ -30,6 +30,7 @@ public class ApplicationContext extends Application {
         database = FirebaseDatabase.getInstance();
         FirebaseUtility.getTotalCourses();
 
+
     }
 
     public static Context getContext() {

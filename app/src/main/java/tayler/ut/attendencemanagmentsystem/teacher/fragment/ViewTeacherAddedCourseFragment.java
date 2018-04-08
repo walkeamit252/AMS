@@ -1,6 +1,7 @@
 package tayler.ut.attendencemanagmentsystem.teacher.fragment;
 
 
+import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -14,13 +15,11 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import tayler.ut.attendencemanagmentsystem.R;
 import tayler.ut.attendencemanagmentsystem.model.course.CourseData;
 import tayler.ut.attendencemanagmentsystem.teacher.adapter.TeacherAddedCoursesAdapter;
 import tayler.ut.attendencemanagmentsystem.utils.Constants;
-import tayler.ut.attendencemanagmentsystem.utils.FirebaseUtility;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -32,6 +31,7 @@ public class ViewTeacherAddedCourseFragment extends Fragment implements TeacherA
     RecyclerView.LayoutManager manager;
     TeacherAddedCoursesAdapter mAdapter;
     ArrayList<CourseData> listData;
+    private ProgressDialog progressDialog;
 
     public ViewTeacherAddedCourseFragment() {
         // Required empty public constructor
@@ -48,6 +48,7 @@ public class ViewTeacherAddedCourseFragment extends Fragment implements TeacherA
     public void onViewCreated(@NonNull View view,
                               @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        progressDialog = new ProgressDialog(getActivity());
         mRecyclerViewAddedSubjectList=view.findViewById(R.id.mRecyclerViewAddedSubjectList);
         txtNoDataFound=view.findViewById(R.id.txtNoDataFound);
         setRecyclerView();
@@ -57,7 +58,6 @@ public class ViewTeacherAddedCourseFragment extends Fragment implements TeacherA
         manager=new LinearLayoutManager(getActivity());
         listData=new ArrayList<>();
         mAdapter=new TeacherAddedCoursesAdapter(getActivity(),listData,this);
-
         mRecyclerViewAddedSubjectList.setLayoutManager(manager);
         mRecyclerViewAddedSubjectList.setAdapter(mAdapter);
     }
