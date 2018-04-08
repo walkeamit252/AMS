@@ -3,31 +3,23 @@ package tayler.ut.attendencemanagmentsystem.utils;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.text.TextUtils;
-import android.util.JsonReader;
 import android.util.Log;
-import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.ValueEventListener;
 import com.google.gson.Gson;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
 
-import org.json.JSONArray;
-import org.json.JSONObject;
 import org.w3c.dom.Comment;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-import tayler.ut.attendencemanagmentsystem.app.AMSApplication;
+import tayler.ut.attendencemanagmentsystem.app.ApplicationContext;
 import tayler.ut.attendencemanagmentsystem.model.attendance.AttendanceData;
 import tayler.ut.attendencemanagmentsystem.model.course.CourseData;
 import tayler.ut.attendencemanagmentsystem.model.student.StudentData;
@@ -137,11 +129,11 @@ public class FirebaseUtility {
         if(studentData!=null){
             String userId = studentData.getStudentId();
             if(TextUtils.isEmpty(studentData.getStudentId())){
-                userId = AMSApplication.getFirebaseReference().push().getKey();
+                userId = ApplicationContext.getFirebaseDatabaseReference().push().getKey();
                 studentData.setStudentId(userId);
             }
 
-            AMSApplication.getFirebaseReference().child(FirebaseConstants.STUDENT_TABLE+studentData.getYear()).child(userId)
+            ApplicationContext.getFirebaseDatabaseReference().child(FirebaseConstants.STUDENT_TABLE+studentData.getYear()).child(userId)
                     .setValue(studentData)
                     .addOnCompleteListener(new OnCompleteListener<Void>() {
                         @Override
@@ -167,11 +159,11 @@ public class FirebaseUtility {
         if(teacherData!=null){
             String userId = teacherData.getTeacherId();
             if(TextUtils.isEmpty(userId)){
-                userId = AMSApplication.getFirebaseReference().push().getKey();
+                userId = ApplicationContext.getFirebaseDatabaseReference().push().getKey();
                 teacherData.setTeacherId(userId);
             }
 
-            AMSApplication.getFirebaseReference().child(FirebaseConstants.TEACHER_TABLE).child(userId)
+            ApplicationContext.getFirebaseDatabaseReference().child(FirebaseConstants.TEACHER_TABLE).child(userId)
                     .setValue(teacherData)
                     .addOnCompleteListener(new OnCompleteListener<Void>() {
                         @Override
@@ -289,11 +281,11 @@ public class FirebaseUtility {
 
             }
         };
-        AMSApplication.getFirebaseReference().addChildEventListener(childEventListener);
+        ApplicationContext.getFirebaseDatabaseReference().addChildEventListener(childEventListener);
 
 
 
-       /*AMSApplication.getFirebaseReference().child(FirebaseConstants.STUDENT_TABLE+year).orderByChild("year")
+       /*ApplicationContext.getFirebaseDatabaseReference().child(FirebaseConstants.STUDENT_TABLE+year).orderByChild("year")
                 .equalTo(year).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -350,11 +342,11 @@ public class FirebaseUtility {
             public void onCancelled(DatabaseError databaseError) {
             }
         };
-        AMSApplication.getFirebaseReference().addChildEventListener(childEventListener);
+        ApplicationContext.getFirebaseDatabaseReference().addChildEventListener(childEventListener);
 
 
 
-       /*AMSApplication.getFirebaseReference().child(FirebaseConstants.STUDENT_TABLE+year).orderByChild("year")
+       /*ApplicationContext.getFirebaseDatabaseReference().child(FirebaseConstants.STUDENT_TABLE+year).orderByChild("year")
                 .equalTo(year).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -469,7 +461,7 @@ public class FirebaseUtility {
 
             }
         };
-        AMSApplication.getFirebaseReference().addChildEventListener(childEventListener);
+        ApplicationContext.getFirebaseDatabaseReference().addChildEventListener(childEventListener);
     }
 
 
@@ -538,7 +530,7 @@ public class FirebaseUtility {
 
             }
         };
-        AMSApplication.getFirebaseReference().addChildEventListener(childEventListener);
+        ApplicationContext.getFirebaseDatabaseReference().addChildEventListener(childEventListener);
     }
 
 
