@@ -94,6 +94,18 @@ public class FirebaseUtility {
         teacherProfileData = teacherData;
     }
 
+
+    public static void updateTeacherProfileData(String subjects){
+        if(teacherProfileData!=null){
+            String mySubjects = teacherProfileData.getSubjects();
+            mySubjects = mySubjects+","+subjects;
+            teacherProfileData.setSubjects(mySubjects);
+
+            saveTeacherProfile(teacherProfileData);
+        }
+    }
+
+
     public static void saveStudentProfile(String studentId){
 //   teacherId = "-L9YZfr4aq4SLa7Uq2-a";
         Query studentDetailsQuery = ApplicationContext.getFirebaseDatabaseReference().child(FirebaseConstants.STUDENT_TABLE).orderByChild(FirebaseConstants.STUDENT_ID).equalTo(studentId);
