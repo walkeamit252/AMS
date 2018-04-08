@@ -22,7 +22,6 @@ import java.util.List;
 import java.util.Map;
 
 import tayler.ut.attendencemanagmentsystem.app.ApplicationContext;
-import tayler.ut.attendencemanagmentsystem.commonui.activity.SplashActivity;
 import tayler.ut.attendencemanagmentsystem.model.attendance.AttendanceData;
 import tayler.ut.attendencemanagmentsystem.model.course.CourseData;
 import tayler.ut.attendencemanagmentsystem.model.student.StudentData;
@@ -168,7 +167,6 @@ public class FirebaseUtility {
     }
 
     public static List<AttendanceData> getAttendanceByYears(String year){
-
         switch (year){
             case FirebaseConstants.FIRSTYEAR :
                 return listAttendanceFirstYear;
@@ -178,7 +176,6 @@ public class FirebaseUtility {
                 return listAttendance3rdYear;
             case FirebaseConstants.FOURTH_YEAR :
                 return listAttendance4thYear;
-
         }
         return null;
     }
@@ -187,7 +184,6 @@ public class FirebaseUtility {
     public static List<TeacherData> getTeacherList(){
         return listTeacher;
     }
-
 
 
     /**

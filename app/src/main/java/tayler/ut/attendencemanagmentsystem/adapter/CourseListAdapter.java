@@ -2,6 +2,7 @@ package tayler.ut.attendencemanagmentsystem.adapter;
 
 
 import android.content.Context;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
@@ -15,7 +16,6 @@ import tayler.ut.attendencemanagmentsystem.R;
 import tayler.ut.attendencemanagmentsystem.model.course.CourseData;
 
 public class CourseListAdapter extends RecyclerView.Adapter<CourseListAdapter.ViewHolder> {
-
     private ArrayList<CourseData> listData;
     private LayoutInflater mInflater;
     private ItemClickListener mClickListener;
@@ -26,6 +26,7 @@ public class CourseListAdapter extends RecyclerView.Adapter<CourseListAdapter.Vi
         this.mInflater = LayoutInflater.from(context);
         this.listData = data;
         this.mClickListener=mClickListener;
+        this.context=context;
     }
 
     // inflates the row layout from xml when needed
@@ -37,7 +38,7 @@ public class CourseListAdapter extends RecyclerView.Adapter<CourseListAdapter.Vi
 
     // binds the data to the TextView in each row
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
+    public void onBindViewHolder(ViewHolder holder, final int position) {
         CourseData courseData = listData.get(position);
         if(courseData!=null){
             holder.tvSubjectName.setText(courseData.getCourseName());
@@ -50,18 +51,15 @@ public class CourseListAdapter extends RecyclerView.Adapter<CourseListAdapter.Vi
                 holder.textViewUpload.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-
+                          mClickListener.onUploadFileClick(listData.get(position));
                     }
                 });
-
             }
             else{
                 holder.textViewUpload.setText("File Uploaded");
+                holder.textViewUpload.setTextColor(ContextCompat.getColor(context, R.color.button_color_pressed));
             }
         }
-
-
-
     }
 
     // total number of rows
@@ -69,7 +67,6 @@ public class CourseListAdapter extends RecyclerView.Adapter<CourseListAdapter.Vi
     public int getItemCount() {
         return listData.size();
     }
-
 
     // stores and recycles views as they are scrolled off screen
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
