@@ -29,11 +29,15 @@ import tayler.ut.attendencemanagmentsystem.app.ApplicationContext;
 import tayler.ut.attendencemanagmentsystem.R;
 import tayler.ut.attendencemanagmentsystem.adapter.AttendenceListAdapter;
 import tayler.ut.attendencemanagmentsystem.model.StudentListModel;
+import tayler.ut.attendencemanagmentsystem.model.attendance.AttendanceData;
 import tayler.ut.attendencemanagmentsystem.model.course.CourseData;
+import tayler.ut.attendencemanagmentsystem.model.student.StudentData;
 import tayler.ut.attendencemanagmentsystem.utils.Constants;
+import tayler.ut.attendencemanagmentsystem.utils.DateUtils;
+import tayler.ut.attendencemanagmentsystem.utils.FirebaseUtility;
 
 
-public class TakeAttendenceFragment extends Fragment implements AttendenceListAdapter.ItemClickListener {
+public class TakeAttendenceFragment extends Fragment implements AttendenceListAdapter.ItemClickListener, View.OnClickListener {
 
     private AttendenceListAdapter mListAdapter;
     private RecyclerView recyclerView;
@@ -42,10 +46,11 @@ public class TakeAttendenceFragment extends Fragment implements AttendenceListAd
 
     private DatabaseReference mDatabaseRefrence;
     private FirebaseDatabase database;
-    private ArrayList<StudentListModel> attendenceListModels = new ArrayList<>();
+    private ArrayList<AttendanceData> attendenceListModels = new ArrayList<>();
+    private ArrayList<StudentData> listStudent = new ArrayList<>();
 
     CourseData mCourseData;
-    ;
+
 
     private ProgressDialog progressDialog;
     private ApplicationContext mApplicationContext;
@@ -74,34 +79,23 @@ public class TakeAttendenceFragment extends Fragment implements AttendenceListAd
         progressDialog.setMessage("Fetching data..., Please Wait");
         progressDialog.show();
 
-        mDatabaseRefrence.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                Map<String, Object> objectMap = (HashMap<String, Object>) dataSnapshot.getValue();
-                for (Object obj : objectMap.values()) {
-                    if (obj instanceof Map) {
-                        Map<String, Object> mapObj = (Map<String, Object>) obj;
-                        StudentListModel match = new StudentListModel();
-                        match.setStudentName((String) mapObj.get("name"));
-                        match.setStudentNumber((String) mapObj.get("number"));
-                        attendenceListModels.add(match);
-                    }
-                }
-                progressDialog.dismiss();
-                mListAdapter.updateData(attendenceListModels);
-            }
+        listStudent.addAll(FirebaseUtility.getStudentListByYears(mCourseData.getCourseYear()));
+        for(StudentData studentData : listStudent){
+            AttendanceData attendanceData = new AttendanceData(
+                    "","",studentData.getName(),
+                    mCourseData.getTeacherName(),mCourseData.getCourseYear(),
+                    studentData.getEmailId(),studentData.getMobileNumber(),
+                    DateUtils.getCurrentDateForStudent(),false
+            );
 
-            @Override
-            public void onCancelled(DatabaseError error) {
-                // Failed to read value
-                progressDialog.dismiss();
-                Log.w("TAG", "Failed to read value.", error.toException());
-            }
-        });
+            attendenceListModels.add(attendanceData);
+        }
+        mListAdapter.notifyDataSetChanged();
     }
 
     private void initview(View view) {
         mButtonSave=(Button)view.findViewById(R.id.mButtonSave);
+        mButtonSave.setOnClickListener(this);
         mApplicationContext = new ApplicationContext(getActivity());
         database = ApplicationContext.getDatabase();
 
@@ -126,7 +120,28 @@ public class TakeAttendenceFragment extends Fragment implements AttendenceListAd
     @Override
 
     public void onItemClick(View view, int position) {
-        Toast.makeText(getActivity(), "You clicked " + mListAdapter.getItem(position) + " on row number " + position, Toast.LENGTH_SHORT).show();
+        Toast.makeText(getActivity(), "You clicked " + attendenceListModels.get(position) + " on row number " + position, Toast.LENGTH_SHORT).show();
 
+    }
+
+    @Override
+    public void onAbsentPresentClick(int position) {
+        AttendanceData attendanceData = attendenceListModels.get(position);
+        if(attendanceData.isPresent()){
+            attendanceData.setPresent(false);
+        }
+        else{
+            attendanceData.setPresent(true);
+        }
+        mListAdapter.notifyItemChanged(position);
+    }
+
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()){
+            case R.id.mButtonSave :
+
+                break;
+        }
     }
 }

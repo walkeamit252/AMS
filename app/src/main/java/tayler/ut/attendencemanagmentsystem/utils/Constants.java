@@ -11,4 +11,9 @@ public class Constants {
 
     public static final String USER_MODEL = "user_model";
     public static final String COURSE_DATA = "COURSE_DATA";
+
+    public interface BundelKays{
+        String COURSE_NAME = "courseName";
+    }
+
 }

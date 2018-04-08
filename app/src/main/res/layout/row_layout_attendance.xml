@@ -2,8 +2,19 @@
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:padding="@dimen/dimen_5"
+    android:layout_margin="@dimen/dimen_3"
+    >
 
+    <LinearLayout
+        android:id="@+id/llPresentAbsent"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_alignParentRight="true"
+        android:gravity="center"
+        >
     <Switch
         android:id="@+id/mSwitchAttendance"
         android:layout_width="wrap_content"
@@ -11,17 +22,40 @@
         android:layout_alignParentRight="true"
         android:gravity="center"
         android:layout_centerVertical="true"
-        android:layout_marginRight="@dimen/dimen_16"
         />
+
+        <TextView
+            android:id="@+id/textViewPresentOrAbsent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toLeftOf="@id/mSwitchAttendance"
+            android:text="Present"
+            android:textStyle="bold"
+            android:textSize="18sp"
+            android:layout_marginTop="5dp"
+            />
+
+    </LinearLayout>
 
     <TextView
         android:id="@+id/mTextViewStudentName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_toLeftOf="@id/mSwitchAttendance"
+        android:layout_toLeftOf="@id/llPresentAbsent"
         android:text="Amit Walke"
-        android:padding="@dimen/dimen_16"
+        android:layout_marginTop="5dp"
         android:textSize="18sp"
+        />
+
+    <TextView
+        android:id="@+id/textViewDate"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_toLeftOf="@id/llPresentAbsent"
+        android:text="Date"
+        android:layout_marginTop="5dp"
+        android:textSize="12sp"
+        android:layout_below="@+id/mTextViewStudentName"
         />
 
 

@@ -50,6 +50,8 @@ public class AddCourseFragment extends Fragment implements View.OnClickListener,
     ArrayList<CourseData> listData=new ArrayList<>();
     RecyclerView.LayoutManager manager;
 
+    CourseData courseDataAfterUpload;
+
 
 
     @Override
@@ -71,6 +73,10 @@ public class AddCourseFragment extends Fragment implements View.OnClickListener,
         tvFourth=view.findViewById(R.id.tvFourth);
         setRecyclerView();
         setFirstYearSubject();
+
+
+
+
     }
 
     private void setRecyclerView() {
@@ -149,6 +155,11 @@ public class AddCourseFragment extends Fragment implements View.OnClickListener,
 
                     @Override
                     public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                        String url = taskSnapshot.getDownloadUrl().toString();
+                        if(courseDataAfterUpload!=null ) {
+                            courseDataAfterUpload.setSyllabusFilePath(url);
+                            FirebaseUtility.updateCourse(courseDataAfterUpload);
+                        }
                   //      UploadSyllabus upload = new UploadSyllabus(editTextFilename.getText().toString(), taskSnapshot.getDownloadUrl().toString());
                   //      mDatabaseReference.child(mDatabaseReference.push().getKey()).setValue(upload);
                     }
@@ -172,6 +183,12 @@ public class AddCourseFragment extends Fragment implements View.OnClickListener,
     @Override
     public void onItemClick(View view, int position) {
 
+    }
+
+    @Override
+    public void onUploadFileClick(CourseData courseData) {
+        this.courseDataAfterUpload = courseData;
+        getPDF();
     }
 
     private void setFirstYearSubject()

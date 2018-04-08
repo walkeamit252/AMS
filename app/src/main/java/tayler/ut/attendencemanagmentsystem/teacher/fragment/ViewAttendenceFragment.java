@@ -29,6 +29,7 @@ import tayler.ut.attendencemanagmentsystem.app.ApplicationContext;
 import tayler.ut.attendencemanagmentsystem.R;
 import tayler.ut.attendencemanagmentsystem.adapter.AttendenceListAdapter;
 import tayler.ut.attendencemanagmentsystem.model.StudentListModel;
+import tayler.ut.attendencemanagmentsystem.model.attendance.AttendanceData;
 
 public class ViewAttendenceFragment extends Fragment implements AttendenceListAdapter.ItemClickListener {
 
@@ -38,7 +39,7 @@ public class ViewAttendenceFragment extends Fragment implements AttendenceListAd
 
     private DatabaseReference mDatabaseRefrence;
     private FirebaseDatabase database;
-    private ArrayList<StudentListModel> attendenceListModels = new ArrayList<>();;
+    private ArrayList<AttendanceData> attendenceListModels = new ArrayList<>();;
 
     private ProgressDialog progressDialog;
     private ApplicationContext mApplicationContext;
@@ -68,32 +69,9 @@ public class ViewAttendenceFragment extends Fragment implements AttendenceListAd
         progressDialog.setMessage("Fetching data..., Please Wait");
         progressDialog.show();
 
-        mDatabaseRefrence.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
 
 
-                Map<String, Object> objectMap = (HashMap<String, Object>) dataSnapshot.getValue();
-                for (Object obj : objectMap.values()) {
-                    if (obj instanceof Map) {
-                        Map<String, Object> mapObj = (Map<String, Object>) obj;
-                        StudentListModel match = new StudentListModel();
-                        match.setStudentName((String) mapObj.get("name"));
-                        match.setStudentNumber((String) mapObj.get("number"));
-                        attendenceListModels.add(match);
-                    }
-                }
-                progressDialog.dismiss();
-                mListAdapter.updateData(attendenceListModels);
-            }
 
-            @Override
-            public void onCancelled(DatabaseError error) {
-                // Failed to read value
-                progressDialog.dismiss();
-                Log.w("TAG", "Failed to read value.", error.toException());
-            }
-        });
     }
 
     private void initview(View view) {
@@ -122,7 +100,7 @@ public class ViewAttendenceFragment extends Fragment implements AttendenceListAd
     @Override
 
     public void onItemClick(View view, int position) {
-        Toast.makeText(getActivity(), "You clicked " + mListAdapter.getItem(position) + " on row number " + position, Toast.LENGTH_SHORT).show();
+        Toast.makeText(getActivity(), "You clicked " +    " on row number " + position, Toast.LENGTH_SHORT).show();
 
     }
 }

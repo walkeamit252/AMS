@@ -14,11 +14,13 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import tayler.ut.attendencemanagmentsystem.R;
 import tayler.ut.attendencemanagmentsystem.model.course.CourseData;
 import tayler.ut.attendencemanagmentsystem.teacher.adapter.TeacherAddedCoursesAdapter;
 import tayler.ut.attendencemanagmentsystem.utils.Constants;
+import tayler.ut.attendencemanagmentsystem.utils.FirebaseUtility;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -43,7 +45,8 @@ public class ViewTeacherAddedCourseFragment extends Fragment implements TeacherA
     }
 
     @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+    public void onViewCreated(@NonNull View view,
+                              @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         mRecyclerViewAddedSubjectList=view.findViewById(R.id.mRecyclerViewAddedSubjectList);
         txtNoDataFound=view.findViewById(R.id.txtNoDataFound);
@@ -57,6 +60,10 @@ public class ViewTeacherAddedCourseFragment extends Fragment implements TeacherA
 
         mRecyclerViewAddedSubjectList.setLayoutManager(manager);
         mRecyclerViewAddedSubjectList.setAdapter(mAdapter);
+    }
+
+    private void setCourseDatafromServer(){
+
     }
 
     @Override

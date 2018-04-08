@@ -42,13 +42,26 @@ public class CourseListAdapter extends RecyclerView.Adapter<CourseListAdapter.Vi
         if(courseData!=null){
             holder.tvSubjectName.setText(courseData.getCourseName());
             holder.tvYear.setText(courseData.getCourseYear());
-            if(TextUtils.isEmpty(courseData.getSyllabusFilePath())) {
+            if(TextUtils.isEmpty(courseData.getSyllabusFilePath()) ||
+                    (!TextUtils.isEmpty(courseData.getSyllabusFilePath()) &&
+                            courseData.getSyllabusFilePath().equalsIgnoreCase("-"))) {
                 holder.textViewUpload.setText("Upload File");
+
+                holder.textViewUpload.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+
+                    }
+                });
+
             }
             else{
                 holder.textViewUpload.setText("File Uploaded");
             }
         }
+
+
+
     }
 
     // total number of rows
@@ -81,5 +94,6 @@ public class CourseListAdapter extends RecyclerView.Adapter<CourseListAdapter.Vi
     // parent activity will implement this method to respond to click events
     public interface ItemClickListener {
         void onItemClick(View view, int position);
+        void onUploadFileClick(CourseData courseData);
     }
 }

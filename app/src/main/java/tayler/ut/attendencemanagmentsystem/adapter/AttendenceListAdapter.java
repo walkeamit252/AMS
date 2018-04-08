@@ -2,10 +2,12 @@ package tayler.ut.attendencemanagmentsystem.adapter;
 
 
 import android.content.Context;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.Switch;
 import android.widget.TextView;
 
@@ -13,17 +15,19 @@ import java.util.ArrayList;
 
 import tayler.ut.attendencemanagmentsystem.R;
 import tayler.ut.attendencemanagmentsystem.model.StudentListModel;
+import tayler.ut.attendencemanagmentsystem.model.attendance.AttendanceData;
+import tayler.ut.attendencemanagmentsystem.model.student.StudentData;
 
 public class AttendenceListAdapter extends RecyclerView.Adapter<AttendenceListAdapter.ViewHolder> {
 
-    private ArrayList<StudentListModel> mData;
+    private ArrayList<AttendanceData> mData;
     private LayoutInflater mInflater;
     private ItemClickListener mClickListener;
     private Context context;
     private String activityName;
 
     // data is passed into the constructor
-    public AttendenceListAdapter(Context context, ArrayList<StudentListModel> data, String activityName) {
+    public AttendenceListAdapter(Context context, ArrayList<AttendanceData> data, String activityName) {
         this.mInflater = LayoutInflater.from(context);
         this.mData = data;
         this.context = context;
@@ -39,8 +43,31 @@ public class AttendenceListAdapter extends RecyclerView.Adapter<AttendenceListAd
 
     // binds the data to the TextView in each row
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
-        holder.mtxtName.setText("Name: " + "" + mData.get(position).getStudentName());
+    public void onBindViewHolder(ViewHolder holder, final int position) {
+        AttendanceData attendanceData = mData.get(position);
+        holder.mTextViewStudentName.setText("Name : " + "" + mData.get(position).getStudentName());
+        holder.textViewDate.setText("Date : " + "" + mData.get(position).getAttandanceDate());
+        holder.llPresentAbsent.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(mClickListener!=null){
+                    mClickListener.onAbsentPresentClick(position);
+                }
+            }
+        });
+
+        if(attendanceData.isPresent()){
+            holder.mSwitch.setChecked(true);
+            holder.textViewPresentOrAbsent.setText("Present");
+            holder.textViewPresentOrAbsent.setTextColor(ContextCompat.getColor(holder.textViewPresentOrAbsent.getContext(),
+                    R.color.menu_user_type_text_color));
+        }
+        else{
+            holder.mSwitch.setChecked(false);
+            holder.textViewPresentOrAbsent.setText("Absent");
+            holder.textViewPresentOrAbsent.setTextColor(ContextCompat.getColor(holder.textViewPresentOrAbsent.getContext(),
+                    R.color.button_color));
+        }
     }
 
     // total number of rows
@@ -53,12 +80,18 @@ public class AttendenceListAdapter extends RecyclerView.Adapter<AttendenceListAd
     // stores and recycles views as they are scrolled off screen
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
-        private TextView mtxtName;
+        private TextView mTextViewStudentName;
+        private TextView textViewPresentOrAbsent;
+        private TextView textViewDate;
+        private LinearLayout llPresentAbsent;
         private Switch mSwitch;
 
         ViewHolder(View itemView) {
             super(itemView);
-            mtxtName = itemView.findViewById(R.id.mTextViewStudentName);
+            mTextViewStudentName = itemView.findViewById(R.id.mTextViewStudentName);
+            textViewPresentOrAbsent = itemView.findViewById(R.id.textViewPresentOrAbsent);
+            textViewDate = itemView.findViewById(R.id.textViewDate);
+            llPresentAbsent = itemView.findViewById(R.id.llPresentAbsent);
             itemView.setOnClickListener(this);
         }
 
@@ -68,10 +101,6 @@ public class AttendenceListAdapter extends RecyclerView.Adapter<AttendenceListAd
         }
     }
 
-    // convenience method for getting data at click position
-    public String getItem(int id) {
-        return mData.get(id).getStudentName();
-    }
 
     // allows clicks events to be caught
     public void setClickListener(ItemClickListener itemClickListener) {
@@ -81,9 +110,10 @@ public class AttendenceListAdapter extends RecyclerView.Adapter<AttendenceListAd
     // parent activity will implement this method to respond to click events
     public interface ItemClickListener {
         void onItemClick(View view, int position);
+        void onAbsentPresentClick(int position);
     }
 
-    public void updateData(ArrayList<StudentListModel> data) {
+    public void updateData(ArrayList<AttendanceData> data) {
         this.mData = data;
         notifyDataSetChanged();
 

@@ -27,7 +27,9 @@ import com.google.gson.Gson;
 import tayler.ut.attendencemanagmentsystem.R;
 import tayler.ut.attendencemanagmentsystem.commonui.activity.BaseActivity;
 import tayler.ut.attendencemanagmentsystem.model.SignupModel;
+import tayler.ut.attendencemanagmentsystem.model.teacher.TeacherData;
 import tayler.ut.attendencemanagmentsystem.utils.Constants;
+import tayler.ut.attendencemanagmentsystem.utils.FirebaseUtility;
 
 public class TeacherSignupActivity extends BaseActivity {
 
@@ -154,6 +156,14 @@ public class TeacherSignupActivity extends BaseActivity {
     }
 
     private void writeNewUser(String userId, String name, String email, String number) {
+            TeacherData teacherData = new TeacherData(userId,
+                    name,
+                    email,
+                    number,
+                    "",
+                    etPassword.getText().toString().trim()
+            );
+            FirebaseUtility.updateTeacher(teacherData);
 
         SignupModel signupModel = new SignupModel(userId, name, email, number);
         signupModel.setUserid(userId);

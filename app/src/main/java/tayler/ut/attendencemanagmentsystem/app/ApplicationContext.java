@@ -11,7 +11,7 @@ import tayler.ut.attendencemanagmentsystem.utils.FirebaseUtility;
 
 public class ApplicationContext extends Application {
 
-    public Context mContext;
+    static Context mContext;
     private static FirebaseDatabase database;
     private static DatabaseReference dbRef ;
 
@@ -32,7 +32,7 @@ public class ApplicationContext extends Application {
 
     }
 
-    public Context getmContext() {
+    public static Context getContext() {
         return mContext;
     }
 

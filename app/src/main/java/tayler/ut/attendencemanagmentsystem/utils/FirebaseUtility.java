@@ -22,6 +22,7 @@ import java.util.List;
 import java.util.Map;
 
 import tayler.ut.attendencemanagmentsystem.app.ApplicationContext;
+import tayler.ut.attendencemanagmentsystem.commonui.activity.SplashActivity;
 import tayler.ut.attendencemanagmentsystem.model.attendance.AttendanceData;
 import tayler.ut.attendencemanagmentsystem.model.course.CourseData;
 import tayler.ut.attendencemanagmentsystem.model.student.StudentData;
@@ -192,10 +193,10 @@ public class FirebaseUtility {
     /**
      * Update Student Here
      *
-     * @param context
+     * @param
      * @param studentData
      */
-    public static void updateStudent(Context context, StudentData studentData){
+    public static void updateStudent(StudentData studentData){
 
         if(studentData!=null){
             String userId = studentData.getStudentId();
@@ -272,7 +273,7 @@ public class FirebaseUtility {
         }
     }
 
-    public static void updateCourse(Context context, CourseData courseData){
+    public static void updateCourse( CourseData courseData){
         if(courseData!=null){
             String courseId = courseData.getCourseId();
             if(TextUtils.isEmpty(courseId)){
@@ -497,6 +498,7 @@ public class FirebaseUtility {
                 listCourseSecondYear.clear();
                 listCourse3rdYear.clear();
                 listCourseFourthYear.clear();
+                listCourseAll.clear();
 
         ChildEventListener childEventListener = new ChildEventListener() {
             @Override
@@ -513,6 +515,7 @@ public class FirebaseUtility {
 
 
                     if (courseData != null && !TextUtils.isEmpty(courseData.getCourseYear())) {
+                        listCourseAll.add(courseData);
                         switch (courseData.getCourseYear()) {
                             case FirebaseConstants.FIRSTYEAR:
                                 listCourseFirstYear.add(courseData);
@@ -634,6 +637,18 @@ public class FirebaseUtility {
         ApplicationContext.getFirebaseDatabaseReference().addChildEventListener(childEventListener);
     }
 
+    public static String getYearFromCourseName(String courseName){
+        String year = "";
+        if(listCourseAll!=null && listCourseAll.size()>0 && !TextUtils.isEmpty(courseName)){
+            for(CourseData courseData : listCourseAll){
+                if(courseName.equalsIgnoreCase(courseData.getCourseName())){
+                    year = courseData.getCourseYear();
+                }
+            }
+        }
+        return year;
+    }
+
     public interface FirebaseConstants{
         String STUDENT_TABLE        = "Student-";
         String TEACHER_TABLE        = "Teacher";
@@ -653,4 +668,92 @@ public class FirebaseUtility {
         String SUBJECT                 = "subject";
         String TEACHER_ID              = "teacherId";
     }
+
+    /**
+     * THIS IS ONLY FOR TESTING
+     */
+
+    public static void setTestCourseData(){
+        int j = 0;
+        for(int i = 0;i<4;i++) {
+            CourseData courseData = new CourseData("", "Course "+(++j)+" "+ FirebaseUtility.FirebaseConstants.FIRSTYEAR,
+                    FirebaseUtility.FirebaseConstants.FIRSTYEAR, "-",
+                    "", "0");
+            FirebaseUtility.updateCourse(courseData);
+        }
+
+        int k = 0;
+        for(int i = 0;i<4;i++) {
+            CourseData courseData = new CourseData("", "Course "+(++k)+" "+
+                    FirebaseUtility.FirebaseConstants.SECOND_YEAR,
+                    FirebaseUtility.FirebaseConstants.SECOND_YEAR, "-",
+                    "", "0");
+            FirebaseUtility.updateCourse(courseData);
+        }
+
+        int l = 0;
+        for(int i = 0;i<4;i++) {
+            CourseData courseData = new CourseData("", "Course "+(++l)+" "+
+                    FirebaseUtility.FirebaseConstants.THIRD_YEAR,
+                    FirebaseUtility.FirebaseConstants.THIRD_YEAR, "-",
+                    "", "0");
+            FirebaseUtility.updateCourse(courseData);
+        }
+
+        int m = 0;
+        for(int i = 0;i<4;i++) {
+            CourseData courseData = new CourseData("", "Course "+(++m)+" "+
+                    FirebaseUtility.FirebaseConstants.FOURTH_YEAR,
+                    FirebaseUtility.FirebaseConstants.FOURTH_YEAR, "-",
+                    "", "0");
+            FirebaseUtility.updateCourse(courseData);
+        }
+    }
+
+    public static void setTestStudentsData(){
+        int j = 0;
+        for(int i = 0;i<10;i++) {
+            StudentData studentData = new StudentData("","Student1"+(++j)+" "+
+                    FirebaseUtility.FirebaseConstants.FIRSTYEAR,
+                    "student"+j+"@gmail.com",
+                    "1234567890",
+                    FirebaseUtility.FirebaseConstants.FIRSTYEAR,
+                    "-");
+            FirebaseUtility.updateStudent(studentData);
+        }
+
+        int k = 0;
+        for(int i = 0;i<10;i++) {
+            StudentData studentData = new StudentData("","Student1"+(++k)+" "+
+                    FirebaseConstants.SECOND_YEAR,
+                    "student"+k+"@gmail.com",
+                    "1234567890",
+                    FirebaseConstants.SECOND_YEAR,
+                    "-");
+            FirebaseUtility.updateStudent(studentData);
+        }
+
+        int l = 0;
+        for(int i = 0;i<10;i++) {
+            StudentData studentData = new StudentData("","Student1"+(++l)+" "+
+                    FirebaseConstants.THIRD_YEAR,
+                    "student"+l+"@gmail.com",
+                    "1234567890",
+                    FirebaseConstants.THIRD_YEAR,
+                    "-");
+            FirebaseUtility.updateStudent(studentData);
+        }
+
+        int m = 0;
+        for(int i = 0;i<10;i++) {
+            StudentData studentData = new StudentData("","Student1"+(++m)+" "+
+                    FirebaseConstants.FOURTH_YEAR,
+                    "student"+m+"@gmail.com",
+                    "1234567890",
+                    FirebaseUtility.FirebaseConstants.FOURTH_YEAR,
+                    "-");
+            FirebaseUtility.updateStudent(studentData);
+        }
+    }
+
 }

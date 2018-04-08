@@ -22,6 +22,7 @@ import com.google.firebase.database.DatabaseReference;
 
 import tayler.ut.attendencemanagmentsystem.R;
 import tayler.ut.attendencemanagmentsystem.commonui.activity.BaseActivity;
+import tayler.ut.attendencemanagmentsystem.utils.FirebaseUtility;
 
 public class TeacherLoginActivity extends BaseActivity {
 
@@ -107,10 +108,20 @@ public class TeacherLoginActivity extends BaseActivity {
                         // the auth state listener will be notified and logic to handle the
                         // signed in user can be handled in the listener.
                         if (!task.isSuccessful()) {
+
+
+
+
+
                             // there was an error
                             Toast.makeText(TeacherLoginActivity.this, getString(R.string.invalid_login), Toast.LENGTH_LONG).show();
                             progressDialog.dismiss();
                         } else {
+                            String teacherId  = task.getResult().getUser().getUid();
+                            if(!TextUtils.isEmpty(teacherId)) {
+                                FirebaseUtility.saveTeacherProfile(teacherId);
+                            }
+
                             prefs.edit().putBoolean("teacherlogin", true).commit();
                             Intent intent = new Intent(TeacherLoginActivity.this, TeacherMenuActivity.class);
                             startActivity(intent);
