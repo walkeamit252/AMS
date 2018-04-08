@@ -11,12 +11,11 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -29,25 +28,29 @@ import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
+import java.util.ArrayList;
+
 import tayler.ut.attendencemanagmentsystem.R;
-import tayler.ut.attendencemanagmentsystem.model.UploadSyllabus;
+import tayler.ut.attendencemanagmentsystem.adapter.CourseListAdapter;
+import tayler.ut.attendencemanagmentsystem.model.course.CourseData;
 import tayler.ut.attendencemanagmentsystem.utils.Constants;
+import tayler.ut.attendencemanagmentsystem.utils.FirebaseUtility;
 
 import static android.app.Activity.RESULT_OK;
 
 
-public class AddSubjectFragment extends Fragment {
-    @Nullable
+public class AddCourseFragment extends Fragment implements View.OnClickListener,CourseListAdapter.ItemClickListener{
 
-    private TextView textViewStatus;
-    private EditText editTextFilename;
-    private ProgressBar progressBar;
-
-    private Button btnUploadFile;
-
-    //the firebase objects for storage and database
+    RecyclerView mRecyclerViewAddSubject;
+    TextView tvFirst,tvSecond,tvThird,tvFourth;
     StorageReference mStorageReference;
     DatabaseReference mDatabaseReference;
+
+    CourseListAdapter mCourseListAdapter;
+    ArrayList<CourseData> listData=new ArrayList<>();
+    RecyclerView.LayoutManager manager;
+
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -55,32 +58,57 @@ public class AddSubjectFragment extends Fragment {
         //getting firebase objects
         mStorageReference = FirebaseStorage.getInstance().getReference();
         mDatabaseReference = FirebaseDatabase.getInstance().getReference(Constants.DATABASE_PATH_UPLOADS);
-
         initView(view);
         setListner();
         return view;
-
     }
 
     private void initView(View view) {
+        mRecyclerViewAddSubject=view.findViewById(R.id.mRecyclerViewAddSubject);
+        tvFirst=view.findViewById(R.id.tvFirst);
+        tvSecond=view.findViewById(R.id.tvSecond);
+        tvThird=view.findViewById(R.id.tvThird);
+        tvFourth=view.findViewById(R.id.tvFourth);
+        setRecyclerView();
+        setFirstYearSubject();
+    }
 
-        textViewStatus = (TextView) view.findViewById(R.id.textViewStatus);
-        editTextFilename = (EditText) view.findViewById(R.id.editTextFileName);
-        progressBar = (ProgressBar) view.findViewById(R.id.progressbar);
-        btnUploadFile = (Button) view.findViewById(R.id.btn_upload);
+    private void setRecyclerView() {
+        mCourseListAdapter=new CourseListAdapter(getActivity(),listData,this);
+        manager=new LinearLayoutManager(getActivity());
+        mRecyclerViewAddSubject.setLayoutManager(manager);
+        mRecyclerViewAddSubject.setAdapter(mCourseListAdapter);
     }
 
     private void setListner() {
-
-        btnUploadFile.setOnClickListener(new UploadButtonclickListner());
+        tvFirst.setOnClickListener(this);
+        tvSecond.setOnClickListener(this);
+        tvThird.setOnClickListener(this);
+        tvFourth.setOnClickListener(this);
     }
 
-    private class UploadButtonclickListner implements View.OnClickListener {
-        @Override
-        public void onClick(View view) {
-            getPDF();
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.tvFirst:
+                setFirstYearSubject();
+                break;
+            case R.id.tvSecond:
+                setSecondYearSubject();
+                break;
+            case R.id.tvThird:
+                setThirdYearSubject();
+                break;
+            case R.id.tvFourth:
+                setFourthYearSubject();
+                break;
         }
     }
+
+
+
+
+
 
     private void getPDF() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && ContextCompat.checkSelfPermission(getActivity(),
@@ -104,9 +132,8 @@ public class AddSubjectFragment extends Fragment {
         super.onActivityResult(requestCode, resultCode, data);
 
         if (requestCode == Constants.PICK_PDF_CODE && resultCode == RESULT_OK && data != null && data.getData() != null) {
-            //if a file is selected
+
             if (data.getData() != null) {
-                //uploading the file
                 uploadFile(data.getData());
             } else {
                 Toast.makeText(getActivity(), "No file chosen", Toast.LENGTH_SHORT).show();
@@ -116,18 +143,14 @@ public class AddSubjectFragment extends Fragment {
 
     private void uploadFile(Uri data) {
 
-        progressBar.setVisibility(View.VISIBLE);
         StorageReference sRef = mStorageReference.child(Constants.STORAGE_PATH_UPLOADS + System.currentTimeMillis() + ".pdf");
         sRef.putFile(data)
                 .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                    @SuppressWarnings("VisibleForTests")
+
                     @Override
                     public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                        progressBar.setVisibility(View.GONE);
-                        textViewStatus.setText(getString(R.string.syllabus_uploaded_successfully));
-                        editTextFilename.setText("");
-                        UploadSyllabus upload = new UploadSyllabus(editTextFilename.getText().toString(), taskSnapshot.getDownloadUrl().toString());
-                        mDatabaseReference.child(mDatabaseReference.push().getKey()).setValue(upload);
+                  //      UploadSyllabus upload = new UploadSyllabus(editTextFilename.getText().toString(), taskSnapshot.getDownloadUrl().toString());
+                  //      mDatabaseReference.child(mDatabaseReference.push().getKey()).setValue(upload);
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
@@ -141,8 +164,53 @@ public class AddSubjectFragment extends Fragment {
                     @Override
                     public void onProgress(UploadTask.TaskSnapshot taskSnapshot) {
                         double progress = (100.0 * taskSnapshot.getBytesTransferred()) / taskSnapshot.getTotalByteCount();
-                        textViewStatus.setText((int) progress + "% Uploading...");
+
                     }
                 });
+    }
+
+    @Override
+    public void onItemClick(View view, int position) {
+
+    }
+
+    private void setFirstYearSubject()
+    {
+        tvFirst.setSelected(true);
+        tvSecond.setSelected(false);
+        tvThird.setSelected(false);
+        tvFourth.setSelected(false);
+        listData= (ArrayList<CourseData>) FirebaseUtility.getCourses(FirebaseUtility.FirebaseConstants.FIRSTYEAR);
+        mCourseListAdapter.notifyDataSetChanged();
+    }
+
+    private void setSecondYearSubject()
+    {
+        tvFirst.setSelected(false);
+        tvSecond.setSelected(true);
+        tvThird.setSelected(false);
+        tvFourth.setSelected(false);
+        listData= (ArrayList<CourseData>) FirebaseUtility.getCourses(FirebaseUtility.FirebaseConstants.SECOND_YEAR);
+        mCourseListAdapter.notifyDataSetChanged();
+    }
+
+    private void setThirdYearSubject()
+    {
+        tvFirst.setSelected(false);
+        tvSecond.setSelected(false);
+        tvThird.setSelected(true);
+        tvFourth.setSelected(false);
+        listData= (ArrayList<CourseData>) FirebaseUtility.getCourses(FirebaseUtility.FirebaseConstants.THIRD_YEAR);
+        mCourseListAdapter.notifyDataSetChanged();
+    }
+
+    private void setFourthYearSubject()
+    {
+        tvFirst.setSelected(false);
+        tvSecond.setSelected(false);
+        tvThird.setSelected(false);
+        tvFourth.setSelected(true);
+        listData= (ArrayList<CourseData>) FirebaseUtility.getCourses(FirebaseUtility.FirebaseConstants.FIRSTYEAR);
+        mCourseListAdapter.notifyDataSetChanged();
     }
 }

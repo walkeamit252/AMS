@@ -29,6 +29,8 @@ import tayler.ut.attendencemanagmentsystem.app.ApplicationContext;
 import tayler.ut.attendencemanagmentsystem.R;
 import tayler.ut.attendencemanagmentsystem.adapter.AttendenceListAdapter;
 import tayler.ut.attendencemanagmentsystem.model.StudentListModel;
+import tayler.ut.attendencemanagmentsystem.model.course.CourseData;
+import tayler.ut.attendencemanagmentsystem.utils.Constants;
 
 
 public class TakeAttendenceFragment extends Fragment implements AttendenceListAdapter.ItemClickListener {
@@ -41,6 +43,8 @@ public class TakeAttendenceFragment extends Fragment implements AttendenceListAd
     private DatabaseReference mDatabaseRefrence;
     private FirebaseDatabase database;
     private ArrayList<StudentListModel> attendenceListModels = new ArrayList<>();
+
+    CourseData mCourseData;
     ;
 
     private ProgressDialog progressDialog;
@@ -52,16 +56,15 @@ public class TakeAttendenceFragment extends Fragment implements AttendenceListAd
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
         super.onCreateView(inflater, container, savedInstanceState);
-
         View view = inflater.inflate(R.layout.fragment_attendence_list, container, false);
-
+        Bundle bundle= getArguments();
+        mCourseData=bundle.getParcelable(Constants.COURSE_DATA);
         return view;
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
         initview(view);
         fetchAttendenceList();
     }

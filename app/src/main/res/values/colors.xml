@@ -6,4 +6,72 @@
     <color name="white">#FFFFFF</color>
     <color name="black">#000000</color>
     <color name="transparent_black">#66000000</color>
+
+
+
+    <color name="primary">#2196F3</color>
+    <color name="primaryDark">#1976D2</color>
+    <color name="accent">#96d1ff</color>
+    <color name="window_background">#F5F5F5</color>
+    <!--App colors-->
+    <color name="negative_button_color">#3d4246</color>
+    <color name="negative_button_color_pressed">#2a2e31</color>
+    <color name="negative_button_color_disabled">#777a7d</color>
+    <color name="color_white">#ffffff</color>
+    <color name="welcome_text_color">#4e4e4e</color>
+    <color name="hint_text_color">#9c9c9c</color>
+    <color name="button_color">#ed1c24</color>
+    <color name="button_color_pressed">#C70039</color>
+    <color name="button_color_disabled">#f18a8d</color>
+    <color name="forgot_password_text">#4083ff</color>
+    <color name="buttn_text_color">#ffffff</color>
+    <color name="button_color_log_in_with_fb">#25469b</color>
+    <color name="button_color_pressed_log_in_with_fb">#25469b</color>
+    <color name="button_color_disabled_log_in_with_fb">#25469b</color>
+    <color name="color_header">#ffffff</color>
+    <color name="header_text_color">#de292929</color>
+    <color name="text_color"> #4a4a4a</color>
+    <color name="background_color"> #f6f6f6</color>
+    <color name="registration_text_color">  #7c7c7c</color>
+    <color name="color_menu_option_bg_selected"> #f6f6f6</color>
+    <color name="color_menu_option_bg"> #565e63</color>
+    <color name="color_text_menu_item"> #ffffff</color>
+    <color name="color_text_selcted_menu_item"> #ed1c24</color>
+    <color name="menu_screen_bg_color"> #565e63</color>
+    <color name="menu_user_type_text_color"> #37fc8c</color>
+    <color name="color_home_bottom_bar"> #3d4246</color>
+    <color name="color_home_bottom_bar_text_color"> #ffffff</color>
+    <color name="color_black"> #000000</color>
+    <color name="seperator_color"> #dbdbdb</color>
+    <color name="driver_request_window_trip_id_label_color"> #a4a4a4</color>
+    <color name="driver_request_window_trip_id_text"> #4a4a4a</color>
+    <color name="passenger_rating_text_color"> #f7b400</color>
+    <color name="view_note_color"> #425ac2</color>
+    <color name="service_type_text_color"> #f5a623</color>
+    <color name="call_button_color"> #3CB371</color>
+    <color name="call_button_color_pressed"> #2E8B57</color>
+    <color name="call_button_color_disabled"> #00FF7F</color>
+    <color name="color_verification_note_bg"> #f6f6f6</color>
+    <color name="color_verification_note_bg_border"> #7c7c7c</color>
+    <color name="color_text_selcted_list_dialog_item">#ed1c24</color>
+    <color name="color_text_list_dialog_item">#4a4a4a</color>
+    <color name="cash_collect_page_text_color">#7c7c7c</color>
+    <color name="cash_collect_page_darker_background_color">#ececec</color>
+    <color name="cash_collect_page_values_text_color">#000000</color>
+    <color name="cash_collect_page_total_fare_color">#e4e4e4</color>
+    <color name="cash_collect_currency_text_color">#27ac60</color>
+    <color name="credit_note_reason_bg_color">#f3f3f3</color>
+    <color name="credit_note_reason_border_color">#d4d4d4</color>
+    <color name="my_booking_info_text">#3E3E3E</color>
+    <color name="jobs_bookings_tabs_bg_color">#ffffff</color>
+    <color name="jobs_bookings_tabs_bg_color_selected">#3d4246</color>
+    <color name="service_type_rental_text_color">#1d77ec</color>
+    <color name="text_color_black">#000000</color>
+    <color name="txt_dept_color">#9B9B9B</color>
+    <color name="resend_otp_text_color">#379a4a</color>
+    <color name="transperant_edit_text">#00000000</color>
+    <color name="disable_view_bg_color">#E8E8E8</color>
+
+
+
 </resources>

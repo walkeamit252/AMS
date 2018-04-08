@@ -43,4 +43,9 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="submit">Submit</string>
+    <string name="first_year">1st</string>
+    <string name="second_year">2nd</string>
+    <string name="third_year">3rd</string>
+    <string name="fourth_year">4th</string>
+    <string name="no_data_found">No Data Found</string>
 </resources>

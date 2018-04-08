@@ -1,5 +1,4 @@
-package tayler.ut.attendencemanagmentsystem.adapter;
-
+package tayler.ut.attendencemanagmentsystem.teacher.adapter;
 
 import android.content.Context;
 import android.support.v7.widget.AppCompatTextView;
@@ -14,7 +13,11 @@ import java.util.ArrayList;
 import tayler.ut.attendencemanagmentsystem.R;
 import tayler.ut.attendencemanagmentsystem.model.course.CourseData;
 
-public class CourseListAdapter extends RecyclerView.Adapter<CourseListAdapter.ViewHolder> {
+/**
+ * Created by amitwalke on 4/8/18.
+ */
+
+public class TeacherAddedCoursesAdapter extends RecyclerView.Adapter<TeacherAddedCoursesAdapter.ViewHolder> {
 
     private ArrayList<CourseData> listData;
     private LayoutInflater mInflater;
@@ -22,7 +25,7 @@ public class CourseListAdapter extends RecyclerView.Adapter<CourseListAdapter.Vi
     private Context context;
 
     // data is passed into the constructor
-    public CourseListAdapter(Context context, ArrayList<CourseData> data,ItemClickListener mClickListener) {
+    public TeacherAddedCoursesAdapter(Context context, ArrayList<CourseData> data,ItemClickListener mClickListener) {
         this.mInflater = LayoutInflater.from(context);
         this.listData = data;
         this.mClickListener=mClickListener;

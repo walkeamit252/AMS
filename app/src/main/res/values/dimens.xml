@@ -41,4 +41,95 @@
     <dimen name="dimen_39">39dp</dimen>
     <dimen name="dimen_40">40dp</dimen>
 
+
+    <!-- Default screen margins, per the Android Design guidelines. -->
+    <dimen name="standard_margin">16dp</dimen>
+    <dimen name="small_margin">8dp</dimen>
+    <dimen name="tiny_margin">4dp</dimen>
+    <dimen name="image_size">120dp</dimen>
+    <dimen name="card_margin">16dp</dimen>
+    <dimen name="fab_margin">16dp</dimen>
+    <dimen name="credit_note_passenger_signature_height">150dp</dimen>
+    <dimen name="add_note_view_height">100dp</dimen>
+    <dimen name="passenger_image_width_half_in_negative">-30dp</dimen>
+    <dimen name="vehicle_image_width_receipt">100dp</dimen>
+    <dimen name="vehicle_image_height_receipt">60dp</dimen>
+
+
+    <!--Text sizes-->
+    <dimen name="welcome_text_size">16.8dp</dimen>
+    <dimen name="login_credentials_size">14.4dp</dimen>
+    <dimen name="forgot_password_text_size">12dp</dimen>
+    <dimen name="new_user_text_size">13.4dp</dimen>
+    <dimen name="button_text_size">16.8dp</dimen>
+    <dimen name="common_display_text_size">13.4dp</dimen>
+    <dimen name="header_text_size">19.2dp</dimen>
+    <dimen name="menu_text_size">14dp</dimen>
+    <dimen name="home_botoom_bar_text_size">16dp</dimen>
+
+    <!--Text sizes-->
+    <dimen name="sp_10">10sp</dimen>
+    <dimen name="sp_11">11sp</dimen>
+    <dimen name="sp_12">12sp</dimen>
+    <dimen name="sp_13">13sp</dimen>
+    <dimen name="sp_14">14sp</dimen>
+    <dimen name="sp_15">15sp</dimen>
+    <dimen name="sp_16">16sp</dimen>
+    <dimen name="sp_17">17sp</dimen>
+    <dimen name="sp_18">18sp</dimen>
+    <dimen name="sp_19">19sp</dimen>
+    <dimen name="sp_20">20sp</dimen>
+    <dimen name="sp_21">21sp</dimen>
+    <dimen name="sp_22">22sp</dimen>
+    <dimen name="sp_23">23sp</dimen>
+    <dimen name="sp_24">24sp</dimen>
+    <dimen name="sp_25">25sp</dimen>
+
+
+
+    <!--Margins and Relative Distances-->
+    <dimen name="button_height">48dp</dimen>
+    <dimen name="navigation_bar_height">48dp</dimen>
+    <dimen name="passenger_image_width">60dp</dimen>
+    <dimen name="driver_image_width_height_trip_details_window">50dp</dimen>
+
+    <dimen name="dp_0">0dp</dimen>
+    <dimen name="dp_0.5">0.5dp</dimen>
+    <dimen name="dp_1">1dp</dimen>
+    <dimen name="dp_2">2dp</dimen>
+    <dimen name="dp_3">3dp</dimen>
+    <dimen name="dp_4">4dp</dimen>
+    <dimen name="dp_5">5dp</dimen>
+    <dimen name="dp_6">6dp</dimen>
+    <dimen name="dp_7">7dp</dimen>
+    <dimen name="dp_8">8dp</dimen>
+    <dimen name="dp_10">10dp</dimen>
+    <dimen name="dp_12">12dp</dimen>
+    <dimen name="dp_15">15dp</dimen>
+    <dimen name="dp_16">16dp</dimen>
+    <dimen name="dp_20">20dp</dimen>
+    <dimen name="dp_25">25dp</dimen>
+    <dimen name="dp_30">30dp</dimen>
+    <dimen name="dp_35">35dp</dimen>
+    <dimen name="dp_40">40dp</dimen>
+    <dimen name="dp_42">42dp</dimen>
+
+
+    <dimen name="dp_45">45dp</dimen>
+    <dimen name="dp_48">48dp</dimen>
+    <dimen name="dp_50">50dp</dimen>
+    <dimen name="dp_55">55dp</dimen>
+    <dimen name="dp_64">64dp</dimen>
+    <dimen name="dp_72">72dp</dimen>
+    <dimen name="dp_80">80dp</dimen>
+    <dimen name="dp_90">90dp</dimen>
+    <dimen name="dp_100">100dp</dimen>
+    <dimen name="dp_110">110dp</dimen>
+    <dimen name="dp_120">120dp</dimen>
+    <dimen name="dp_130">130dp</dimen>
+    <dimen name="dp_140">140dp</dimen>
+    <dimen name="dp_200">200dp</dimen>
+    <dimen name="dp_300">300dp</dimen>
+
+
 </resources>

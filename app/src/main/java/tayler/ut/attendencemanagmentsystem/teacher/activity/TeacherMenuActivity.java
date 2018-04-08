@@ -17,7 +17,7 @@ import com.google.firebase.auth.FirebaseAuth;
 
 import tayler.ut.attendencemanagmentsystem.R;
 import tayler.ut.attendencemanagmentsystem.commonui.activity.LoginOptionActivity;
-import tayler.ut.attendencemanagmentsystem.teacher.fragment.AddSubjectFragment;
+import tayler.ut.attendencemanagmentsystem.teacher.fragment.AddCourseFragment;
 import tayler.ut.attendencemanagmentsystem.teacher.fragment.ProfileFragment;
 import tayler.ut.attendencemanagmentsystem.teacher.fragment.TakeAttendenceFragment;
 
@@ -48,7 +48,7 @@ public class TeacherMenuActivity extends AppCompatActivity {
                                 selectedFragment = new TakeAttendenceFragment();
                                 break;
                             case R.id.nav_add_subject:
-                                selectedFragment = new AddSubjectFragment();
+                                selectedFragment = new AddCourseFragment();
                                 break;
                             case R.id.nav_view_profile:
                                 selectedFragment = new ProfileFragment();

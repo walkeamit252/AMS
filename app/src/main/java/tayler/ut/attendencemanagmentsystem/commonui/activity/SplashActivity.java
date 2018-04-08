@@ -11,12 +11,8 @@ import android.support.annotation.Nullable;
 import com.google.firebase.auth.FirebaseAuth;
 
 import tayler.ut.attendencemanagmentsystem.R;
-import tayler.ut.attendencemanagmentsystem.model.course.CourseData;
-import tayler.ut.attendencemanagmentsystem.model.student.StudentData;
-import tayler.ut.attendencemanagmentsystem.model.teacher.TeacherData;
 import tayler.ut.attendencemanagmentsystem.student.activity.StudentMenuActivity;
 import tayler.ut.attendencemanagmentsystem.teacher.activity.TeacherMenuActivity;
-import tayler.ut.attendencemanagmentsystem.utils.FirebaseUtility;
 
 public class SplashActivity extends BaseActivity {
 
@@ -78,7 +74,7 @@ public class SplashActivity extends BaseActivity {
         }*/
 
 
-       // moveToNextScreen();
+         moveToNextScreen();
     }
 
     private void initUI() {

@@ -7,9 +7,13 @@ import android.os.Parcelable;
  * Created by sibaprasad on 07/04/18.
  */
 
-public class CourseData implements Parcelable{
-String courseId;
-String courseName;
+public class CourseData implements Parcelable {
+    String courseId;
+    String courseName;
+    String courseYear;
+    String syllabusFilePath;
+    String teacherName;
+    String totalStudents;
 
     public CourseData(String courseId, String courseName,
                       String courseYear, String syllabusFilePath,
@@ -22,9 +26,6 @@ String courseName;
         this.totalStudents = totalStudents;
     }
 
-    String courseYear;
-String syllabusFilePath;
-String teacherName;
 
     public String getCourseId() {
         return courseId;
@@ -74,7 +75,7 @@ String teacherName;
         this.totalStudents = totalStudents;
     }
 
-    String totalStudents;
+
 
     @Override
     public int describeContents() {
