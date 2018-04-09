@@ -25,6 +25,8 @@ public class StudentMenuActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_student_menu);
+        bottomNavigationView = (BottomNavigationView)
+                findViewById(R.id.navigation);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         final ActionBar actionbar = getSupportActionBar();

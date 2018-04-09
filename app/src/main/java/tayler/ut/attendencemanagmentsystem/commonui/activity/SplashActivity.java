@@ -14,6 +14,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import tayler.ut.attendencemanagmentsystem.R;
 import tayler.ut.attendencemanagmentsystem.student.activity.StudentMenuActivity;
 import tayler.ut.attendencemanagmentsystem.teacher.activity.TeacherMenuActivity;
+import tayler.ut.attendencemanagmentsystem.utils.Constants;
 import tayler.ut.attendencemanagmentsystem.utils.DateUtils;
 import tayler.ut.attendencemanagmentsystem.utils.FirebaseUtility;
 
@@ -50,9 +51,8 @@ public class SplashActivity extends BaseActivity {
 
         mContext = getApplicationContext();
 
-        isStudent = prefs.getBoolean("studentlogin", false);
-
-        isteacher = prefs.getBoolean("teacherlogin", false);
+        isStudent = prefs.getBoolean(Constants.STUDENT_LOGIN_FLAG, false);
+        isteacher = prefs.getBoolean(Constants.TEACHER_LOGIN_FLAG, false);
     }
 
     private void moveToNextScreen() {
@@ -71,6 +71,7 @@ public class SplashActivity extends BaseActivity {
                 }
                 else if (auth.getCurrentUser() !=null && isStudent){
                     startActivity(new Intent(SplashActivity.this, StudentMenuActivity.class));
+                    FirebaseUtility.saveStudentProfile(auth.getCurrentUser().getUid());
                     finish();
                 }
                  else {

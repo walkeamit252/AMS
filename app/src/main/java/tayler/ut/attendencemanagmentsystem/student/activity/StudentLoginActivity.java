@@ -21,6 +21,7 @@ import com.google.firebase.auth.FirebaseAuth;
 
 import tayler.ut.attendencemanagmentsystem.R;
 import tayler.ut.attendencemanagmentsystem.commonui.activity.BaseActivity;
+import tayler.ut.attendencemanagmentsystem.utils.Constants;
 import tayler.ut.attendencemanagmentsystem.utils.FirebaseUtility;
 
 
@@ -112,12 +113,14 @@ public class StudentLoginActivity extends BaseActivity {
                             Toast.makeText(StudentLoginActivity.this, getString(R.string.invalid_login), Toast.LENGTH_LONG).show();
                             progressDialog.dismiss();
                         } else {
-                            prefs.edit().putBoolean("studentlogin", true).commit();
+                            prefs.edit().putBoolean(Constants.STUDENT_LOGIN_FLAG, true).commit();
+                            prefs.edit().putBoolean(Constants.TEACHER_LOGIN_FLAG, false).commit();
 
                             String studentId = task.getResult().getUser().getUid();
                             if (!TextUtils.isEmpty(studentId)) {
                                 FirebaseUtility.saveStudentProfile(studentId);
                             }
+                            progressDialog.dismiss();
 
 
                             Intent intent = new Intent(StudentLoginActivity.this, StudentMenuActivity.class);
@@ -135,5 +138,12 @@ public class StudentLoginActivity extends BaseActivity {
             Intent intent = new Intent(StudentLoginActivity.this, StudentSignupActivity.class);
             startActivity(intent);
         }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        etEmailid.setText("amit@gmail.com");
+        etPassword.setText("111111");
     }
 }

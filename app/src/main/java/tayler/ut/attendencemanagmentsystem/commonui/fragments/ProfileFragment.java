@@ -23,6 +23,7 @@ import tayler.ut.attendencemanagmentsystem.R;
 import tayler.ut.attendencemanagmentsystem.commonui.activity.LoginOptionActivity;
 import tayler.ut.attendencemanagmentsystem.model.student.StudentData;
 import tayler.ut.attendencemanagmentsystem.model.teacher.TeacherData;
+import tayler.ut.attendencemanagmentsystem.utils.Constants;
 import tayler.ut.attendencemanagmentsystem.utils.FirebaseUtility;
 
 /**
@@ -60,8 +61,8 @@ public class ProfileFragment extends Fragment {
         mSujectViewUnderline = (View) view.findViewById(R.id.mSujectViewUnderline);
         mLogout = view.findViewById(R.id.mLogout);
 
-        isStudent = prefs.getBoolean("studentlogin", false);
-        isteacher = prefs.getBoolean("teacherlogin", false);
+        isStudent = prefs.getBoolean(Constants.STUDENT_LOGIN_FLAG, false);
+        isteacher = prefs.getBoolean(Constants.TEACHER_LOGIN_FLAG, false);
 
         if (isteacher) {
             setTeacherProfileData();
@@ -85,8 +86,7 @@ public class ProfileFragment extends Fragment {
         mTeacherName.setText(mStudentData.getName());
         mTeacherEmail.setText(mStudentData.getEmailId());
         mTeacherNumber.setText(mStudentData.getMobileNumber());
-        mTeacherSubjects.setVisibility(View.GONE);
-        mSujectViewUnderline.setVisibility(View.GONE);
+        mTeacherSubjects.setText(mStudentData.getYear());
     }
 
     private void setTeacherProfileData() {

@@ -29,6 +29,7 @@ import tayler.ut.attendencemanagmentsystem.commonui.activity.BaseActivity;
 import tayler.ut.attendencemanagmentsystem.model.SignupModel;
 import tayler.ut.attendencemanagmentsystem.model.student.StudentData;
 import tayler.ut.attendencemanagmentsystem.teacher.activity.TeacherLoginActivity;
+import tayler.ut.attendencemanagmentsystem.utils.Constants;
 import tayler.ut.attendencemanagmentsystem.utils.FirebaseUtility;
 
 
@@ -132,6 +133,13 @@ public class StudentSignupActivity extends BaseActivity {
             Toast.makeText(this, getString(R.string.password_and_confirm_password_are_not_matched), Toast.LENGTH_LONG).show();
             return;
         }
+        if (TextUtils.isEmpty(selectedYear)) {
+            Toast.makeText(this, getString(R.string.please_select_year), Toast.LENGTH_LONG).show();
+            return;
+        }
+
+
+
         progressDialog.setMessage("Registering Please Wait...");
         progressDialog.show();
 
@@ -167,7 +175,8 @@ public class StudentSignupActivity extends BaseActivity {
     private void saveValueInSharedPrefrnce() {
         SharedPreferences sharedPref = getPreferences(Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPref.edit();
-        editor.putBoolean("isStudent", true);
+        editor.putBoolean(Constants.STUDENT_LOGIN_FLAG, true);
+        editor.putBoolean(Constants.TEACHER_LOGIN_FLAG, false);
         editor.commit();
     }
 
@@ -179,12 +188,8 @@ public class StudentSignupActivity extends BaseActivity {
         signupModel.setEmail(email);
         signupModel.setNumber(number);
         mDatabase.child("studentsignup").child(userId).setValue(signupModel);
-
         StudentData mStudentData = new StudentData(userId, name, email, number, selectedYear, etPassword.getText().toString());
-
         FirebaseUtility.updateStudent(mStudentData);
-
-
     }
 
     private class LoginClickListener implements View.OnClickListener {

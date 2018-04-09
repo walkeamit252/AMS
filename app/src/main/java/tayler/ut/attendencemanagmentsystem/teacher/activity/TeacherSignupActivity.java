@@ -12,6 +12,7 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -47,6 +48,7 @@ public class TeacherSignupActivity extends BaseActivity {
     private DatabaseReference mDatabase;
 
     SharedPreferences prefs;
+    RadioGroup mRadioGroup;
 
 
     @Override
@@ -71,6 +73,11 @@ public class TeacherSignupActivity extends BaseActivity {
         etNumber = (EditText) findViewById(R.id.edt_numbet);
         etPassword = (EditText) findViewById(R.id.edt_password);
         etConfirmPassword = (EditText) findViewById(R.id.edt_confirm_password);
+
+        mRadioGroup = (RadioGroup) findViewById(R.id.radioGroup);
+
+        mRadioGroup.setVisibility(View.GONE);
+        findViewById(R.id.mTextViewSelectYear).setVisibility(View.GONE);
 
         setListener();
     }
@@ -151,7 +158,8 @@ public class TeacherSignupActivity extends BaseActivity {
     private void saveValueInSharedPrefrnce() {
         SharedPreferences sharedPref = getPreferences(Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPref.edit();
-        editor.putBoolean("isTeacher", true);
+        editor.putBoolean(Constants.TEACHER_LOGIN_FLAG, true);
+        editor.putBoolean(Constants.STUDENT_LOGIN_FLAG, false);
         editor.commit();
     }
 

@@ -66,7 +66,8 @@ public class FirebaseUtility {
     public static void saveTeacherProfile(String teacherId){
 
         // teacherId = "-L9YZfr4aq4SLa7Uq2-a";
-        Query teacherDetailsQuery = ApplicationContext.getFirebaseDatabaseReference().child(FirebaseConstants.TEACHER_TABLE).orderByChild(FirebaseConstants.TEACHER_ID).equalTo(teacherId);
+        Query teacherDetailsQuery = ApplicationContext.getFirebaseDatabaseReference().
+                child(FirebaseConstants.TEACHER_TABLE).orderByChild(FirebaseConstants.TEACHER_ID).equalTo(teacherId);
         teacherDetailsQuery.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -132,7 +133,8 @@ public class FirebaseUtility {
 
     public static void saveStudentProfile(String studentId){
 //   teacherId = "-L9YZfr4aq4SLa7Uq2-a";
-        Query studentDetailsQuery = ApplicationContext.getFirebaseDatabaseReference().child(FirebaseConstants.STUDENT_TABLE).orderByChild(FirebaseConstants.STUDENT_ID).equalTo(studentId);
+        Query studentDetailsQuery = ApplicationContext.getFirebaseDatabaseReference().
+                child(FirebaseConstants.STUDENT_TABLE).orderByChild(FirebaseConstants.STUDENT_ID).equalTo(studentId);
         studentDetailsQuery.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -154,7 +156,7 @@ public class FirebaseUtility {
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
-
+                Log.i(TAG, "onCancelled: " + databaseError.getDetails());
             }
         });
     }

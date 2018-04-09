@@ -22,6 +22,7 @@ import com.google.firebase.database.DatabaseReference;
 
 import tayler.ut.attendencemanagmentsystem.R;
 import tayler.ut.attendencemanagmentsystem.commonui.activity.BaseActivity;
+import tayler.ut.attendencemanagmentsystem.utils.Constants;
 import tayler.ut.attendencemanagmentsystem.utils.FirebaseUtility;
 
 public class TeacherLoginActivity extends BaseActivity {
@@ -114,7 +115,8 @@ public class TeacherLoginActivity extends BaseActivity {
                                 FirebaseUtility.saveTeacherProfile(teacherId);
                             }
 
-                            prefs.edit().putBoolean("teacherlogin", true).commit();
+                            prefs.edit().putBoolean(Constants.TEACHER_LOGIN_FLAG, true).commit();
+                            prefs.edit().putBoolean(Constants.STUDENT_LOGIN_FLAG, false).commit();
                             Intent intent = new Intent(TeacherLoginActivity.this, TeacherMenuActivity.class);
                             startActivity(intent);
                             finish();

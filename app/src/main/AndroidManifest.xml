@@ -27,7 +27,8 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".student.activity.StudentLoginActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.AppCompat.DayNight.NoActionBar"/>
         <activity
             android:name=".teacher.activity.TeacherLoginActivity"
             android:screenOrientation="portrait"

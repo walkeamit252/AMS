@@ -11,6 +11,8 @@ public class Constants {
 
     public static final String USER_MODEL = "user_model";
     public static final String COURSE_DATA = "COURSE_DATA";
+    public static final String STUDENT_LOGIN_FLAG = "studentlogin";
+    public static final String TEACHER_LOGIN_FLAG = "teacherlogin";
 
     public interface BundelKays{
         String COURSE_NAME = "courseName";
