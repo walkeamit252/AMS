@@ -118,7 +118,7 @@ public class StudentLoginActivity extends BaseActivity {
 
                             String studentId = task.getResult().getUser().getUid();
                             if (!TextUtils.isEmpty(studentId)) {
-                                FirebaseUtility.saveStudentProfile(studentId);
+                                FirebaseUtility.saveStudentProfile(studentId,FirebaseUtility.FirebaseConstants.FIRSTYEAR);
                             }
                             progressDialog.dismiss();
 

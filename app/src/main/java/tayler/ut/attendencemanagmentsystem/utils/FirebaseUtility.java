@@ -34,7 +34,7 @@ import tayler.ut.attendencemanagmentsystem.model.teacher.TeacherData;
 
 public class FirebaseUtility {
 
-
+    static int yearCount = 0;
 
     private static List<StudentData> listStudentsFirstYear = new ArrayList<>();
     private static List<StudentData> listStudentsSecondYear = new ArrayList<>();
@@ -131,10 +131,11 @@ public class FirebaseUtility {
     }
 
 
-    public static void saveStudentProfile(String studentId){
+    public static void saveStudentProfile(final String studentId,String year){
+
 //   teacherId = "-L9YZfr4aq4SLa7Uq2-a";
         Query studentDetailsQuery = ApplicationContext.getFirebaseDatabaseReference().
-                child(FirebaseConstants.STUDENT_TABLE).orderByChild(FirebaseConstants.STUDENT_ID).equalTo(studentId);
+                child(FirebaseConstants.STUDENT_TABLE+year).orderByChild(FirebaseConstants.STUDENT_ID).equalTo(studentId);
         studentDetailsQuery.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -150,6 +151,18 @@ public class FirebaseUtility {
                     String name = studentData.getName();
                     Log.i(TAG, "onDataChange: name from id is:  "+name);
                 } else {
+                    yearCount++;
+                    if(yearCount==1){
+                        saveStudentProfile(studentId,FirebaseConstants.SECOND_YEAR);
+                    }
+                    else if(yearCount==2){
+                        saveStudentProfile(studentId,FirebaseConstants.THIRD_YEAR);
+
+                    }
+                    else{
+                        saveStudentProfile(studentId,FirebaseConstants.FOURTH_YEAR);
+                    }
+
                     Log.i(TAG, " name does'nt exists!");
                 }
             }
