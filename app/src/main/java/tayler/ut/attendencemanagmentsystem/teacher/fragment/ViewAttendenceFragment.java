@@ -61,10 +61,6 @@ public class ViewAttendenceFragment extends Fragment implements AttendenceListAd
         progressDialog = new ProgressDialog(getActivity());
         progressDialog.setMessage("Fetching data..., Please Wait");
         progressDialog.show();
-
-
-
-
     }
 
     private void initview(View view) {
@@ -82,7 +78,6 @@ public class ViewAttendenceFragment extends Fragment implements AttendenceListAd
 
         DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(recyclerView.getContext(), mLayoutManager.getOrientation());
         recyclerView.addItemDecoration(dividerItemDecoration);
-
 
         mListAdapter = new AttendenceListAdapter(getActivity(), attendenceListModels,"ViewAttendence");
         recyclerView.setAdapter(mListAdapter);
