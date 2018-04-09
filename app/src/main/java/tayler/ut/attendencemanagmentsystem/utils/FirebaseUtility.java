@@ -17,6 +17,7 @@ import com.google.gson.Gson;
 import org.w3c.dom.Comment;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -52,6 +53,8 @@ public class FirebaseUtility {
     private static List<CourseData> listCourseFourthYear = new ArrayList<>();
 
     private static List<CourseData> listCourseAll = new ArrayList<>();
+
+    private static List<CourseData> currentTeacherCourses = new ArrayList<>();
 
 
     private static TeacherData teacherProfileData ;
@@ -94,6 +97,27 @@ public class FirebaseUtility {
         teacherProfileData = teacherData;
     }
 
+    public static List<CourseData> getTeachersAddedCourses(){
+        return currentTeacherCourses;
+    }
+
+    public static void setTeachersSubjectList(CourseData courseData){
+        currentTeacherCourses.add(courseData);
+    }
+
+    public static void setTeachersSubjectListFromCourseName(String subjectNamewithComma){
+
+        if(!TextUtils.isEmpty(subjectNamewithComma)){
+
+            String[] array = subjectNamewithComma.split(",");
+            List<String> list = Arrays. asList(array);
+            for(CourseData courseData : listCourseAll){
+                if(list.contains(courseData.getCourseName())){
+                    setTeachersSubjectList(courseData);
+                }
+            }
+        }
+    }
 
     public static void updateTeacherProfileData(String subjects){
         if(teacherProfileData!=null){
@@ -262,7 +286,8 @@ public class FirebaseUtility {
         }
     }
 
-    public static void updateAttendance(Context context, AttendanceData attendanceData,String year){
+    public static void updateAttendance(AttendanceData attendanceData,
+                                        String year){
         if(attendanceData!=null){
             String attendanceId = attendanceData.getAttendanceId();
             if(TextUtils.isEmpty(attendanceId)){
@@ -292,6 +317,8 @@ public class FirebaseUtility {
                 courseId = ApplicationContext.getFirebaseDatabaseReference().push().getKey();
                 courseData.setCourseId(courseId);
             }
+
+            setTeachersSubjectList(courseData);
 
             ApplicationContext.getFirebaseDatabaseReference().child(FirebaseConstants.COURSE_TABLE).child(courseId)
                     .setValue(courseData)
@@ -782,6 +809,11 @@ public class FirebaseUtility {
                     "-");
             FirebaseUtility.updateStudent(studentData);
         }
+    }
+
+    public interface OnFirebasseActionListener{
+        void onSuccess();
+        void onFail();
     }
 
 }

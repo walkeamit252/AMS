@@ -37,7 +37,10 @@ import tayler.ut.attendencemanagmentsystem.utils.DateUtils;
 import tayler.ut.attendencemanagmentsystem.utils.FirebaseUtility;
 
 
-public class TakeAttendenceFragment extends Fragment implements AttendenceListAdapter.ItemClickListener, View.OnClickListener {
+public class TakeAttendenceFragment extends Fragment
+        implements AttendenceListAdapter.ItemClickListener,
+        View.OnClickListener,
+        FirebaseUtility.OnFirebasseActionListener {
 
     private AttendenceListAdapter mListAdapter;
     private RecyclerView recyclerView;
@@ -64,6 +67,10 @@ public class TakeAttendenceFragment extends Fragment implements AttendenceListAd
         View view = inflater.inflate(R.layout.fragment_attendence_list, container, false);
         Bundle bundle= getArguments();
         mCourseData=bundle.getParcelable(Constants.COURSE_DATA);
+
+        progressDialog = new ProgressDialog(getActivity());
+        progressDialog.setMessage("Loading...,Please Wait");
+
         return view;
     }
 
@@ -75,8 +82,7 @@ public class TakeAttendenceFragment extends Fragment implements AttendenceListAd
     }
 
     private void fetchAttendenceList() {
-        progressDialog = new ProgressDialog(getActivity());
-        progressDialog.setMessage("Fetching data..., Please Wait");
+
         progressDialog.show();
 
         listStudent.addAll(FirebaseUtility.getStudentListByYears(mCourseData.getCourseYear()));
@@ -85,11 +91,12 @@ public class TakeAttendenceFragment extends Fragment implements AttendenceListAd
                     "","",studentData.getName(),
                     mCourseData.getTeacherName(),mCourseData.getCourseYear(),
                     studentData.getEmailId(),studentData.getMobileNumber(),
-                    DateUtils.getCurrentDateForStudent(),false
+                    DateUtils.getCurrentDateForStudent(),true
             );
 
             attendenceListModels.add(attendanceData);
         }
+        progressDialog.dismiss();
         mListAdapter.notifyDataSetChanged();
     }
 
@@ -141,7 +148,28 @@ public class TakeAttendenceFragment extends Fragment implements AttendenceListAd
         switch (view.getId()){
             case R.id.mButtonSave :
 
+                progressDialog.show();
+
+                for(AttendanceData attendanceData :attendenceListModels) {
+                    FirebaseUtility.updateAttendance(attendanceData,mCourseData.getCourseYear());
+                }
+
+                Toast.makeText(mApplicationContext, "Attendance Updated Successfully", Toast.LENGTH_SHORT).show();
+
+                progressDialog.dismiss();
+
+
                 break;
         }
+    }
+
+    @Override
+    public void onSuccess() {
+
+    }
+
+    @Override
+    public void onFail() {
+
     }
 }

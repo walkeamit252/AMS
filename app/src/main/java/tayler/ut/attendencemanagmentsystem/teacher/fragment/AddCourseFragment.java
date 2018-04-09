@@ -161,6 +161,7 @@ public class AddCourseFragment extends Fragment implements View.OnClickListener,
                             courseDataAfterUpload.setSyllabusFilePath(url);
                             FirebaseUtility.updateCourse(courseDataAfterUpload);
                             FirebaseUtility.updateTeacherProfileData(courseDataAfterUpload.getCourseName());
+
                             Toast.makeText(getActivity(), "Success", Toast.LENGTH_LONG).show();
                         }
 
