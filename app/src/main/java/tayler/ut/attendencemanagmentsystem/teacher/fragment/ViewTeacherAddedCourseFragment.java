@@ -15,13 +15,11 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import tayler.ut.attendencemanagmentsystem.R;
 import tayler.ut.attendencemanagmentsystem.model.course.CourseData;
 import tayler.ut.attendencemanagmentsystem.teacher.adapter.TeacherAddedCoursesAdapter;
 import tayler.ut.attendencemanagmentsystem.utils.Constants;
-import tayler.ut.attendencemanagmentsystem.utils.FirebaseUtility;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -32,7 +30,7 @@ public class ViewTeacherAddedCourseFragment extends Fragment implements TeacherA
     TextView txtNoDataFound;
     RecyclerView.LayoutManager manager;
     TeacherAddedCoursesAdapter mAdapter;
-    ArrayList<CourseData> listData = new ArrayList<>();
+    ArrayList<CourseData> listData;
     private ProgressDialog progressDialog;
 
     public ViewTeacherAddedCourseFragment() {
@@ -54,11 +52,11 @@ public class ViewTeacherAddedCourseFragment extends Fragment implements TeacherA
         mRecyclerViewAddedSubjectList=view.findViewById(R.id.mRecyclerViewAddedSubjectList);
         txtNoDataFound=view.findViewById(R.id.txtNoDataFound);
         setRecyclerView();
-        getTeacherAddedCourses();
     }
 
     private void setRecyclerView() {
         manager=new LinearLayoutManager(getActivity());
+        listData = new ArrayList<>();
         mAdapter=new TeacherAddedCoursesAdapter(getActivity(),listData,this);
         mRecyclerViewAddedSubjectList.setLayoutManager(manager);
         mRecyclerViewAddedSubjectList.setAdapter(mAdapter);
@@ -77,22 +75,4 @@ public class ViewTeacherAddedCourseFragment extends Fragment implements TeacherA
         FragmentManager manager = getActivity().getSupportFragmentManager();
         manager.beginTransaction().replace(R.id.frame_layout,fragment).commit();
     }
-
-    private void getTeacherAddedCourses(){
-        List<CourseData> listCourses  = FirebaseUtility.getTeachersAddedCourses();
-        if(listCourses!=null && listCourses.size()>0){
-            listData.clear();
-            listData.addAll(listCourses);
-            mAdapter.notifyDataSetChanged();
-        }
-        else{
-            listCourses  = FirebaseUtility.getTeachersAddedCourses();
-            FirebaseUtility.getTotalCourses( );
-            FirebaseUtility.setTeachersSubjectListFromCourseName(FirebaseUtility.getTeacherProfileData().getSubjects());
-            listData.clear();
-            listData.addAll(listCourses);
-            mAdapter.notifyDataSetChanged();
-        }
-    }
-
 }

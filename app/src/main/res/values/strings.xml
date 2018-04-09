@@ -48,4 +48,14 @@
     <string name="third_year">3rd</string>
     <string name="fourth_year">4th</string>
     <string name="no_data_found">No Data Found</string>
+    <string name="profile">Profile</string>
+    <string name="view_subject">View subject</string>
+    <string name="select_year">Select year</string>
+
+    <string name="first_y">1stYear</string>
+    <string name="second_y">2ndYear</string>
+    <string name="third_y">3rdYear</string>
+    <string name="fourth_y">4thYear</string>
+
+
 </resources>

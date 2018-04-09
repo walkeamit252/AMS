@@ -12,18 +12,20 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
 
 import tayler.ut.attendencemanagmentsystem.R;
 import tayler.ut.attendencemanagmentsystem.commonui.activity.LoginOptionActivity;
 import tayler.ut.attendencemanagmentsystem.teacher.fragment.AddCourseFragment;
-import tayler.ut.attendencemanagmentsystem.teacher.fragment.ProfileFragment;
+import tayler.ut.attendencemanagmentsystem.commonui.fragments.ProfileFragment;
 import tayler.ut.attendencemanagmentsystem.teacher.fragment.ViewTeacherAddedCourseFragment;
 
 public class TeacherMenuActivity extends AppCompatActivity {
 
     BottomNavigationView bottomNavigationView ;
+    TextView mToolbarTitle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,11 +34,13 @@ public class TeacherMenuActivity extends AppCompatActivity {
         bottomNavigationView = (BottomNavigationView)
                 findViewById(R.id.navigation);
 
+
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        ActionBar actionbar = getSupportActionBar();
-        actionbar.setDisplayHomeAsUpEnabled(true);
-        actionbar.setTitle("Attendece System");
+        final ActionBar actionbar = getSupportActionBar();
+        //   actionbar.setTitle("Attendece System");
+        mToolbarTitle = findViewById(R.id.mToolbarTitle);
+        mToolbarTitle.setText("Subject List");
 
         bottomNavigationView.setOnNavigationItemSelectedListener
                 (new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -46,12 +50,15 @@ public class TeacherMenuActivity extends AppCompatActivity {
                         switch (item.getItemId()) {
                             case R.id.nav_take_attendance:
                                 selectedFragment = new ViewTeacherAddedCourseFragment();
+                                mToolbarTitle.setText("Subject List");
                                 break;
                             case R.id.nav_add_subject:
                                 selectedFragment = new AddCourseFragment();
+                                mToolbarTitle.setText("Add Subject");
                                 break;
                             case R.id.nav_view_profile:
                                 selectedFragment = new ProfileFragment();
+                                mToolbarTitle.setText("Profile");
                                 break;
                         }
                         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();

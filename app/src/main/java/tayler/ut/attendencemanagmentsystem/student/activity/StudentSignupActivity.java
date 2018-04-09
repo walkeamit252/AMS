@@ -11,6 +11,8 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -32,16 +34,17 @@ public class StudentSignupActivity extends BaseActivity {
 
     private Button btnSignup;
     private TextView txtLogin;
-
     private EditText etName;
     private EditText etEmail;
     private EditText etNumber;
     private EditText etPassword;
     private EditText etConfirmPassword;
-
     private FirebaseAuth firebaseAuth;
     private ProgressDialog progressDialog;
     private DatabaseReference mDatabase;
+    RadioGroup mRadioGroup;
+    RadioButton mRadioFirst, mRadioSecond, mRadioThird, mRadioFourth;
+    String selectedYear;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -65,6 +68,12 @@ public class StudentSignupActivity extends BaseActivity {
         etNumber = (EditText) findViewById(R.id.edt_numbet);
         etPassword = (EditText) findViewById(R.id.edt_password);
         etConfirmPassword = (EditText) findViewById(R.id.edt_confirm_password);
+
+        mRadioGroup = (RadioGroup) findViewById(R.id.radioGroup);
+        mRadioFirst = (RadioButton) findViewById(R.id.radioFirst);
+        mRadioSecond = (RadioButton) findViewById(R.id.radioSecond);
+        mRadioThird = (RadioButton) findViewById(R.id.radioThird);
+        mRadioFourth = (RadioButton) findViewById(R.id.radioFourth);
         setListener();
     }
 
@@ -72,6 +81,19 @@ public class StudentSignupActivity extends BaseActivity {
 
         btnSignup.setOnClickListener(new SignupButtonClickListener());
         txtLogin.setOnClickListener(new LoginClickListener());
+
+        mRadioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                RadioButton rb = group.findViewById(checkedId);
+                if (null != rb && checkedId > -1) {
+                    selectedYear = rb.getText().toString();
+                    Toast.makeText(StudentSignupActivity.this, rb.getText().toString(), Toast.LENGTH_SHORT).show();
+
+                }
+            }
+        });
+
     }
 
     private class SignupButtonClickListener implements View.OnClickListener {

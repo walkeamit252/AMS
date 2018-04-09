@@ -138,6 +138,8 @@ public class AddCourseFragment extends Fragment implements View.OnClickListener,
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == Constants.PICK_PDF_CODE && resultCode == RESULT_OK && data != null && data.getData() != null) {
             if (data.getData() != null) {
+                progressDialog.setMessage("Please Wait...");
+                progressDialog.show();
                 uploadFile(data.getData());
             } else {
                 Toast.makeText(getActivity(), "No file chosen", Toast.LENGTH_SHORT).show();
@@ -146,8 +148,7 @@ public class AddCourseFragment extends Fragment implements View.OnClickListener,
     }
 
     private void uploadFile(Uri data) {
-        progressDialog.setMessage("Please Wait...");
-        progressDialog.show();
+
 
         StorageReference sRef = mStorageReference.child(Constants.STORAGE_PATH_UPLOADS + System.currentTimeMillis() + ".pdf");
         sRef.putFile(data)
@@ -155,7 +156,7 @@ public class AddCourseFragment extends Fragment implements View.OnClickListener,
 
                     @Override
                     public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                        progressDialog.cancel();
+                        progressDialog.dismiss();
                         String url = taskSnapshot.getDownloadUrl().toString();
                         if(courseDataAfterUpload!=null ) {
                             courseDataAfterUpload.setSyllabusFilePath(url);
@@ -170,7 +171,7 @@ public class AddCourseFragment extends Fragment implements View.OnClickListener,
                 .addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception exception) {
-                        progressDialog.cancel();
+                        progressDialog.dismiss();
                         Toast.makeText(getActivity(), exception.getMessage(), Toast.LENGTH_LONG).show();
                     }
                 })
@@ -178,7 +179,7 @@ public class AddCourseFragment extends Fragment implements View.OnClickListener,
                     @SuppressWarnings("VisibleForTests")
                     @Override
                     public void onProgress(UploadTask.TaskSnapshot taskSnapshot) {
-                        progressDialog.cancel();
+                        progressDialog.dismiss();
                         double progress = (100.0 * taskSnapshot.getBytesTransferred()) / taskSnapshot.getTotalByteCount();
 
                     }

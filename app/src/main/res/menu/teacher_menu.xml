@@ -4,7 +4,7 @@
         <item
             android:id="@+id/nav_take_attendance"
             android:icon="@drawable/icon_view_attendence"
-            android:title="@string/view_attendence" />
+            android:title="@string/view_subject"/>
         <item
             android:id="@+id/nav_add_subject"
             android:icon="@drawable/icon_mark_attendence"
@@ -12,7 +12,7 @@
         <item
             android:id="@+id/nav_view_profile"
             android:icon="@drawable/icon_mark_attendence"
-            android:title="@string/mark_attendence" />
+            android:title="@string/profile"/>
      <!--   <item
             android:id="@+id/nav_logout_teacher"
             android:icon="@drawable/icon_logout"
