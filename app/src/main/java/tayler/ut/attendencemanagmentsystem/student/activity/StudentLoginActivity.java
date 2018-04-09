@@ -19,8 +19,9 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 
-import tayler.ut.attendencemanagmentsystem.commonui.activity.BaseActivity;
 import tayler.ut.attendencemanagmentsystem.R;
+import tayler.ut.attendencemanagmentsystem.commonui.activity.BaseActivity;
+import tayler.ut.attendencemanagmentsystem.utils.FirebaseUtility;
 
 
 public class StudentLoginActivity extends BaseActivity {
@@ -112,6 +113,13 @@ public class StudentLoginActivity extends BaseActivity {
                             progressDialog.dismiss();
                         } else {
                             prefs.edit().putBoolean("studentlogin", true).commit();
+
+                            String studentId = task.getResult().getUser().getUid();
+                            if (!TextUtils.isEmpty(studentId)) {
+                                FirebaseUtility.saveStudentProfile(studentId);
+                            }
+
+
                             Intent intent = new Intent(StudentLoginActivity.this, StudentMenuActivity.class);
                             startActivity(intent);
                             finish();

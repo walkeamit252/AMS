@@ -3,7 +3,9 @@ package tayler.ut.attendencemanagmentsystem.commonui.fragments;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -19,6 +21,7 @@ import com.google.firebase.auth.FirebaseAuth;
 
 import tayler.ut.attendencemanagmentsystem.R;
 import tayler.ut.attendencemanagmentsystem.commonui.activity.LoginOptionActivity;
+import tayler.ut.attendencemanagmentsystem.model.student.StudentData;
 import tayler.ut.attendencemanagmentsystem.model.teacher.TeacherData;
 import tayler.ut.attendencemanagmentsystem.utils.FirebaseUtility;
 
@@ -30,7 +33,11 @@ public class ProfileFragment extends Fragment {
     TextView mTeacherName, mTeacherEmail, mTeacherNumber, mTeacherSubjects, mLogout;
     ImageView mImageProfile;
     TeacherData mTeacherData;
+    StudentData mStudentData;
     View mSujectViewUnderline;
+    private SharedPreferences prefs;
+    private boolean isteacher = false;
+    private boolean isStudent = false;
 
     public ProfileFragment() {
     }
@@ -45,6 +52,7 @@ public class ProfileFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        prefs = PreferenceManager.getDefaultSharedPreferences(getActivity().getApplicationContext());
         mTeacherName = (TextView) view.findViewById(R.id.mUserName);
         mTeacherEmail = (TextView) view.findViewById(R.id.mUserEmail);
         mTeacherNumber = (TextView) view.findViewById(R.id.mUserNumber);
@@ -52,12 +60,40 @@ public class ProfileFragment extends Fragment {
         mSujectViewUnderline = (View) view.findViewById(R.id.mSujectViewUnderline);
         mLogout = view.findViewById(R.id.mLogout);
 
+        isStudent = prefs.getBoolean("studentlogin", false);
+        isteacher = prefs.getBoolean("teacherlogin", false);
 
+        if (isteacher) {
+            setTeacherProfileData();
+        } else if (isStudent) {
+            setStudentData();
+        }
+
+        mLogout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                logout();
+            }
+        });
+    }
+
+    private void setStudentData() {
+        mStudentData = FirebaseUtility.getStudentProfileData();
+        if (mStudentData == null) {
+            return;
+        }
+        mTeacherName.setText(mStudentData.getName());
+        mTeacherEmail.setText(mStudentData.getEmailId());
+        mTeacherNumber.setText(mStudentData.getMobileNumber());
+        mTeacherSubjects.setVisibility(View.GONE);
+        mSujectViewUnderline.setVisibility(View.GONE);
+    }
+
+    private void setTeacherProfileData() {
         mTeacherData = FirebaseUtility.getTeacherProfileData();
         if (mTeacherData == null) {
             return;
         }
-
         mTeacherName.setText(mTeacherData.getName());
         mTeacherEmail.setText(mTeacherData.getEmailId());
         mTeacherNumber.setText(mTeacherData.getMobileNumber());
@@ -69,15 +105,8 @@ public class ProfileFragment extends Fragment {
             mTeacherSubjects.setVisibility(View.GONE);
             mSujectViewUnderline.setVisibility(View.GONE);
         }
-
-
-        mLogout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                logout();
-            }
-        });
     }
+
 
     private void logout() {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());

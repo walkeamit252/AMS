@@ -24,10 +24,12 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-import tayler.ut.attendencemanagmentsystem.commonui.activity.BaseActivity;
 import tayler.ut.attendencemanagmentsystem.R;
+import tayler.ut.attendencemanagmentsystem.commonui.activity.BaseActivity;
 import tayler.ut.attendencemanagmentsystem.model.SignupModel;
+import tayler.ut.attendencemanagmentsystem.model.student.StudentData;
 import tayler.ut.attendencemanagmentsystem.teacher.activity.TeacherLoginActivity;
+import tayler.ut.attendencemanagmentsystem.utils.FirebaseUtility;
 
 
 public class StudentSignupActivity extends BaseActivity {
@@ -177,6 +179,12 @@ public class StudentSignupActivity extends BaseActivity {
         signupModel.setEmail(email);
         signupModel.setNumber(number);
         mDatabase.child("studentsignup").child(userId).setValue(signupModel);
+
+        StudentData mStudentData = new StudentData(userId, name, email, number, selectedYear, etPassword.getText().toString());
+
+        FirebaseUtility.updateStudent(mStudentData);
+
+
     }
 
     private class LoginClickListener implements View.OnClickListener {
