@@ -50,6 +50,8 @@ public class LoginOptionActivity extends BaseActivity {
 
             startActivity(intent);
 
+            finish();
+
         }
     }
 
@@ -59,6 +61,8 @@ public class LoginOptionActivity extends BaseActivity {
 
             Intent intent = new Intent(LoginOptionActivity.this, StudentLoginActivity.class);
             startActivity(intent);
+
+            finish();
 
         }
     }

@@ -133,7 +133,6 @@ public class FirebaseUtility {
 
     public static void saveStudentProfile(final String studentId,String year){
 
-//   teacherId = "-L9YZfr4aq4SLa7Uq2-a";
         Query studentDetailsQuery = ApplicationContext.getFirebaseDatabaseReference().
                 child(FirebaseConstants.STUDENT_TABLE+year).orderByChild(FirebaseConstants.STUDENT_ID).equalTo(studentId);
         studentDetailsQuery.addListenerForSingleValueEvent(new ValueEventListener() {

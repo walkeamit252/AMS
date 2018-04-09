@@ -174,7 +174,7 @@
                     android:id="@+id/radioFourth"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/first_y"
+                    android:text="@string/fourth_y"
                     android:padding="@dimen/dimen_16"/>
             </RadioGroup>
 

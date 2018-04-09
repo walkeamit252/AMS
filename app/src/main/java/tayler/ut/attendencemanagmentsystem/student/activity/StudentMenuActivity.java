@@ -12,9 +12,9 @@ import android.view.MenuItem;
 import android.widget.TextView;
 
 import tayler.ut.attendencemanagmentsystem.R;
-import tayler.ut.attendencemanagmentsystem.teacher.fragment.AddCourseFragment;
 import tayler.ut.attendencemanagmentsystem.commonui.fragments.ProfileFragment;
-import tayler.ut.attendencemanagmentsystem.teacher.fragment.ViewTeacherAddedCourseFragment;
+import tayler.ut.attendencemanagmentsystem.student.fragment.ViewStudentSyllabusListFragment;
+import tayler.ut.attendencemanagmentsystem.teacher.fragment.AddCourseFragment;
 
 public class StudentMenuActivity extends AppCompatActivity {
 
@@ -39,11 +39,11 @@ public class StudentMenuActivity extends AppCompatActivity {
                     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                         Fragment selectedFragment = null;
                         switch (item.getItemId()) {
-                            case R.id.nav_take_attendance:
-                                selectedFragment = new ViewTeacherAddedCourseFragment();
+                            case R.id.nav_view_student_subject:
+                                selectedFragment = new ViewStudentSyllabusListFragment();
                                 mToolbarTitle.setText("Subject List");
                                 break;
-                            case R.id.nav_add_subject:
+                            case R.id.nav_view_student_attendance:
                                 selectedFragment = new AddCourseFragment();
                                 mToolbarTitle.setText("Add Subject");
                                 break;
@@ -59,5 +59,11 @@ public class StudentMenuActivity extends AppCompatActivity {
                         return true;
                     }
                 });
+
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.frame_layout, new ViewStudentSyllabusListFragment());
+        transaction.commit();
+        mToolbarTitle.setText("Subject List");
+
     }
 }

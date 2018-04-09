@@ -122,7 +122,6 @@ public class StudentLoginActivity extends BaseActivity {
                             }
                             progressDialog.dismiss();
 
-
                             Intent intent = new Intent(StudentLoginActivity.this, StudentMenuActivity.class);
                             startActivity(intent);
                             finish();

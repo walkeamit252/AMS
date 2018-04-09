@@ -189,6 +189,7 @@ public class StudentSignupActivity extends BaseActivity {
         signupModel.setNumber(number);
         mDatabase.child("studentsignup").child(userId).setValue(signupModel);
         StudentData mStudentData = new StudentData(userId, name, email, number, selectedYear, etPassword.getText().toString());
+        FirebaseUtility.saveStudentProfile(userId, selectedYear);
         FirebaseUtility.updateStudent(mStudentData);
     }
 

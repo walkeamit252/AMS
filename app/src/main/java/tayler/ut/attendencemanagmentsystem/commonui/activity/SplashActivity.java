@@ -72,6 +72,7 @@ public class SplashActivity extends BaseActivity {
                 else if (auth.getCurrentUser() !=null && isStudent){
                     startActivity(new Intent(SplashActivity.this, StudentMenuActivity.class));
                   //  FirebaseUtility.saveStudentProfile(auth.getCurrentUser().getUid());
+                    FirebaseUtility.saveStudentProfile(auth.getCurrentUser().getUid(), FirebaseUtility.FirebaseConstants.FIRSTYEAR);
                     finish();
                 }
                  else {
