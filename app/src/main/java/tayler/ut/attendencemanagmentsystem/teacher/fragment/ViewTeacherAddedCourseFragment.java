@@ -15,11 +15,13 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import tayler.ut.attendencemanagmentsystem.R;
 import tayler.ut.attendencemanagmentsystem.model.course.CourseData;
 import tayler.ut.attendencemanagmentsystem.teacher.adapter.TeacherAddedCoursesAdapter;
 import tayler.ut.attendencemanagmentsystem.utils.Constants;
+import tayler.ut.attendencemanagmentsystem.utils.FirebaseUtility;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -57,6 +59,10 @@ public class ViewTeacherAddedCourseFragment extends Fragment implements TeacherA
     private void setRecyclerView() {
         manager=new LinearLayoutManager(getActivity());
         listData = new ArrayList<>();
+        List<CourseData> listTeachersCourse = FirebaseUtility.getTeachersAddedCourses();
+        if(listTeachersCourse!=null && listTeachersCourse.size()>0){
+            listData.addAll(listTeachersCourse);
+        }
         mAdapter=new TeacherAddedCoursesAdapter(getActivity(),listData,this);
         mRecyclerViewAddedSubjectList.setLayoutManager(manager);
         mRecyclerViewAddedSubjectList.setAdapter(mAdapter);

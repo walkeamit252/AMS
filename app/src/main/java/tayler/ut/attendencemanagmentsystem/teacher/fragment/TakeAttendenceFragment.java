@@ -70,13 +70,17 @@ public class TakeAttendenceFragment extends Fragment
 
         progressDialog = new ProgressDialog(getActivity());
         progressDialog.setMessage("Loading...,Please Wait");
-
+        FirebaseUtility.getStudentByYear(mCourseData.getCourseYear(),this);
         return view;
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+
+
+
         initview(view);
         fetchAttendenceList();
     }
@@ -85,7 +89,10 @@ public class TakeAttendenceFragment extends Fragment
 
         progressDialog.show();
 
-        listStudent.addAll(FirebaseUtility.getStudentListByYears(mCourseData.getCourseYear()));
+        listStudent.addAll(FirebaseUtility.getStudentListByYears(mCourseData.getCourseYear() ));
+        if(listStudent.size()==0){
+            FirebaseUtility.getStudentByYear(mCourseData.getCourseYear(),this);
+        }
         for(StudentData studentData : listStudent){
             AttendanceData attendanceData = new AttendanceData(
                     "","",studentData.getName(),
@@ -165,7 +172,7 @@ public class TakeAttendenceFragment extends Fragment
 
     @Override
     public void onSuccess() {
-
+        fetchAttendenceList();
     }
 
     @Override

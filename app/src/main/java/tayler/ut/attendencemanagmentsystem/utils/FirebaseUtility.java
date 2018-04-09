@@ -78,6 +78,7 @@ public class FirebaseUtility {
                     for (DataSnapshot child : dataSnapshot.getChildren()) {
                         teacherData = child.getValue(TeacherData.class);
                         saveTeacherProfile(teacherData);
+                        setTeachersSubjectListFromCourseName(teacherData.getSubjects());
                     }
                     String name = teacherData.getName();
                     Log.i(TAG, "onDataChange: name from id is:  "+name);
@@ -381,7 +382,7 @@ public class FirebaseUtility {
      * @param year
      */
 
-    public static void getStudentByYear(final String year ){
+    public static void getStudentByYear(final String year,final OnFirebasseActionListener onFirebasseActionListen ){
 
         switch (year){
             case FirebaseConstants.FIRSTYEAR :
@@ -426,7 +427,9 @@ public class FirebaseUtility {
                             break;
                     }
                 }
-
+                if(onFirebasseActionListen!=null){
+                    onFirebasseActionListen.onSuccess();
+                }
             }
 
             @Override
