@@ -2,6 +2,7 @@ package tayler.ut.attendencemanagmentsystem.teacher.fragment;
 
 import android.Manifest;
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
@@ -12,6 +13,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -52,6 +54,7 @@ public class AddCourseFragment extends Fragment implements View.OnClickListener,
     CourseData courseDataAfterUpload;
 
     private ProgressDialog progressDialog;
+    Uri uriUploadedFile;
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -112,10 +115,6 @@ public class AddCourseFragment extends Fragment implements View.OnClickListener,
     }
 
 
-
-
-
-
     private void getPDF() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && ContextCompat.checkSelfPermission(getActivity(),
                 Manifest.permission.READ_EXTERNAL_STORAGE)
@@ -138,18 +137,41 @@ public class AddCourseFragment extends Fragment implements View.OnClickListener,
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == Constants.PICK_PDF_CODE && resultCode == RESULT_OK && data != null && data.getData() != null) {
             if (data.getData() != null) {
-                progressDialog.setMessage("Please Wait...");
-                progressDialog.show();
-                uploadFile(data.getData());
+                uriUploadedFile = data.getData();
+                uploadFileDialog();
             } else {
                 Toast.makeText(getActivity(), "No file chosen", Toast.LENGTH_SHORT).show();
             }
         }
     }
 
+
+    private void uploadFileDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        builder.setTitle("Signout");
+        builder.setMessage("Are you sure you want to Upload File?");
+        builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+
+            public void onClick(DialogInterface dialog, int which) {
+                uploadFile(uriUploadedFile);
+                progressDialog.setMessage("Please Wait...");
+                progressDialog.show();
+            }
+        });
+
+        builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                // Do nothing
+                dialog.dismiss();
+            }
+        });
+        AlertDialog alert = builder.create();
+        alert.show();
+    }
+
     private void uploadFile(Uri data) {
-
-
         StorageReference sRef = mStorageReference.child(Constants.STORAGE_PATH_UPLOADS + System.currentTimeMillis() + ".pdf");
         sRef.putFile(data)
                 .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
@@ -162,10 +184,8 @@ public class AddCourseFragment extends Fragment implements View.OnClickListener,
                             courseDataAfterUpload.setSyllabusFilePath(url);
                             FirebaseUtility.updateCourse(courseDataAfterUpload);
                             FirebaseUtility.updateTeacherProfileData(courseDataAfterUpload.getCourseName());
-
                             Toast.makeText(getActivity(), "Success", Toast.LENGTH_LONG).show();
                         }
-
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
@@ -179,9 +199,8 @@ public class AddCourseFragment extends Fragment implements View.OnClickListener,
                     @SuppressWarnings("VisibleForTests")
                     @Override
                     public void onProgress(UploadTask.TaskSnapshot taskSnapshot) {
-                        progressDialog.dismiss();
                         double progress = (100.0 * taskSnapshot.getBytesTransferred()) / taskSnapshot.getTotalByteCount();
-
+                        progressDialog.setMessage("Please Wait..." + (int) progress + "%");
                     }
                 });
     }

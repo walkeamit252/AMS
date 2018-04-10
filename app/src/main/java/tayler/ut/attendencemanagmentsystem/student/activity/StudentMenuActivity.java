@@ -14,7 +14,7 @@ import android.widget.TextView;
 import tayler.ut.attendencemanagmentsystem.R;
 import tayler.ut.attendencemanagmentsystem.commonui.fragments.ProfileFragment;
 import tayler.ut.attendencemanagmentsystem.student.fragment.ViewStudentSyllabusListFragment;
-import tayler.ut.attendencemanagmentsystem.teacher.fragment.AddCourseFragment;
+import tayler.ut.attendencemanagmentsystem.student.fragment.ViewStudentSyllabuswiseAttendanceFragment;
 
 public class StudentMenuActivity extends AppCompatActivity {
 
@@ -44,8 +44,8 @@ public class StudentMenuActivity extends AppCompatActivity {
                                 mToolbarTitle.setText("Subject List");
                                 break;
                             case R.id.nav_view_student_attendance:
-                                selectedFragment = new AddCourseFragment();
-                                mToolbarTitle.setText("Add Subject");
+                                selectedFragment = new ViewStudentSyllabuswiseAttendanceFragment();
+                                mToolbarTitle.setText("Attendance List");
                                 break;
                             case R.id.nav_view_profile:
                                 selectedFragment = new ProfileFragment();

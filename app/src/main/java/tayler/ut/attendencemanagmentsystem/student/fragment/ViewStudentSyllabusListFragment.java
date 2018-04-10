@@ -60,7 +60,6 @@ public class ViewStudentSyllabusListFragment extends Fragment implements Student
         mAdapter.notifyDataSetChanged();
     }
 
-
     @Override
     public void onItemClick(View view, int position) {
 
