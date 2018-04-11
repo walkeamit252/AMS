@@ -20,8 +20,16 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import tayler.ut.attendencemanagmentsystem.R;
 import tayler.ut.attendencemanagmentsystem.commonui.activity.BaseActivity;
+import tayler.ut.attendencemanagmentsystem.commonui.activity.SplashActivity;
+import tayler.ut.attendencemanagmentsystem.model.course.CourseData;
+import tayler.ut.attendencemanagmentsystem.model.teacher.TeacherData;
+import tayler.ut.attendencemanagmentsystem.model.teacher.TeacherLocalData;
+import tayler.ut.attendencemanagmentsystem.utils.AppPreferences;
 import tayler.ut.attendencemanagmentsystem.utils.Constants;
 import tayler.ut.attendencemanagmentsystem.utils.FirebaseUtility;
 
@@ -65,6 +73,7 @@ public class TeacherLoginActivity extends BaseActivity {
         txtSignup = (TextView) findViewById(R.id.txt_signup);
 
         setListener();
+
     }
 
     private void setListener() {
@@ -112,8 +121,10 @@ public class TeacherLoginActivity extends BaseActivity {
                         } else {
                             String teacherId  = task.getResult().getUser().getUid();
                             if(!TextUtils.isEmpty(teacherId)) {
-                                FirebaseUtility.saveTeacherProfile(teacherId);
+                                FirebaseUtility.saveTeacherProfile(TeacherLoginActivity.this,teacherId);
+                                AppPreferences.setTeacherId(TeacherLoginActivity.this,teacherId);
                             }
+
 
                             prefs.edit().putBoolean(Constants.TEACHER_LOGIN_FLAG, true).commit();
                             prefs.edit().putBoolean(Constants.STUDENT_LOGIN_FLAG, false).commit();

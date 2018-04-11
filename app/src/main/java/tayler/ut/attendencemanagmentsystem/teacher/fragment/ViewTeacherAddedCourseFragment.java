@@ -63,6 +63,16 @@ public class ViewTeacherAddedCourseFragment extends Fragment implements TeacherA
         if(listTeachersCourse!=null && listTeachersCourse.size()>0){
             listData.addAll(listTeachersCourse);
         }
+        else{
+
+
+
+            CourseData courseData = new CourseData();
+            courseData.setCourseYear("1stYear");
+            courseData.setCourseName("Course 1 1stYear");
+            courseData.setCourseId("-L9kGAh6vOxTvz4V1WFN");
+            listData.add(courseData);
+        }
         mAdapter=new TeacherAddedCoursesAdapter(getActivity(),listData,this);
         mRecyclerViewAddedSubjectList.setLayoutManager(manager);
         mRecyclerViewAddedSubjectList.setAdapter(mAdapter);

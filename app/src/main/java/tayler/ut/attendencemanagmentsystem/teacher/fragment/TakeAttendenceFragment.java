@@ -70,7 +70,9 @@ public class TakeAttendenceFragment extends Fragment
 
         progressDialog = new ProgressDialog(getActivity());
         progressDialog.setMessage("Loading...,Please Wait");
-        FirebaseUtility.getStudentByYear(mCourseData.getCourseYear(),this);
+
+        initview(view);
+        fetchAttendenceList();
         return view;
     }
 
@@ -78,11 +80,6 @@ public class TakeAttendenceFragment extends Fragment
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-
-
-
-        initview(view);
-        fetchAttendenceList();
     }
 
     private void fetchAttendenceList() {
@@ -134,8 +131,10 @@ public class TakeAttendenceFragment extends Fragment
     @Override
 
     public void onItemClick(View view, int position) {
-        Toast.makeText(getActivity(), "You clicked " + attendenceListModels.get(position) + " on row number " + position, Toast.LENGTH_SHORT).show();
-
+        AttendanceData attendanceData = attendenceListModels.get(position);
+        if(attendanceData!=null){
+            attendanceData.setPresent(!attendanceData.isPresent());
+        }
     }
 
     @Override
@@ -161,7 +160,7 @@ public class TakeAttendenceFragment extends Fragment
                     FirebaseUtility.updateAttendance(attendanceData,mCourseData.getCourseYear());
                 }
 
-                Toast.makeText(mApplicationContext, "Attendance Updated Successfully", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), "Attendance Updated Successfully", Toast.LENGTH_SHORT).show();
 
                 progressDialog.dismiss();
 
@@ -172,7 +171,20 @@ public class TakeAttendenceFragment extends Fragment
 
     @Override
     public void onSuccess() {
-        fetchAttendenceList();
+        attendenceListModels.clear();
+        listStudent.addAll(FirebaseUtility.getStudentListByYears(mCourseData.getCourseYear() ));
+        for(StudentData studentData : listStudent){
+            AttendanceData attendanceData = new AttendanceData(
+                    "","",studentData.getName(),
+                    mCourseData.getTeacherName(),mCourseData.getCourseYear(),
+                    studentData.getEmailId(),studentData.getMobileNumber(),
+                    DateUtils.getCurrentDateForStudent(),true
+            );
+
+            attendenceListModels.add(attendanceData);
+        }
+        mListAdapter.notifyDataSetChanged();
+//        fetchAttendenceList();
     }
 
     @Override

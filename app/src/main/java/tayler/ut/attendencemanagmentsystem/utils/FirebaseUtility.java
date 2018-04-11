@@ -5,11 +5,14 @@ import android.support.annotation.NonNull;
 import android.text.TextUtils;
 import android.util.Log;
 
+import com.firebase.ui.auth.data.model.User;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.google.gson.Gson;
@@ -27,6 +30,7 @@ import tayler.ut.attendencemanagmentsystem.model.attendance.AttendanceData;
 import tayler.ut.attendencemanagmentsystem.model.course.CourseData;
 import tayler.ut.attendencemanagmentsystem.model.student.StudentData;
 import tayler.ut.attendencemanagmentsystem.model.teacher.TeacherData;
+import tayler.ut.attendencemanagmentsystem.model.teacher.TeacherLocalData;
 
 /**
  * Created by sibaprasad on 07/04/18.
@@ -63,7 +67,7 @@ public class FirebaseUtility {
 
     private static final String TAG = "FirebaseUtility";
 
-    public static void saveTeacherProfile(String teacherId){
+    public static void saveTeacherProfile(final Context mContext,String teacherId){
 
         // teacherId = "-L9YZfr4aq4SLa7Uq2-a";
         Query teacherDetailsQuery = ApplicationContext.getFirebaseDatabaseReference().
@@ -74,11 +78,19 @@ public class FirebaseUtility {
                 TeacherData teacherData = null;
                 //_______________________________ check if server return null _________________________________
                 if (dataSnapshot.exists()) {
-                    //getting the data at specific node which is selected by input Restaurant name
+                    //getting the data a t specific node which is selected by input Restaurant name
                     for (DataSnapshot child : dataSnapshot.getChildren()) {
                         teacherData = child.getValue(TeacherData.class);
                         saveTeacherProfile(teacherData);
-                        setTeachersSubjectListFromCourseName(teacherData.getSubjects());
+                        List<CourseData> courseDataList = setTeachersSubjectListFromCourseName(teacherData.getSubjects());
+
+
+                        TeacherLocalData teacherLocalData = new TeacherLocalData();
+                        teacherLocalData.setTeacherData(teacherData);
+                        teacherLocalData.setCourseDataList(courseDataList);
+
+                        AppPreferences.setTeacherLocalData(mContext,teacherLocalData);
+
                     }
                     String name = teacherData.getName();
                     Log.i(TAG, "onDataChange: name from id is:  "+name);
@@ -97,6 +109,22 @@ public class FirebaseUtility {
 
     public static void saveTeacherProfile(TeacherData teacherData){
         teacherProfileData = teacherData;
+        if(teacherData!=null){
+            String userId = teacherData.getTeacherId();
+            ApplicationContext.getFirebaseDatabaseReference().child(FirebaseConstants.TEACHER_TABLE).child(userId)
+                    .setValue(teacherData)
+                    .addOnCompleteListener(new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
+                            if (task.isSuccessful()) {
+                                Log.i(TAG, "onComplete: success ");
+                            } else {
+                                Log.i(TAG, "onComplete: fail");
+                            }
+                        }
+                    });
+        }
+
     }
 
     public static List<CourseData> getTeachersAddedCourses(){
@@ -107,18 +135,20 @@ public class FirebaseUtility {
         currentTeacherCourses.add(courseData);
     }
 
-    public static void setTeachersSubjectListFromCourseName(String subjectNamewithComma){
+    public static List<CourseData> setTeachersSubjectListFromCourseName(String subjectNamewithComma){
 
+        List<CourseData> listdat  = new ArrayList<>();
         if(!TextUtils.isEmpty(subjectNamewithComma)){
-
             String[] array = subjectNamewithComma.split(",");
             List<String> list = Arrays. asList(array);
             for(CourseData courseData : listCourseAll){
                 if(list.contains(courseData.getCourseName())){
+                    listdat.add(courseData);
                     setTeachersSubjectList(courseData);
                 }
             }
         }
+        return listdat;
     }
 
     public static void updateTeacherProfileData(String subjects){
@@ -400,7 +430,61 @@ public class FirebaseUtility {
 
         }
 
-        ChildEventListener childEventListener = new ChildEventListener() {
+
+        DatabaseReference database = FirebaseDatabase.getInstance().getReference();
+     //   DatabaseReference ref = database.child("profiles");
+
+        database.child(FirebaseConstants.STUDENT_TABLE+year).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for (DataSnapshot noteDataSnapshot : dataSnapshot.getChildren()) {
+                     StudentData studentData = noteDataSnapshot.getValue(StudentData.class);
+
+                    switch (year){
+                        case FirebaseConstants.FIRSTYEAR :
+                            listStudentsFirstYear.add(studentData);
+                            break;
+                        case FirebaseConstants.SECOND_YEAR :
+                            listStudentsSecondYear.add(studentData);
+                            break;
+                        case FirebaseConstants.THIRD_YEAR :
+                            listStudents3rdYear.add(studentData);
+                            break;
+                        case FirebaseConstants.FOURTH_YEAR :
+                            listStudents4thYear.add(studentData);
+                            break;
+                    }
+
+                    if(onFirebasseActionListen!=null){
+                        onFirebasseActionListen.onSuccess();
+                    }
+
+                }
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
+        /*Query phoneQuery = ref.orderByChild(phoneNo).equalTo("+923336091371");
+        phoneQuery.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for(DataSnapshot singleSnapshot : dataSnapshot.getChildren()){
+                    user = singleSnapshot.getValue(User.class);
+                }
+            }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                Log.e(TAG, "onCancelled", databaseError.toException());
+            }
+        });*/
+
+
+        /*ChildEventListener childEventListener = new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String previousChildName) {
                 Log.d(TAG, "onChildAdded:" + dataSnapshot.getKey());
@@ -426,10 +510,13 @@ public class FirebaseUtility {
                              listStudents4thYear.add(studentData);
                             break;
                     }
+
+                    if(onFirebasseActionListen!=null){
+                        onFirebasseActionListen.onSuccess();
+                    }
+
                 }
-                if(onFirebasseActionListen!=null){
-                    onFirebasseActionListen.onSuccess();
-                }
+
             }
 
             @Override
@@ -451,13 +538,8 @@ public class FirebaseUtility {
             @Override
             public void onChildMoved(DataSnapshot dataSnapshot, String previousChildName) {
                 Log.d(TAG, "onChildMoved:" + dataSnapshot.getKey());
-
-                // A comment has changed position, use the key to determine if we are
-                // displaying this comment and if so move it.
                 Comment movedComment = dataSnapshot.getValue(Comment.class);
                 String commentKey = dataSnapshot.getKey();
-
-                // ...
             }
 
             @Override
@@ -466,7 +548,7 @@ public class FirebaseUtility {
 
             }
         };
-        ApplicationContext.getFirebaseDatabaseReference().addChildEventListener(childEventListener);
+        ApplicationContext.getFirebaseDatabaseReference().addChildEventListener(childEventListener);*/
 
 
 

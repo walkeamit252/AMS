@@ -7,6 +7,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CompoundButton;
 import android.widget.LinearLayout;
 import android.widget.Switch;
 import android.widget.TextView;
@@ -43,7 +44,7 @@ public class AttendenceListAdapter extends RecyclerView.Adapter<AttendenceListAd
 
     // binds the data to the TextView in each row
     @Override
-    public void onBindViewHolder(ViewHolder holder, final int position) {
+    public void onBindViewHolder(final ViewHolder holder, final int position) {
         AttendanceData attendanceData = mData.get(position);
         holder.mTextViewStudentName.setText("Name : " + "" + mData.get(position).getStudentName());
         holder.textViewDate.setText("Date : " + "" + mData.get(position).getAttandanceDate());
@@ -68,6 +69,16 @@ public class AttendenceListAdapter extends RecyclerView.Adapter<AttendenceListAd
             holder.textViewPresentOrAbsent.setTextColor(ContextCompat.getColor(holder.textViewPresentOrAbsent.getContext(),
                     R.color.button_color));
         }
+
+        holder.mSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                if(mClickListener!=null){
+                    mClickListener.onAbsentPresentClick(position);
+                }
+            }
+        });
+
     }
 
     // total number of rows
@@ -92,6 +103,7 @@ public class AttendenceListAdapter extends RecyclerView.Adapter<AttendenceListAd
             textViewPresentOrAbsent = itemView.findViewById(R.id.textViewPresentOrAbsent);
             textViewDate = itemView.findViewById(R.id.textViewDate);
             llPresentAbsent = itemView.findViewById(R.id.llPresentAbsent);
+            mSwitch = itemView.findViewById(R.id.mSwitchAttendance);
             itemView.setOnClickListener(this);
         }
 

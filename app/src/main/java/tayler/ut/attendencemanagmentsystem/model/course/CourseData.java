@@ -7,7 +7,7 @@ import android.os.Parcelable;
  * Created by sibaprasad on 07/04/18.
  */
 
-public class CourseData implements Parcelable {
+public  class CourseData implements Parcelable {
     String courseId;
     String courseName;
     String courseYear;

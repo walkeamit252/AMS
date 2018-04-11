@@ -11,9 +11,16 @@ import android.util.Log;
 
 import com.google.firebase.auth.FirebaseAuth;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import tayler.ut.attendencemanagmentsystem.R;
+import tayler.ut.attendencemanagmentsystem.model.course.CourseData;
+import tayler.ut.attendencemanagmentsystem.model.teacher.TeacherData;
+import tayler.ut.attendencemanagmentsystem.model.teacher.TeacherLocalData;
 import tayler.ut.attendencemanagmentsystem.student.activity.StudentMenuActivity;
 import tayler.ut.attendencemanagmentsystem.teacher.activity.TeacherMenuActivity;
+import tayler.ut.attendencemanagmentsystem.utils.AppPreferences;
 import tayler.ut.attendencemanagmentsystem.utils.Constants;
 import tayler.ut.attendencemanagmentsystem.utils.DateUtils;
 import tayler.ut.attendencemanagmentsystem.utils.FirebaseUtility;
@@ -44,6 +51,27 @@ public class SplashActivity extends BaseActivity {
         Log.i(TAG, "onCreate: "+ DateUtils.getCurrentDateForStudent());
 
 
+
+        TeacherLocalData teacherLocalData = new TeacherLocalData();
+        TeacherData teacherData = new TeacherData();
+        teacherData.setTeacherId("123");
+        teacherData.setEmailId("s@s.com");
+        teacherData.setSubjects("s@s.com");
+        teacherData.setYear("asdasdas");
+        CourseData courseData = new CourseData();
+        courseData.setSyllabusFilePath("cdfsdfds");
+        courseData.setCourseName("dasdasda");
+        courseData.setCourseYear("FirstYear");
+        List<CourseData> listC = new ArrayList<>();
+        listC.add(courseData);
+        teacherLocalData.setTeacherData(teacherData);
+        teacherLocalData.setCourseDataList(listC);
+
+        AppPreferences.setTeacherLocalData(SplashActivity.this,teacherLocalData);
+
+        TeacherLocalData teacherLocalData1 = AppPreferences.getTeacherLocalData(SplashActivity.this);
+
+
          moveToNextScreen();
     }
 
@@ -66,7 +94,7 @@ public class SplashActivity extends BaseActivity {
 
                 if (auth.getCurrentUser() != null && isteacher ) {
                     startActivity(new Intent(SplashActivity.this, TeacherMenuActivity.class));
-                    FirebaseUtility.saveTeacherProfile(auth.getCurrentUser().getUid());
+                    FirebaseUtility.saveTeacherProfile(SplashActivity.this,auth.getCurrentUser().getUid());
                     finish();
                 }
                 else if (auth.getCurrentUser() !=null && isStudent){
