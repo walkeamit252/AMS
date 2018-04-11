@@ -69,7 +69,7 @@ public class TakeOrViewAttendanceTabbedFragment extends Fragment  implements Fir
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-
+        progressDialog = new ProgressDialog(getActivity());
         final View view = inflater.inflate(R.layout.fragment_tabbed_view_take_attendance, container, false);
         Bundle bundle= getArguments();
         if(bundle!=null){
@@ -82,9 +82,7 @@ public class TakeOrViewAttendanceTabbedFragment extends Fragment  implements Fir
     }
 
     private void initTabs(){
-        tabLayout.addTab(tabLayout.newTab().setText("Tab 1"));
-        tabLayout.addTab(tabLayout.newTab().setText("Tab 2"));
-        tabLayout.addTab(tabLayout.newTab().setText("Tab 3"));
+
         tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
 
 
@@ -93,7 +91,7 @@ public class TakeOrViewAttendanceTabbedFragment extends Fragment  implements Fir
         adapter.addFragment(TakeOrViewAttendenceFragment.newInstance(Constants.TAB_TAKE_ATTENDANCE,attendenceListModels,mCourseData),"Attendance");
         adapter.addFragment(TakeOrViewAttendenceFragment.newInstance(Constants.TAB_VIEW_ATTENDANCE,attendenceListModels,mCourseData),"View Attendance");
         viewPager.setAdapter(adapter);
-
+        tabLayout.setupWithViewPager(viewPager);
         viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
     }
 
@@ -101,7 +99,7 @@ public class TakeOrViewAttendanceTabbedFragment extends Fragment  implements Fir
     public void onViewCreated(@NonNull View view,
                               @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        progressDialog = new ProgressDialog(getActivity());
+
         mRecyclerViewAddedSubjectList=view.findViewById(R.id.mRecyclerViewAddedSubjectList);
         txtNoDataFound=view.findViewById(R.id.txtNoDataFound);
         tabLayout = (TabLayout)view.findViewById(R.id.tab_layout);

@@ -66,20 +66,10 @@ public class ViewTeacherAddedCourseFragment extends Fragment implements TeacherA
             listData.addAll(listTeachersCourse);
         }
         else{
-
-
             List<CourseData> listTeachCourses =  new TeacherDataManager(getActivity()).getTeachersCourseList();
-
-
             if(listTeachCourses!=null && listTeachCourses.size()>0){
                 listData.addAll(listTeachCourses);
             }
-
-            CourseData courseData = new CourseData();
-            courseData.setCourseYear("1stYear");
-            courseData.setCourseName("Course 1 1stYear");
-            courseData.setCourseId("-L9kGAh6vOxTvz4V1WFN");
-            listData.add(courseData);
         }
         if(listData.size()>0) {
             mAdapter = new TeacherAddedCoursesAdapter(getActivity(), listData, this);

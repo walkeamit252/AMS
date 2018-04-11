@@ -53,6 +53,7 @@ public class TakeOrViewAttendenceFragment extends Fragment
     private FirebaseDatabase database;
     private ArrayList<AttendanceData> attendenceListModels ;
     private CourseData mCourseData;
+    private List<StudentData> listStudent = new ArrayList<>();
 
 
     private ProgressDialog progressDialog;
@@ -120,7 +121,17 @@ public class TakeOrViewAttendenceFragment extends Fragment
         DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(recyclerView.getContext(), mLayoutManager.getOrientation());
         recyclerView.addItemDecoration(dividerItemDecoration);
 
+        if(attendenceListModels!=null && attendenceListModels.size()>0){
+            setRecyclerAdapter();
+        }
+        else{
+            fetchAttendenceList();
+        }
 
+
+    }
+
+    private void setRecyclerAdapter(){
         mListAdapter = new AttendenceListAdapter(getActivity(), attendenceListModels, tab);
         recyclerView.setAdapter(mListAdapter);
         mListAdapter.notifyDataSetChanged();
@@ -181,5 +192,26 @@ public class TakeOrViewAttendenceFragment extends Fragment
     @Override
     public void onFail() {
 
+    }
+    private void fetchAttendenceList() {
+
+        progressDialog.show();
+
+        listStudent.addAll(FirebaseUtility.getStudentListByYears(mCourseData.getCourseYear() ));
+        if(listStudent.size()==0){
+            FirebaseUtility.getStudentByYear(mCourseData.getCourseYear(),this);
+        }
+        for(StudentData studentData : listStudent){
+            AttendanceData attendanceData = new AttendanceData(
+                    "","",studentData.getName(),
+                    mCourseData.getTeacherName(),mCourseData.getCourseYear(),
+                    studentData.getEmailId(),studentData.getMobileNumber(),
+                    DateUtils.getCurrentDateForStudent(),true
+            );
+
+            attendenceListModels.add(attendanceData);
+            setRecyclerAdapter();
+        }
+        progressDialog.dismiss();
     }
 }

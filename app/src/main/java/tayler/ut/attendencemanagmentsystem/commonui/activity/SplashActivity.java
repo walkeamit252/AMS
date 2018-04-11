@@ -65,11 +65,11 @@ public class SplashActivity extends BaseActivity {
         List<CourseData> listC = new ArrayList<>();
         listC.add(courseData);
         teacherLocalData.setTeacherData(teacherData);
-        teacherLocalData.setCourseDataList(listC);
+      //  teacherLocalData.setCourseDataList(listC);
 
-        AppPreferences.setTeacherLocalData(SplashActivity.this,teacherLocalData);
+      //  AppPreferences.setTeacherLocalData(SplashActivity.this,teacherLocalData);
 
-        TeacherLocalData teacherLocalData1 = AppPreferences.getTeacherLocalData(SplashActivity.this);
+   //     TeacherLocalData teacherLocalData1 = AppPreferences.getTeacherLocalData(SplashActivity.this);
 
 
          moveToNextScreen();
