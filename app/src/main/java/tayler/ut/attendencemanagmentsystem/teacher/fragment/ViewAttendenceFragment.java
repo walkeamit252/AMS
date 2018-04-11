@@ -79,7 +79,7 @@ public class ViewAttendenceFragment extends Fragment implements AttendenceListAd
         DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(recyclerView.getContext(), mLayoutManager.getOrientation());
         recyclerView.addItemDecoration(dividerItemDecoration);
 
-        mListAdapter = new AttendenceListAdapter(getActivity(), attendenceListModels,"ViewAttendence");
+       // mListAdapter = new AttendenceListAdapter(getActivity(), attendenceListModels ,t);
         recyclerView.setAdapter(mListAdapter);
         mListAdapter.notifyDataSetChanged();
         mListAdapter.setClickListener(this);

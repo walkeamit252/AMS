@@ -4,6 +4,8 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
 
 
@@ -59,14 +61,20 @@ public class AppPreferences {
         editor.commit();
     }
 
-    public static void setTeacherLocalData(Context context, TeacherLocalData teacherData) {
-        String teacherLocalDataString =  new Gson().toJson(teacherData);
-        setStringPreference(context, Key.TEACHER_LOCALDATA, teacherLocalDataString);
+    public static void setTeacherLocalData(Context context, TeacherLocalData teacherLocalData) {
+        String teacherLocalDataAsString = null;
+        try {
+            teacherLocalDataAsString = new ObjectMapper().writeValueAsString(teacherLocalData);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
+        if(teacherLocalDataAsString!=null) {
+            setStringPreference(context, Key.TEACHER_LOCALDATA, teacherLocalDataAsString);
+        }
     }
 
-    public static TeacherLocalData getTeacherLocalData(Context context) {
-        String json = getStringPreference(context, Key.TEACHER_LOCALDATA, "");
-        return new Gson().fromJson(json, TeacherLocalData.class);
+    public static String getTeacherLocalData(Context context) {
+        return getStringPreference(context, Key.TEACHER_LOCALDATA, "");
     }
 
     public static void setTeacherId(Context context, String teacherId) {

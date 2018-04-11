@@ -13,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,6 +23,7 @@ import tayler.ut.attendencemanagmentsystem.model.course.CourseData;
 import tayler.ut.attendencemanagmentsystem.teacher.adapter.TeacherAddedCoursesAdapter;
 import tayler.ut.attendencemanagmentsystem.utils.Constants;
 import tayler.ut.attendencemanagmentsystem.utils.FirebaseUtility;
+import tayler.ut.attendencemanagmentsystem.utils.TeacherDataManager;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -66,6 +68,12 @@ public class ViewTeacherAddedCourseFragment extends Fragment implements TeacherA
         else{
 
 
+            List<CourseData> listTeachCourses =  new TeacherDataManager(getActivity()).getTeachersCourseList();
+
+
+            if(listTeachCourses!=null && listTeachCourses.size()>0){
+                listData.addAll(listTeachCourses);
+            }
 
             CourseData courseData = new CourseData();
             courseData.setCourseYear("1stYear");
@@ -73,22 +81,20 @@ public class ViewTeacherAddedCourseFragment extends Fragment implements TeacherA
             courseData.setCourseId("-L9kGAh6vOxTvz4V1WFN");
             listData.add(courseData);
         }
-        mAdapter=new TeacherAddedCoursesAdapter(getActivity(),listData,this);
-        mRecyclerViewAddedSubjectList.setLayoutManager(manager);
-        mRecyclerViewAddedSubjectList.setAdapter(mAdapter);
-    }
-
-    private void setCourseDatafromServer(){
-
+        if(listData.size()>0) {
+            mAdapter = new TeacherAddedCoursesAdapter(getActivity(), listData, this);
+            mRecyclerViewAddedSubjectList.setLayoutManager(manager);
+            mRecyclerViewAddedSubjectList.setAdapter(mAdapter);
+        }
+        else{
+            Toast.makeText(getActivity(),"No Courses Added Yet",Toast.LENGTH_LONG).show();
+        }
     }
 
     @Override
     public void onItemClick(View view, int position) {
-        TakeAttendenceFragment fragment=new TakeAttendenceFragment();
-        Bundle bundle =new Bundle();
-        bundle.putParcelable(Constants.COURSE_DATA,listData.get(position));
-        fragment.setArguments(bundle);
         FragmentManager manager = getActivity().getSupportFragmentManager();
-        manager.beginTransaction().replace(R.id.frame_layout,fragment).commit();
+        manager.beginTransaction().replace(R.id.frame_layout,
+                TakeOrViewAttendanceTabbedFragment.newInstance(listData.get(position))).commit();
     }
 }

@@ -171,7 +171,7 @@ public class TeacherSignupActivity extends BaseActivity {
                     "",
                     etPassword.getText().toString().trim()
             );
-            FirebaseUtility.updateTeacher(teacherData);
+            FirebaseUtility.updateTeacher(TeacherSignupActivity.this,teacherData);
 
         SignupModel signupModel = new SignupModel(userId, name, email, number);
         signupModel.setUserid(userId);

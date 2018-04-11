@@ -13,26 +13,26 @@ import android.widget.Switch;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import tayler.ut.attendencemanagmentsystem.R;
 import tayler.ut.attendencemanagmentsystem.model.StudentListModel;
 import tayler.ut.attendencemanagmentsystem.model.attendance.AttendanceData;
 import tayler.ut.attendencemanagmentsystem.model.student.StudentData;
+import tayler.ut.attendencemanagmentsystem.utils.Constants;
 
 public class AttendenceListAdapter extends RecyclerView.Adapter<AttendenceListAdapter.ViewHolder> {
 
-    private ArrayList<AttendanceData> mData;
+    private List<AttendanceData> mData;
     private LayoutInflater mInflater;
     private ItemClickListener mClickListener;
-    private Context context;
-    private String activityName;
+    private int tabType;
 
     // data is passed into the constructor
-    public AttendenceListAdapter(Context context, ArrayList<AttendanceData> data, String activityName) {
+    public AttendenceListAdapter(Context context,List<AttendanceData> data,int tabType) {
         this.mInflater = LayoutInflater.from(context);
         this.mData = data;
-        this.context = context;
-        this.activityName = activityName;
+        this.tabType = tabType;
     }
 
     // inflates the row layout from xml when needed
@@ -45,6 +45,16 @@ public class AttendenceListAdapter extends RecyclerView.Adapter<AttendenceListAd
     // binds the data to the TextView in each row
     @Override
     public void onBindViewHolder(final ViewHolder holder, final int position) {
+
+        if(tabType== Constants.TAB_TAKE_ATTENDANCE){
+            holder.llPresentAbsent.setVisibility(View.VISIBLE);
+            holder.textViewDate.setVisibility(View.VISIBLE);
+        }
+        else{
+            holder.llPresentAbsent.setVisibility(View.GONE);
+            holder.textViewDate.setVisibility(View.GONE);
+        }
+
         AttendanceData attendanceData = mData.get(position);
         holder.mTextViewStudentName.setText("Name : " + "" + mData.get(position).getStudentName());
         holder.textViewDate.setText("Date : " + "" + mData.get(position).getAttandanceDate());

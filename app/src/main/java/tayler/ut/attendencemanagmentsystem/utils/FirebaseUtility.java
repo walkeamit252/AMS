@@ -87,7 +87,7 @@ public class FirebaseUtility {
 
                         TeacherLocalData teacherLocalData = new TeacherLocalData();
                         teacherLocalData.setTeacherData(teacherData);
-                        teacherLocalData.setCourseDataList(courseDataList);
+                        teacherLocalData.setTeacherCourseList(courseDataList);
 
                         AppPreferences.setTeacherLocalData(mContext,teacherLocalData);
 
@@ -308,7 +308,7 @@ public class FirebaseUtility {
      * @param
      */
 
-    public static void updateTeacher( TeacherData teacherData){
+    public static void updateTeacher(final Context mContext,final TeacherData teacherData){
         if(teacherData!=null){
             String userId = teacherData.getTeacherId();
             if(TextUtils.isEmpty(userId)){
@@ -323,6 +323,11 @@ public class FirebaseUtility {
                         public void onComplete(@NonNull Task<Void> task) {
                             if (task.isSuccessful()) {
                                 Log.i(TAG, "onComplete: success ");
+
+                                TeacherLocalData teacherLocalData = new TeacherLocalData();
+                                teacherLocalData.setTeacherData(teacherData);
+                                AppPreferences.setTeacherLocalData(mContext,teacherLocalData);
+
                             } else {
                                 Log.i(TAG, "onComplete: fail");
                             }
@@ -914,5 +919,7 @@ public class FirebaseUtility {
         void onSuccess();
         void onFail();
     }
+
+
 
 }
