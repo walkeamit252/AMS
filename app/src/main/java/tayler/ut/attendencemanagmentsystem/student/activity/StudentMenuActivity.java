@@ -10,14 +10,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.widget.TextView;
-
 import tayler.ut.attendencemanagmentsystem.R;
 import tayler.ut.attendencemanagmentsystem.commonui.fragments.ProfileFragment;
 import tayler.ut.attendencemanagmentsystem.student.fragment.ViewStudentSyllabusListFragment;
 import tayler.ut.attendencemanagmentsystem.student.fragment.ViewStudentSyllabuswiseAttendanceFragment;
 
 public class StudentMenuActivity extends AppCompatActivity {
-
     BottomNavigationView bottomNavigationView;
     TextView mToolbarTitle;
 

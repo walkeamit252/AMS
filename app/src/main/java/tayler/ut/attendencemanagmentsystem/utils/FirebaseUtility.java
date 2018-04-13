@@ -156,7 +156,6 @@ public class FirebaseUtility {
             String mySubjects = teacherProfileData.getSubjects();
             mySubjects = mySubjects+","+subjects;
             teacherProfileData.setSubjects(mySubjects);
-
             saveTeacherProfile(teacherProfileData);
         }
     }
@@ -300,7 +299,6 @@ public class FirebaseUtility {
                     });
         }
     }
-
     /**
      * Update Teachers Subjects
      *
@@ -367,9 +365,7 @@ public class FirebaseUtility {
                 courseId = ApplicationContext.getFirebaseDatabaseReference().push().getKey();
                 courseData.setCourseId(courseId);
             }
-
             setTeachersSubjectList(courseData);
-
             ApplicationContext.getFirebaseDatabaseReference().child(FirebaseConstants.COURSE_TABLE).child(courseId)
                     .setValue(courseData)
                     .addOnCompleteListener(new OnCompleteListener<Void>() {
@@ -386,10 +382,7 @@ public class FirebaseUtility {
     }
 
     public static List<AttendanceData> getAttendanceByYear(Context context,String year){
-
         List<AttendanceData> listAttendance =  new ArrayList<>();
-
-
         return listAttendance;
     }
 
