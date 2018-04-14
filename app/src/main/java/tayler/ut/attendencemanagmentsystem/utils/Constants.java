@@ -21,6 +21,7 @@ public class Constants {
         String TAB_TYPE = "tabType";
         String COURSE_DATA = "COURSE_DATA";
         String ATTENDANCE_LIST = "attendanceList";
+        String ATTENDANCE_DATA = "attendanceData";
     }
 
 }

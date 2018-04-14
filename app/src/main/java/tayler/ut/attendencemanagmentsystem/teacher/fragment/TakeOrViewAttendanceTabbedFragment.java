@@ -127,10 +127,10 @@ public class TakeOrViewAttendanceTabbedFragment extends Fragment  implements Fir
         }
         for(StudentData studentData : listStudent){
             AttendanceData attendanceData = new AttendanceData(
-                    "","",studentData.getName(),
+                    "","",studentData.getStudentId(),studentData.getName(),
                     mCourseData.getTeacherName(),mCourseData.getCourseYear(),
                     studentData.getEmailId(),studentData.getMobileNumber(),
-                    DateUtils.getCurrentDateForStudent(),true
+                    DateUtils.getCurrentDateForStudent(),true,mCourseData.getCourseName()
             );
 
             attendenceListModels.add(attendanceData);

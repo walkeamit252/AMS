@@ -522,6 +522,8 @@ public static int getMonthNumberFromMonthname(String monthName) {
         return time;
     }
 
+
+
     public static String getNextDateForGoal() {
         LocalDate localDate = new DateTime().plusDays(1).toLocalDate();
         DateTimeFormatter fmt = DateTimeFormat.forPattern("yyyy-MM-dd");

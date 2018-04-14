@@ -11,8 +11,21 @@ public class AttendanceData implements Parcelable{
 
     String attendanceId;
 
+    public String getSubjectName() {
+        return subjectName;
+    }
+
+    public void setSubjectName(String subjectName) {
+        this.subjectName = subjectName;
+    }
+
+    String subjectName;
+
     String studentId;
     String teacherId;
+
+    public AttendanceData() {
+    }
 
     public String getStudentId() {
         return studentId;
@@ -30,11 +43,12 @@ public class AttendanceData implements Parcelable{
         return CREATOR;
     }
 
-    public AttendanceData(String attendanceid, String teacherId,
+    public AttendanceData(String attendanceid, String teacherId,String studentId,
                           String studentName, String teacherName,
                           String year, String emailId,
                           String mobileNumber, String attandanceDate,
-                          boolean isPresent) {
+                          boolean isPresent,String subjectname
+    ) {
         this.attendanceId = attendanceid;
         this.studentId = studentId;
         this.teacherId = teacherId;
@@ -45,6 +59,7 @@ public class AttendanceData implements Parcelable{
         this.mobileNumber = mobileNumber;
         this.attandanceDate = attandanceDate;
         this.isPresent = isPresent;
+        this.subjectName = subjectname;
     }
 
     public void setStudentId(String studentId) {
@@ -130,6 +145,8 @@ public class AttendanceData implements Parcelable{
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(this.attendanceId);
+        dest.writeString(this.subjectName);
         dest.writeString(this.studentId);
         dest.writeString(this.teacherId);
         dest.writeString(this.studentName);
@@ -142,6 +159,8 @@ public class AttendanceData implements Parcelable{
     }
 
     protected AttendanceData(Parcel in) {
+        this.attendanceId = in.readString();
+        this.subjectName = in.readString();
         this.studentId = in.readString();
         this.teacherId = in.readString();
         this.studentName = in.readString();

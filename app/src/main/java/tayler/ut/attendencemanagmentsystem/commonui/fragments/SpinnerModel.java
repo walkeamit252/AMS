@@ -7,6 +7,20 @@ package tayler.ut.attendencemanagmentsystem.commonui.fragments;
 public class SpinnerModel {
 
     String monthName;
+    int monthNumber;
+
+    public int getMonthNumber() {
+        return monthNumber;
+    }
+
+    public SpinnerModel(String monthName, int monthNumber) {
+        this.monthName = monthName;
+        this.monthNumber = monthNumber;
+    }
+
+    public void setMonthNumber(int monthNumber) {
+        this.monthNumber = monthNumber;
+    }
 
     public String getMonthName() {
         return monthName;

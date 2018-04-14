@@ -6,6 +6,7 @@ import android.os.Parcelable;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -30,6 +31,7 @@ import java.util.Map;
 import tayler.ut.attendencemanagmentsystem.app.ApplicationContext;
 import tayler.ut.attendencemanagmentsystem.R;
 import tayler.ut.attendencemanagmentsystem.adapter.AttendenceListAdapter;
+import tayler.ut.attendencemanagmentsystem.commonui.fragments.ShowAttendanceDetailFragment;
 import tayler.ut.attendencemanagmentsystem.model.StudentListModel;
 import tayler.ut.attendencemanagmentsystem.model.attendance.AttendanceData;
 import tayler.ut.attendencemanagmentsystem.model.course.CourseData;
@@ -128,6 +130,14 @@ public class TakeOrViewAttendenceFragment extends Fragment
             fetchAttendenceList();
         }
 
+        if(tab== Constants.TAB_VIEW_ATTENDANCE){
+            mButtonSave.setVisibility(View.GONE);
+        }
+        else {
+            mButtonSave.setVisibility(View.VISIBLE);
+
+        }
+
 
     }
 
@@ -141,27 +151,30 @@ public class TakeOrViewAttendenceFragment extends Fragment
     @Override
 
     public void onItemClick(View view, int position) {
+        AttendanceData attendanceData = attendenceListModels.get(position);
         if(tab == Constants.TAB_TAKE_ATTENDANCE){
-            AttendanceData attendanceData = attendenceListModels.get(position);
+
             if (attendanceData != null) {
                 attendanceData.setPresent(!attendanceData.isPresent());
             }
         }
         else {
-          // open your dialog Fragment
+            FragmentManager manager = getActivity().getSupportFragmentManager();
+            manager.beginTransaction().replace(R.id.frame_layout,
+                    ShowAttendanceDetailFragment.newInstance(attendanceData)).commit();
         }
     }
 
     @Override
     public void onAbsentPresentClick(int position) {
         AttendanceData attendanceData = attendenceListModels.get(position);
-        if(attendanceData.isPresent()){
+       /* if(attendanceData.isPresent()){
             attendanceData.setPresent(false);
         }
         else{
             attendanceData.setPresent(true);
-        }
-        mListAdapter.notifyItemChanged(position);
+        }*/
+     //   mListAdapter.notifyItemChanged(position);
     }
 
     @Override
@@ -203,10 +216,10 @@ public class TakeOrViewAttendenceFragment extends Fragment
         }
         for(StudentData studentData : listStudent){
             AttendanceData attendanceData = new AttendanceData(
-                    "","",studentData.getName(),
+                    "","",studentData.getStudentId(),studentData.getName(),
                     mCourseData.getTeacherName(),mCourseData.getCourseYear(),
                     studentData.getEmailId(),studentData.getMobileNumber(),
-                    DateUtils.getCurrentDateForStudent(),true
+                    DateUtils.getCurrentDateForStudent(),true,mCourseData.getCourseName()
             );
 
             attendenceListModels.add(attendanceData);

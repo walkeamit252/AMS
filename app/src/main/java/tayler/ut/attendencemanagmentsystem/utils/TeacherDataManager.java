@@ -70,4 +70,21 @@ public class TeacherDataManager {
         }
     }
 
+    public void updateTeacherAddedCourse(CourseData courseData) {
+        TeacherLocalData teacherLocalData = getTeacherLocalDataModel();
+        if (teacherLocalData != null) {
+            List<CourseData> listCourseData = teacherLocalData.getTeacherCourseList();
+            if(listCourseData!=null) {
+                listCourseData.add(courseData);
+                teacherLocalData.setTeacherCourseList(listCourseData);
+            }
+            else{
+                List<CourseData> listCourseDataLoc = new ArrayList<>();
+                listCourseDataLoc.add(courseData);
+                teacherLocalData.setTeacherCourseList(listCourseDataLoc);
+            }
+            AppPreferences.setTeacherLocalData(context,teacherLocalData);
+        }
+    }
+
 }

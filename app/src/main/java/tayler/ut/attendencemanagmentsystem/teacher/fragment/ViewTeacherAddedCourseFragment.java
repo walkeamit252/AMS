@@ -20,6 +20,7 @@ import java.util.List;
 
 import tayler.ut.attendencemanagmentsystem.R;
 import tayler.ut.attendencemanagmentsystem.model.course.CourseData;
+import tayler.ut.attendencemanagmentsystem.model.teacher.TeacherLocalData;
 import tayler.ut.attendencemanagmentsystem.teacher.adapter.TeacherAddedCoursesAdapter;
 import tayler.ut.attendencemanagmentsystem.utils.Constants;
 import tayler.ut.attendencemanagmentsystem.utils.FirebaseUtility;
@@ -61,7 +62,7 @@ public class ViewTeacherAddedCourseFragment extends Fragment implements TeacherA
     private void setRecyclerView() {
         manager=new LinearLayoutManager(getActivity());
         listData = new ArrayList<>();
-        List<CourseData> listTeachersCourse = FirebaseUtility.getTeachersAddedCourses();
+        List<CourseData> listTeachersCourse = new TeacherDataManager(getActivity()).getTeachersCourseList();
         if(listTeachersCourse!=null && listTeachersCourse.size()>0){
             listData.addAll(listTeachersCourse);
         }

@@ -913,6 +913,61 @@ public class FirebaseUtility {
         void onFail();
     }
 
+    public static List<AttendanceData> getAttendanceListById(String year,String studentId,
+                                                             String subject,String date,
+                                                              final OnAttendanceActionListener onAttendanceActionListene){
+//        DatabaseReference mFriendsRef = FirebaseDatabase.getInstance().getReference().child("friends").child(studentId);
+//
+//        DatabaseReference mUsersRef = FirebaseDatabase.getInstance().getReference().child("users");
 
+
+        final List<AttendanceData> attendanceDataList = new ArrayList<>();
+
+        Query teacherDetailsQuery = ApplicationContext.getFirebaseDatabaseReference().
+                child(FirebaseConstants.ATTENDANCE_TABLE+year).orderByChild(FirebaseConstants.STUDENT_ID).equalTo(studentId);
+        teacherDetailsQuery.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                AttendanceData attendanceData = null;
+                //_______________________________ check if server return null _________________________________
+                if (dataSnapshot.exists()) {
+                    //getting the data a t specific node which is selected by input Restaurant name
+                    for (DataSnapshot child : dataSnapshot.getChildren()) {
+                        attendanceData = child.getValue(AttendanceData.class);
+
+                        String dateOfATtendance= attendanceData.getAttandanceDate();
+                        String dateTemp = dateOfATtendance;
+                        if(!TextUtils.isEmpty(dateOfATtendance)){
+                            String[] strArray = dateOfATtendance.split("-");
+                            if(strArray!=null && strArray.length>2){
+                                String month = strArray[1];
+                                if(dateTemp.contains(month)){
+                                    attendanceDataList.add(attendanceData);
+                                }
+                            }
+                        }
+                    }
+                    if(onAttendanceActionListene!=null){
+                        onAttendanceActionListene.onSuccess(attendanceDataList);
+                    }
+
+                    Log.i(TAG, "onDataChange: name from id is:  "+attendanceData.getStudentName());
+                } else {
+                    Log.i(TAG, " name does'nt exists!");
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+return attendanceDataList;
+    }
+
+    public interface OnAttendanceActionListener{
+        void onSuccess(List<AttendanceData> list);
+        void onFail();
+    }
 
 }

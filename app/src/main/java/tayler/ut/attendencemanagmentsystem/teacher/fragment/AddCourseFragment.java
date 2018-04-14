@@ -38,6 +38,7 @@ import tayler.ut.attendencemanagmentsystem.adapter.CourseListAdapter;
 import tayler.ut.attendencemanagmentsystem.model.course.CourseData;
 import tayler.ut.attendencemanagmentsystem.utils.Constants;
 import tayler.ut.attendencemanagmentsystem.utils.FirebaseUtility;
+import tayler.ut.attendencemanagmentsystem.utils.TeacherDataManager;
 
 import static android.app.Activity.RESULT_OK;
 
@@ -183,6 +184,10 @@ public class AddCourseFragment extends Fragment implements View.OnClickListener,
                         if(courseDataAfterUpload!=null ) {
                             courseDataAfterUpload.setSyllabusFilePath(url);
                             FirebaseUtility.updateCourse(courseDataAfterUpload);
+
+                            new TeacherDataManager(getActivity()).updateTeacherAddedCourse(courseDataAfterUpload);
+
+
                             FirebaseUtility.updateTeacherProfileData(courseDataAfterUpload.getCourseName());
                             Toast.makeText(getActivity(), "Success", Toast.LENGTH_LONG).show();
                         }

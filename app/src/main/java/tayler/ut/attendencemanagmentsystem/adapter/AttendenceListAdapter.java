@@ -46,6 +46,8 @@ public class AttendenceListAdapter extends RecyclerView.Adapter<AttendenceListAd
     @Override
     public void onBindViewHolder(final ViewHolder holder, final int position) {
 
+        final AttendanceData attendanceData = mData.get(position);
+
         if(tabType== Constants.TAB_TAKE_ATTENDANCE){
             holder.llPresentAbsent.setVisibility(View.VISIBLE);
             holder.textViewDate.setVisibility(View.VISIBLE);
@@ -55,7 +57,7 @@ public class AttendenceListAdapter extends RecyclerView.Adapter<AttendenceListAd
             holder.textViewDate.setVisibility(View.GONE);
         }
 
-        AttendanceData attendanceData = mData.get(position);
+
         holder.mTextViewStudentName.setText("Name : " + "" + mData.get(position).getStudentName());
         holder.textViewDate.setText("Date : " + "" + mData.get(position).getAttandanceDate());
         holder.llPresentAbsent.setOnClickListener(new View.OnClickListener() {
@@ -85,6 +87,18 @@ public class AttendenceListAdapter extends RecyclerView.Adapter<AttendenceListAd
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
                 if(mClickListener!=null){
                     mClickListener.onAbsentPresentClick(position);
+                }
+                if(b){
+                    holder.mSwitch.setChecked(true);
+                    holder.textViewPresentOrAbsent.setText("Present");
+                    holder.textViewPresentOrAbsent.setTextColor(ContextCompat.getColor(holder.textViewPresentOrAbsent.getContext(),
+                            R.color.menu_user_type_text_color));
+                }
+                else{
+                    holder.mSwitch.setChecked(false);
+                    holder.textViewPresentOrAbsent.setText("Absent");
+                    holder.textViewPresentOrAbsent.setTextColor(ContextCompat.getColor(holder.textViewPresentOrAbsent.getContext(),
+                            R.color.button_color));
                 }
             }
         });
