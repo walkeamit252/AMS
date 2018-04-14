@@ -36,6 +36,10 @@ public class TeacherMenuActivity extends AppCompatActivity {
         mToolbarTitle = findViewById(R.id.mToolbarTitle);
         mToolbarTitle.setText("Subject List");
 
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.frame_layout, new ViewTeacherAddedCourseFragment());
+        transaction.commit();
+
         bottomNavigationView.setOnNavigationItemSelectedListener
                 (new BottomNavigationView.OnNavigationItemSelectedListener() {
                     @Override
@@ -58,11 +62,17 @@ public class TeacherMenuActivity extends AppCompatActivity {
                         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
                         transaction.replace(R.id.frame_layout, selectedFragment);
                         transaction.commit();
-                        setTitle(item.getTitle());
+                       // setTitle(item.getTitle());
                         return true;
                     }
                 });
 
+    }
+
+    public void setToolbarTitleFromFragment(String title){
+        if(mToolbarTitle!=null){
+            mToolbarTitle.setText(title);
+        }
     }
 
 }

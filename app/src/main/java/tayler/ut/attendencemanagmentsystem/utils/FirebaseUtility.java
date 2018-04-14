@@ -85,9 +85,14 @@ public class FirebaseUtility {
                         List<CourseData> courseDataList = setTeachersSubjectListFromCourseName(teacherData.getSubjects());
 
 
+
+
+
                         TeacherLocalData teacherLocalData = new TeacherLocalData();
                         teacherLocalData.setTeacherData(teacherData);
                         teacherLocalData.setTeacherCourseList(courseDataList);
+
+                     //   new TeacherDataManager(mContext).
 
                         AppPreferences.setTeacherLocalData(mContext,teacherLocalData);
 

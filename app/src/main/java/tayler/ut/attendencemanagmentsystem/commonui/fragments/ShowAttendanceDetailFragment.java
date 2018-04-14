@@ -24,6 +24,7 @@ import tayler.ut.attendencemanagmentsystem.R;
 import tayler.ut.attendencemanagmentsystem.adapter.PresentAbsentAdapter;
 import tayler.ut.attendencemanagmentsystem.commonui.adapter.CustomDropDownAdapter;
 import tayler.ut.attendencemanagmentsystem.model.attendance.AttendanceData;
+import tayler.ut.attendencemanagmentsystem.teacher.activity.TeacherMenuActivity;
 import tayler.ut.attendencemanagmentsystem.utils.Constants;
 import tayler.ut.attendencemanagmentsystem.utils.DateUtils;
 import tayler.ut.attendencemanagmentsystem.utils.FirebaseUtility;
@@ -118,7 +119,9 @@ public class ShowAttendanceDetailFragment extends Fragment implements FirebaseUt
         tvYear.setText("Year : "+attendanceData.getYear());
 
 
-
+        if(getActivity() instanceof TeacherMenuActivity){
+            ((TeacherMenuActivity)getActivity()).setToolbarTitleFromFragment("Student Attendance Details");
+        }
 
         btn_get_attendance_data.setOnClickListener(new View.OnClickListener() {
             @Override

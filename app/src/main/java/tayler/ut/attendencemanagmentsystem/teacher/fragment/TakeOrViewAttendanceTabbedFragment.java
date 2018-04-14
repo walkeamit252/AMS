@@ -22,6 +22,7 @@ import tayler.ut.attendencemanagmentsystem.app.ApplicationContext;
 import tayler.ut.attendencemanagmentsystem.model.attendance.AttendanceData;
 import tayler.ut.attendencemanagmentsystem.model.course.CourseData;
 import tayler.ut.attendencemanagmentsystem.model.student.StudentData;
+import tayler.ut.attendencemanagmentsystem.teacher.activity.TeacherMenuActivity;
 import tayler.ut.attendencemanagmentsystem.teacher.adapter.TeacherAddedCoursesAdapter;
 import tayler.ut.attendencemanagmentsystem.utils.Constants;
 import tayler.ut.attendencemanagmentsystem.utils.DateUtils;
@@ -78,6 +79,11 @@ public class TakeOrViewAttendanceTabbedFragment extends Fragment  implements Fir
             }
             fetchAttendenceList();
         }
+
+        if(getActivity() instanceof TeacherMenuActivity){
+            ((TeacherMenuActivity)getActivity()).setToolbarTitleFromFragment("View Or Take Attendance");
+        }
+
         return view;
     }
 
