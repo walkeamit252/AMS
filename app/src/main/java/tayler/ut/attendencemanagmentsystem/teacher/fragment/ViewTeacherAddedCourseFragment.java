@@ -16,7 +16,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import tayler.ut.attendencemanagmentsystem.R;
 import tayler.ut.attendencemanagmentsystem.model.course.CourseData;
@@ -63,13 +65,29 @@ public class ViewTeacherAddedCourseFragment extends Fragment implements TeacherA
         manager=new LinearLayoutManager(getActivity());
         listData = new ArrayList<>();
         List<CourseData> listTeachersCourse = new TeacherDataManager(getActivity()).getTeachersCourseList();
+        Set<String> setSubject = new HashSet<>();
+        for(CourseData courseData: listTeachersCourse){
+            setSubject.add(courseData.getCourseName());
+        }
+
+
+
         if(listTeachersCourse!=null && listTeachersCourse.size()>0){
-            listData.addAll(listTeachersCourse);
+            // listData.addAll(listTeachersCourse);
+            for(int i = 0;i<setSubject.size();i++){
+                listData.add(listTeachersCourse.get(i));
+            }
         }
         else{
             List<CourseData> listTeachCourses =  new TeacherDataManager(getActivity()).getTeachersCourseList();
+            Set<String> setSubject1 = new HashSet<>();
+            for(CourseData courseData: listTeachersCourse){
+                setSubject1.add(courseData.getCourseName());
+            }
             if(listTeachCourses!=null && listTeachCourses.size()>0){
-                listData.addAll(listTeachCourses);
+                for(int i = 0;i<setSubject1.size();i++){
+                    listData.add(listTeachCourses.get(i));
+                }
             }
         }
         if(listData.size()>0) {

@@ -9,6 +9,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
 
 
+import tayler.ut.attendencemanagmentsystem.model.student.StudentData;
 import tayler.ut.attendencemanagmentsystem.model.teacher.TeacherLocalData;
 
 public class AppPreferences {
@@ -77,6 +78,22 @@ public class AppPreferences {
         return getStringPreference(context, Key.TEACHER_LOCALDATA, "");
     }
 
+    public static String getStudentLocalData(Context context) {
+        return getStringPreference(context, Key.STUDENT_LOCALDATA, "");
+    }
+
+    public static void setStudentLocalData(Context context, StudentData teacherLocalData) {
+        String teacherLocalDataAsString = null;
+        try {
+            teacherLocalDataAsString = new ObjectMapper().writeValueAsString(teacherLocalData);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
+        if(teacherLocalDataAsString!=null) {
+            setStringPreference(context, Key.STUDENT_LOCALDATA, teacherLocalDataAsString);
+        }
+    }
+
     public static void setTeacherId(Context context, String teacherId) {
         setStringPreference(context, Key.USER_ID, teacherId);
     }
@@ -97,8 +114,16 @@ public class AppPreferences {
         setStringPreference(context, Key.TEACHER_NAME, teacherId);
     }
 
-    public static String setTeacherName(Context context) {
+    public static String getTeacherName(Context context) {
         return getStringPreference(context, Key.TEACHER_NAME, "");
+    }
+
+    public static void setStudentId(Context context, String teacherId) {
+        setStringPreference(context, Key.STUDENT_ID, teacherId);
+    }
+
+    public static String getStudentId(Context context) {
+        return getStringPreference(context, Key.STUDENT_ID, "");
     }
 
     public interface Key{
@@ -106,8 +131,10 @@ public class AppPreferences {
         String TEACHER_NAME = "teacherName";
         String TEACHER_Mobile = "teacherMobileNumber";
         String TABLE_NAME = "tableName";
+        String STUDENT_ID = "studentId";
         String SUBJECTS = "subjects";
         String TEACHER_LOCALDATA = "teacherLocalData";
+        String STUDENT_LOCALDATA = "studentLocalData";
     }
 
 }

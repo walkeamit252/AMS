@@ -29,6 +29,7 @@ import tayler.ut.attendencemanagmentsystem.commonui.activity.BaseActivity;
 import tayler.ut.attendencemanagmentsystem.model.SignupModel;
 import tayler.ut.attendencemanagmentsystem.model.student.StudentData;
 import tayler.ut.attendencemanagmentsystem.teacher.activity.TeacherLoginActivity;
+import tayler.ut.attendencemanagmentsystem.utils.AppPreferences;
 import tayler.ut.attendencemanagmentsystem.utils.Constants;
 import tayler.ut.attendencemanagmentsystem.utils.FirebaseUtility;
 
@@ -181,6 +182,9 @@ public class StudentSignupActivity extends BaseActivity {
     }
 
     private void writeNewUser(String userId, String name, String email, String number) {
+
+
+        AppPreferences.setStudentId(StudentSignupActivity.this,userId);
 
         SignupModel signupModel = new SignupModel(userId, name, email, number);
         signupModel.setUserid(userId);

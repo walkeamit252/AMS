@@ -3,6 +3,7 @@ package tayler.ut.attendencemanagmentsystem.student.adapter;
 import android.content.Context;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.AppCompatTextView;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -82,12 +83,14 @@ public class StudentCourseWiseAttendanceListAdapter extends RecyclerView.Adapter
         private AppCompatTextView tvSubjectName;
         private AppCompatTextView tvYear;
         private AppCompatTextView textViewUpload;
+        private CardView media_card_view;
 
         ViewHolder(View itemView) {
             super(itemView);
             tvSubjectName = itemView.findViewById(R.id.tvSubjectName);
             tvYear = itemView.findViewById(R.id.tvYear);
             textViewUpload = itemView.findViewById(R.id.textViewUpload);
+            media_card_view = itemView.findViewById(R.id.media_card_view);
             itemView.setOnClickListener(this);
         }
 

@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
@@ -18,9 +19,12 @@ import android.widget.Toast;
 import java.util.ArrayList;
 
 import tayler.ut.attendencemanagmentsystem.R;
+import tayler.ut.attendencemanagmentsystem.commonui.fragments.ShowAttendanceDetailFragment;
+import tayler.ut.attendencemanagmentsystem.model.attendance.AttendanceData;
 import tayler.ut.attendencemanagmentsystem.model.course.CourseData;
 import tayler.ut.attendencemanagmentsystem.model.student.StudentData;
 import tayler.ut.attendencemanagmentsystem.student.adapter.StudentCourseYearWiseListAdapter;
+import tayler.ut.attendencemanagmentsystem.utils.AppPreferences;
 import tayler.ut.attendencemanagmentsystem.utils.FirebaseUtility;
 
 public class ViewStudentSyllabusListFragment extends Fragment implements StudentCourseYearWiseListAdapter.ItemClickListener {
@@ -62,6 +66,8 @@ public class ViewStudentSyllabusListFragment extends Fragment implements Student
 
     @Override
     public void onItemClick(View view, int position) {
+
+
 
     }
 

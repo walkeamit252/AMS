@@ -21,6 +21,7 @@ import com.google.firebase.auth.FirebaseAuth;
 
 import tayler.ut.attendencemanagmentsystem.R;
 import tayler.ut.attendencemanagmentsystem.commonui.activity.BaseActivity;
+import tayler.ut.attendencemanagmentsystem.utils.AppPreferences;
 import tayler.ut.attendencemanagmentsystem.utils.Constants;
 import tayler.ut.attendencemanagmentsystem.utils.FirebaseUtility;
 
@@ -118,6 +119,7 @@ public class StudentLoginActivity extends BaseActivity {
 
                             String studentId = task.getResult().getUser().getUid();
                             if (!TextUtils.isEmpty(studentId)) {
+                                AppPreferences.setStudentId(StudentLoginActivity.this,studentId);
                                 FirebaseUtility.saveStudentProfile(studentId,FirebaseUtility.FirebaseConstants.FIRSTYEAR);
                             }
                             progressDialog.dismiss();
