@@ -44,33 +44,14 @@ public class SplashActivity extends BaseActivity {
 
         setContentView(R.layout.activity_splash);
 
+
+//        FirebaseUtility.setTestStudentsData();
+//        FirebaseUtility.setTestCourseData();
+//        FirebaseUtility.setTestTeacherData();
+
         prefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
 
         initUI();
-
-        Log.i(TAG, "onCreate: "+ DateUtils.getCurrentDateForStudent());
-
-
-
-        TeacherLocalData teacherLocalData = new TeacherLocalData();
-        TeacherData teacherData = new TeacherData();
-        teacherData.setTeacherId("123");
-        teacherData.setEmailId("s@s.com");
-        teacherData.setSubjects("s@s.com");
-        teacherData.setYear("asdasdas");
-        CourseData courseData = new CourseData();
-        courseData.setSyllabusFilePath("cdfsdfds");
-        courseData.setCourseName("dasdasda");
-        courseData.setCourseYear("FirstYear");
-        List<CourseData> listC = new ArrayList<>();
-        listC.add(courseData);
-        teacherLocalData.setTeacherData(teacherData);
-      //  teacherLocalData.setCourseDataList(listC);
-
-      //  AppPreferences.setTeacherLocalData(SplashActivity.this,teacherLocalData);
-
-   //     TeacherLocalData teacherLocalData1 = AppPreferences.getTeacherLocalData(SplashActivity.this);
-
 
          moveToNextScreen();
     }

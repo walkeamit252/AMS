@@ -26,7 +26,10 @@ public class TeacherData implements Parcelable{
         return CREATOR;
     }
 
-    public TeacherData(String teacherId, String name, String emailId, String mobileNumber, String subjects, String password) {
+    public TeacherData(String teacherId, String name, String emailId,
+                       String mobileNumber,
+                       String subjects,
+                       String password) {
         this.teacherId = teacherId;
         this.name = name;
         this.emailId = emailId;

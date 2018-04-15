@@ -168,12 +168,12 @@ public class TakeOrViewAttendenceFragment extends Fragment
     @Override
     public void onAbsentPresentClick(int position) {
         AttendanceData attendanceData = attendenceListModels.get(position);
-       /* if(attendanceData.isPresent()){
+        if(attendanceData.isPresent()){
             attendanceData.setPresent(false);
         }
         else{
             attendanceData.setPresent(true);
-        }*/
+        }
      //   mListAdapter.notifyItemChanged(position);
     }
 

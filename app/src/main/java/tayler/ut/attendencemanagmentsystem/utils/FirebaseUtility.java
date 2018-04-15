@@ -311,7 +311,7 @@ public class FirebaseUtility {
      * @param
      */
 
-    public static void updateTeacher(final Context mContext,final TeacherData teacherData){
+    public static void updateTeacher(final TeacherData teacherData){
         if(teacherData!=null){
             String userId = teacherData.getTeacherId();
             if(TextUtils.isEmpty(userId)){
@@ -329,7 +329,7 @@ public class FirebaseUtility {
 
                                 TeacherLocalData teacherLocalData = new TeacherLocalData();
                                 teacherLocalData.setTeacherData(teacherData);
-                                AppPreferences.setTeacherLocalData(mContext,teacherLocalData);
+                                AppPreferences.setTeacherLocalData(ApplicationContext.getContext(),teacherLocalData);
 
                             } else {
                                 Log.i(TAG, "onComplete: fail");
@@ -830,37 +830,50 @@ public class FirebaseUtility {
      * THIS IS ONLY FOR TESTING
      */
 
+    public static void setTestTeacherData(){
+        int j = 0;
+        String[] stringArrayFirstYear = {"TeacherA","TeacherB","TeacherC","TeacherD","TeacherE","TeacherF",};
+        for(int i = 0;i<stringArrayFirstYear.length;i++) {
+
+
+           TeacherData teacherData = new TeacherData("",stringArrayFirstYear[i],stringArrayFirstYear[i]+"@gmail.com",
+                   "984923423","","123456"
+                   );
+
+            FirebaseUtility.updateTeacher(teacherData);
+        }
+
+    }
+
     public static void setTestCourseData(){
         int j = 0;
-        for(int i = 0;i<4;i++) {
-            CourseData courseData = new CourseData("", "Course "+(++j)+" "+ FirebaseUtility.FirebaseConstants.FIRSTYEAR,
+        String[] stringArrayFirstYear = {"Subject A","Subject B","Subject C","Subject D","Subject E","Subject F"};
+        for(int i = 0;i<stringArrayFirstYear.length;i++) {
+            CourseData courseData = new CourseData("", stringArrayFirstYear[i],
                     FirebaseUtility.FirebaseConstants.FIRSTYEAR, "-",
                     "", "0");
             FirebaseUtility.updateCourse(courseData);
         }
-
+        String[] stringArray2ndYear = {"Subject G","Subject H","Subject I","Subject J","Subject K","Subject L"};
         int k = 0;
-        for(int i = 0;i<4;i++) {
-            CourseData courseData = new CourseData("", "Course "+(++k)+" "+
-                    FirebaseUtility.FirebaseConstants.SECOND_YEAR,
+        for(int i = 0;i<stringArray2ndYear.length;i++) {
+            CourseData courseData = new CourseData("", stringArray2ndYear[i],
                     FirebaseUtility.FirebaseConstants.SECOND_YEAR, "-",
                     "", "0");
             FirebaseUtility.updateCourse(courseData);
         }
-
+        String[] stringArray3RdYear = {"Subject M","Subject N","Subject O","Subject P","Subject Q","Subject R"};
         int l = 0;
-        for(int i = 0;i<4;i++) {
-            CourseData courseData = new CourseData("", "Course "+(++l)+" "+
-                    FirebaseUtility.FirebaseConstants.THIRD_YEAR,
+        for(int i = 0;i<stringArray3RdYear.length;i++) {
+            CourseData courseData = new CourseData("", stringArray3RdYear[i],
                     FirebaseUtility.FirebaseConstants.THIRD_YEAR, "-",
                     "", "0");
             FirebaseUtility.updateCourse(courseData);
         }
-
+        String[] stringArray4thYear = {"Subject S","Subject T","Subject U","Subject V","Subject W","Subject X"};
         int m = 0;
-        for(int i = 0;i<4;i++) {
-            CourseData courseData = new CourseData("", "Course "+(++m)+" "+
-                    FirebaseUtility.FirebaseConstants.FOURTH_YEAR,
+        for(int i = 0;i<stringArray4thYear.length;i++) {
+            CourseData courseData = new CourseData("", stringArray4thYear[i],
                     FirebaseUtility.FirebaseConstants.FOURTH_YEAR, "-",
                     "", "0");
             FirebaseUtility.updateCourse(courseData);
@@ -868,44 +881,49 @@ public class FirebaseUtility {
     }
 
     public static void setTestStudentsData(){
+
+
+        String[] stringArrayFirstYear = {"Student A","Student B","Student C","Student D","Student E","Student F"};
+        String[] stringArrayEmailFirstYear = {"StudentA@gmail.com","StudentB@gmail.com","StudentC@gmail.com","StudentD@gmail.com","StudentE@gmail.com","StudentF@gmail.com"};
         int j = 0;
-        for(int i = 0;i<10;i++) {
-            StudentData studentData = new StudentData("","Student1"+(++j)+" "+
-                    FirebaseUtility.FirebaseConstants.FIRSTYEAR,
-                    "student"+j+"@gmail.com",
+        for(int i = 0;i<stringArrayFirstYear.length;i++) {
+            StudentData studentData = new StudentData("",stringArrayFirstYear[i],
+                    stringArrayEmailFirstYear[i],
                     "1234567890",
                     FirebaseUtility.FirebaseConstants.FIRSTYEAR,
                     "-");
             FirebaseUtility.updateStudent(studentData);
         }
 
+
+        String[] stringArray2ndYear = {"Student G","Student H","Student I","Student J","Student K","Student L"};
+        String[] stringArrayEmail2ndYear = {"StudentG","Student H","Student I","Student J","Student K","Student L"};
         int k = 0;
-        for(int i = 0;i<10;i++) {
-            StudentData studentData = new StudentData("","Student1"+(++k)+" "+
-                    FirebaseConstants.SECOND_YEAR,
-                    "student"+k+"@gmail.com",
+        for(int i = 0;i<stringArray2ndYear.length;i++) {
+            StudentData studentData = new StudentData("",stringArray2ndYear[i],
+                    stringArrayEmail2ndYear[i]+"@gmail.com",
                     "1234567890",
                     FirebaseConstants.SECOND_YEAR,
                     "-");
             FirebaseUtility.updateStudent(studentData);
         }
-
+        String[] stringArray3RdYear = {"Student M","Student N","Student O","Student P","Student Q","Student R"};
+        String[] stringArrayEmailRdYear = {"StudentM@gmail.com","StudentN@gmail.com","StudentO@gmail.com","StudentP@gmail.com","StudentQ@gmail.com","StudentR@gmail.com"};
         int l = 0;
-        for(int i = 0;i<10;i++) {
-            StudentData studentData = new StudentData("","Student1"+(++l)+" "+
-                    FirebaseConstants.THIRD_YEAR,
-                    "student"+l+"@gmail.com",
+        for(int i = 0;i<stringArray3RdYear.length;i++) {
+            StudentData studentData = new StudentData("",stringArray3RdYear[i],
+                    stringArrayEmailRdYear[i],
                     "1234567890",
                     FirebaseConstants.THIRD_YEAR,
                     "-");
             FirebaseUtility.updateStudent(studentData);
         }
-
+        String[] stringArray4thYear = {"Student S","Student T","Student U","Student V","Student W","Student X"};
+        String[] stringArrayEmail4thYear = {"StudentS@gmail.com","StudentT@gmail.com","StudentU@gmail.com","StudentV@gmail.com","StudentW@gmail.com","StudentX@gmail.com"};
         int m = 0;
-        for(int i = 0;i<10;i++) {
-            StudentData studentData = new StudentData("","Student1"+(++m)+" "+
-                    FirebaseConstants.FOURTH_YEAR,
-                    "student"+m+"@gmail.com",
+        for(int i = 0;i<stringArray4thYear.length;i++) {
+            StudentData studentData = new StudentData("",stringArray4thYear[i],
+                    stringArrayEmail4thYear[i],
                     "1234567890",
                     FirebaseUtility.FirebaseConstants.FOURTH_YEAR,
                     "-");
