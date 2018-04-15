@@ -824,6 +824,7 @@ public class FirebaseUtility {
         String PASSWORD                = "password";
         String SUBJECT                 = "subject";
         String TEACHER_ID              = "teacherId";
+        String SUBJECT_NAME              = "subjectName";
     }
 
     /**
@@ -939,10 +940,6 @@ public class FirebaseUtility {
     public static List<AttendanceData> getAttendanceListById(String year,String studentId,
                                                              String subject,String date,
                                                               final OnAttendanceActionListener onAttendanceActionListene){
-//        DatabaseReference mFriendsRef = FirebaseDatabase.getInstance().getReference().child("friends").child(studentId);
-//
-//        DatabaseReference mUsersRef = FirebaseDatabase.getInstance().getReference().child("users");
-
 
         final List<AttendanceData> attendanceDataList = new ArrayList<>();
 
@@ -988,9 +985,69 @@ public class FirebaseUtility {
 return attendanceDataList;
     }
 
+
+    public static void isAttendanceTaken(String year,String subject,
+                                                             final OnAttendanceAlreadyTakenListener onAttendanceAlreadyTakenListener){
+
+
+        boolean isAttendanceExist = false;
+
+        Query teacherDetailsQuery = ApplicationContext.getFirebaseDatabaseReference().
+                child(FirebaseConstants.ATTENDANCE_TABLE+year).orderByChild(FirebaseConstants.SUBJECT_NAME).equalTo(subject);
+        teacherDetailsQuery.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                AttendanceData attendanceData = null;
+                //_______________________________ check if server return null _________________________________
+                if (dataSnapshot.exists()) {
+                    //getting the data a t specific node which is selected by input Restaurant name
+                    for (DataSnapshot child : dataSnapshot.getChildren()) {
+                        attendanceData = child.getValue(AttendanceData.class);
+
+                        String dateOfATtendance= attendanceData.getAttandanceDate();
+                        String dateTemp = dateOfATtendance;
+                        if(!TextUtils.isEmpty(dateOfATtendance)){
+
+
+                            if(dateOfATtendance.equalsIgnoreCase(DateUtils.getCurrentDateForStudent())){
+                                if(onAttendanceAlreadyTakenListener!=null){
+                                    onAttendanceAlreadyTakenListener.onAttendanceAlreadyTaken(true);
+                                }
+
+                                break;
+
+                            }
+                            else{
+                                if(onAttendanceAlreadyTakenListener!=null){
+                                    onAttendanceAlreadyTakenListener.onAttendanceAlreadyTaken(false);
+                                }
+                                break;
+                            }
+
+                        }
+                    }
+
+
+                    Log.i(TAG, "onDataChange: name from id is:  "+attendanceData.getStudentName());
+                } else {
+                    Log.i(TAG, " name does'nt exists!");
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+    }
+
     public interface OnAttendanceActionListener{
         void onSuccess(List<AttendanceData> list);
         void onFail();
+    }
+
+    public interface OnAttendanceAlreadyTakenListener{
+        void onAttendanceAlreadyTaken(boolean isAttendanceTaken);
     }
 
 }

@@ -44,7 +44,11 @@ import tayler.ut.attendencemanagmentsystem.utils.FirebaseUtility;
 public class TakeOrViewAttendenceFragment extends Fragment
         implements AttendenceListAdapter.ItemClickListener,
         View.OnClickListener,
-        FirebaseUtility.OnFirebasseActionListener {
+        FirebaseUtility.OnFirebasseActionListener,
+FirebaseUtility.OnAttendanceAlreadyTakenListener {
+
+
+    boolean isAttendanceTaken;
 
     private AttendenceListAdapter mListAdapter;
     private RecyclerView recyclerView;
@@ -92,6 +96,8 @@ public class TakeOrViewAttendenceFragment extends Fragment
             }
         }
 
+        FirebaseUtility.isAttendanceTaken(mCourseData.getCourseYear(),mCourseData.getCourseName(),this);
+
 
         progressDialog = new ProgressDialog(getActivity());
         progressDialog.setMessage("Loading...,Please Wait");
@@ -107,6 +113,10 @@ public class TakeOrViewAttendenceFragment extends Fragment
     }
 
     private void initview(View view) {
+
+
+
+
         mButtonSave=(Button)view.findViewById(R.id.mButtonSave);
         mButtonSave.setOnClickListener(this);
         mApplicationContext = new ApplicationContext(getActivity());
@@ -182,17 +192,21 @@ public class TakeOrViewAttendenceFragment extends Fragment
         switch (view.getId()){
             case R.id.mButtonSave :
 
-                progressDialog.show();
-
-                for(AttendanceData attendanceData :attendenceListModels) {
-                    FirebaseUtility.updateAttendance(attendanceData,mCourseData.getCourseYear());
+                if(isAttendanceTaken){
+                    Toast.makeText(getActivity(), "Attendance Already Taken", Toast.LENGTH_SHORT).show();
                 }
+                else {
+                    progressDialog.show();
 
-                Toast.makeText(getActivity(), "Attendance Updated Successfully", Toast.LENGTH_SHORT).show();
+                    for (AttendanceData attendanceData : attendenceListModels) {
+                        FirebaseUtility.updateAttendance(attendanceData, mCourseData.getCourseYear());
+                    }
 
-                progressDialog.dismiss();
+                    Toast.makeText(getActivity(), "Attendance Updated Successfully", Toast.LENGTH_SHORT).show();
 
+                    progressDialog.dismiss();
 
+                }
                 break;
         }
     }
@@ -226,5 +240,10 @@ public class TakeOrViewAttendenceFragment extends Fragment
             setRecyclerAdapter();
         }
         progressDialog.dismiss();
+    }
+
+    @Override
+    public void onAttendanceAlreadyTaken(boolean isAttendanceTaken) {
+        this.isAttendanceTaken = isAttendanceTaken;
     }
 }
