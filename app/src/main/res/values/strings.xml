@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">AttendenceManagmentSystem</string>
+    <string name="app_name">Attendence Management System</string>
 
     <string name="app_heading">Attendance Management System</string>
     <string name="teacher_login">Teacher Login</string>
